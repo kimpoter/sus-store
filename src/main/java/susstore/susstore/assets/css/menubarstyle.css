@@ -1,0 +1,52 @@
+.menu-bar {
+    -fx-background-color: "#2C3656";
+    -fx-padding: 5px 10px 5px 10px;
+    -fx-border-color: "#495A8F";
+    -fx-border-width: 0 0 1px 0;
+}
+
+.menu-bar .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.context-menu {
+    -fx-background-color: "#2C3656";
+    -fx-padding: 5px;
+    -fx-border-color: "#495A8F";
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.menu-button:hover {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 10px;
+}
+
+.menu-button:showing {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 10px;
+}
+
+.menu-item:hover {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 5px;
+}
+
+.menu-item:showing {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 5px;
+}
+
+.menu-item:focused {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 5px;
+}
+
+.menu-item {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.menu-item .label {
+    -fx-text-fill: "#D2D6E3";
+}
