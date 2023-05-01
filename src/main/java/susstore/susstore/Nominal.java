@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class Nominal {
     private String mataUang;
-    private float nominal;
-    private static Map<String, Float> kurs;
-    private static Map<Integer, Float> konversiPoin;
+    private double nominal;
+    private static Map<String, Double> kurs;
+    private static Map<Integer, Double> konversiPoin;
 
     /* Constructors */
     public Nominal() {
@@ -16,7 +16,7 @@ public class Nominal {
         this.nominal = 0;
     }
 
-    public Nominal(String mataUang, float nominal) {
+    public Nominal(String mataUang, double nominal) {
         this.mataUang = mataUang;
         this.nominal = nominal;
     }
@@ -35,11 +35,11 @@ public class Nominal {
         return mataUang;
     }
 
-    public float getNominal() {
+    public double getNominal() {
         return nominal;
     }
 
-    public void setNominal(float nominal) {
+    public void setNominal(double nominal) {
         this.nominal = nominal;
     }
 
@@ -59,7 +59,7 @@ public class Nominal {
         }
     }
 
-    public void addNominal(Nominal other, float multiple) {
+    public void addNominal(Nominal other, double multiple) {
         if(this.mataUang == other.mataUang) {
             this.nominal += other.nominal * multiple;
         }
