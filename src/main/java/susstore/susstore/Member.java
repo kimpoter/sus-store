@@ -71,9 +71,8 @@ public class Member extends Customer implements PointHolder {
         else {
             convertedNominal.subtractNominal(pointDiscount);
         }
-
-        super.bayar(convertedNominal);
-        return harga;
+        convertedNominal.convertNominal(harga.getMataUang());
+        return bayar(convertedNominal);
     }
 
     @Override
