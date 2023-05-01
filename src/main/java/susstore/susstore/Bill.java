@@ -1,6 +1,6 @@
 package susstore.susstore;
 
-public abstract class Bill {
+public abstract class Bill implements Storable {
     protected int idUser;
 
     public Bill(int idUser) {
@@ -10,4 +10,6 @@ public abstract class Bill {
     public int getIdUser() {
         return idUser;
     }
+
+    public abstract Nominal getBillTotal();
 }
