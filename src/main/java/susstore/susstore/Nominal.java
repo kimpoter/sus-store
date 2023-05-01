@@ -3,7 +3,7 @@ package susstore.susstore;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Nominal {
+public class Nominal implements Comparable<Nominal> {
     private String mataUang;
     private double nominal;
     private static Map<String, Double> kurs;
@@ -24,10 +24,6 @@ public class Nominal {
     public Nominal(Nominal other) {
         this.mataUang = other.mataUang;
         this.nominal = other.nominal;
-    }
-
-    public Nominal(String mataUang, int poin) {
-        /* TO-DO: konversi poin ke nominal */
     }
 
     /* Getter & Setter */
@@ -68,5 +64,37 @@ public class Nominal {
             convertedNominal.convertNominal(this.mataUang);
             this.nominal += convertedNominal.nominal * multiple;
         }
+    }
+
+    public void subtractNominal(Nominal other) {
+        if(this.mataUang == other.mataUang) {
+            this.nominal -= other.nominal;
+        }
+        else {
+            Nominal convertedNominal = new Nominal(other);
+            convertedNominal.convertNominal(this.mataUang);
+            this.nominal -= convertedNominal.nominal;
+        }
+    }
+
+    public void subtractNominal(Nominal other, double multiple) {
+        if(this.mataUang == other.mataUang) {
+            this.nominal -= other.nominal * multiple;
+        }
+        else {
+            Nominal convertedNominal = new Nominal(other);
+            convertedNominal.convertNominal(this.mataUang);
+            this.nominal -= convertedNominal.nominal * multiple;
+        }
+    }
+
+    @Override
+    public int compareTo(Nominal o) {
+        Nominal convertedNominal = new Nominal(o);
+        convertedNominal.convertNominal(this.mataUang);
+
+        if(this.nominal < convertedNominal.nominal) return -1;
+        if(this.nominal == convertedNominal.nominal) return 0;
+        return 1;
     }
 }
