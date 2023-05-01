@@ -23,7 +23,17 @@ public class TemporaryBill extends Bill {
         daftar.remove(idx);
     }
 
-    public Nominal hitungTotalBill() {
+    public boolean isBillValid() {
+        boolean valid = true;
+        for (TemporaryBillEntry belanjaan : this.daftar
+             ) {
+            valid &= belanjaan.getBarang().getStok() >= belanjaan.getJumlah();
+        }
+        return valid;
+    }
+
+    @Override
+    public Nominal getBillTotal() {
         Nominal totalPrice = new Nominal();
         for (TemporaryBillEntry belanjaan : this.daftar
              ) {
