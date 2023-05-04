@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class TemporaryBill extends Bill {
+    private static int temporaryBillCount = 0;
     protected List<TemporaryBillEntry> daftar;
 
     public TemporaryBill(int idUser) {
-        super(idUser);
+        super(temporaryBillCount, idUser);
+        temporaryBillCount++;
         this.daftar = new ArrayList<TemporaryBillEntry>();
     }
 

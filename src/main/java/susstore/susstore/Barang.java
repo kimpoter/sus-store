@@ -1,8 +1,10 @@
 package susstore.susstore;
 
 import java.awt.image.BufferedImage;
+import java.util.UUID;
 
-public class Barang {
+public class Barang implements Storable {
+    protected UUID id;
     protected String namaBarang;
     protected int stok;
     protected String kategori;
@@ -10,23 +12,21 @@ public class Barang {
     protected Nominal hargaBarang;
     protected Nominal hargaBeliBarang;
 
-    public Barang(String namaBarang, String kategori, Nominal hargaBarang, Nominal hargaBeliBarang) {
-        this.namaBarang = namaBarang;
-        this.kategori = kategori;
-        this.hargaBarang = hargaBarang;
-        this.hargaBeliBarang = hargaBeliBarang;
-    }
-
     public Barang(String namaBarang, int stok, String kategori, BufferedImage gambar, Nominal hargaBarang, Nominal hargaBeliBarang) {
-        this.namaBarang = namaBarang;
-        this.stok = stok;
-        this.kategori = kategori;
-        this.gambar = gambar;
-        this.hargaBarang = hargaBarang;
-        this.hargaBeliBarang = hargaBeliBarang;
+        this.id                 = UUID.randomUUID();
+        this.namaBarang         = namaBarang;
+        this.stok               = stok;
+        this.kategori           = kategori;
+        this.gambar             = gambar;
+        this.hargaBarang        = hargaBarang;
+        this.hargaBeliBarang    = hargaBeliBarang;
     }
 
     /* Getter & Setter */
+    public UUID getId() {
+        return id;
+    }
+
     public String getNamaBarang() {
         return namaBarang;
     }
@@ -81,5 +81,10 @@ public class Barang {
             throw new Exception("Tidak cukup stok");
         }
         this.stok -= jumlah;
+    }
+
+    @Override
+    public String getStorableId() {
+        return this.id.toString();
     }
 }

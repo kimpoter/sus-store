@@ -1,4 +1,8 @@
 package susstore.susstore;
 
-public interface Storable {
+import java.io.Serializable;
+
+public interface Storable /*extends Serializable*/ {
+    public String getStorableId();
+
 }

@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class FixedBill extends Bill {
+    private static int fixedBillCount;
     protected List<BarangSnapshot> daftar;
     protected Nominal total;
 
     public FixedBill(TemporaryBill bill) {
-        super(bill.idUser);
+        super(fixedBillCount, bill.idUser);
+        fixedBillCount++;
 
         // initialize list
         this.daftar = new ArrayList<BarangSnapshot>();
