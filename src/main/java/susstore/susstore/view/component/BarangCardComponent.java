@@ -24,7 +24,7 @@ public class BarangCardComponent {
     private void loadUI() {
         Rectangle imageContainer = new Rectangle(0, 0, 180, 180);
         imageContainer.getStyleClass().add("image-container");
-        Image image = new Image("/src/main/java/susstore/susstore/assets/barang.jpg", false);
+        Image image = new Image("images/barang.jpg", false);
         imageContainer.setFill(new ImagePattern(image));
         Label nameLabel = new Label("Nama Barang");
 
@@ -60,7 +60,7 @@ public class BarangCardComponent {
 
     private void setStyleSheet() {
         this.componentRootLayout.getStyleClass().add("component-root-layout");
-        this.componentRootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/barang-card-component.css");
+        this.componentRootLayout.getStylesheets().add("css/barang-card-component.css");
     }
 
     public Pane getComponent() {

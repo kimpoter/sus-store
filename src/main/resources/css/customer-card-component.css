@@ -2,7 +2,7 @@
     font-family: "Font Awesome 6 Free Solid";
     font-style: normal;
     font-weight: normal;
-    src: url("../fa-solid.otf");
+    src: url("../fonts/fa-solid.otf");
 }
 
 .root-component-layout {
@@ -84,8 +84,8 @@
 }
 
 .name-label {
-    -fx-font-weight: bold:
-    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
 }
 
 .name-phone-container {

@@ -37,9 +37,7 @@ public class DateTimeComponent {
                         labelTanggal.setText(now.format(dateFormat));
                         labelJam.setText(now.format(timeFormat));
                     });
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -47,7 +45,7 @@ public class DateTimeComponent {
         thread.start();
 
         this.rootLayout.getChildren().addAll(labelTanggal, labelJam);
-        this.rootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/datetimecomponent.css");
+        this.rootLayout.getStylesheets().add("css/datetimecomponent.css");
     }
 
     public VBox getRootLayout() {

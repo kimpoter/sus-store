@@ -67,7 +67,7 @@ public class Navbar {
     }
 
     private void setStylesheet() {
-        this.menuBar.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/menubarstyle.css");
+        this.menuBar.getStylesheets().add("css/menubarstyle.css");
     }
 
     public MenuBar getMenuBar() {
