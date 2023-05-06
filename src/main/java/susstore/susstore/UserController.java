@@ -3,6 +3,8 @@ package susstore.susstore;
 import java.util.ArrayList;
 import java.util.List;
 
+import susstore.susstore.models.Storable;
+
 public class UserController {
     private int dataStore;
     private SubscriberManager subscribers;
