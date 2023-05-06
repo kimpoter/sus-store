@@ -17,10 +17,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
-public class SettingsPage extends Page{
+public class SettingsPage extends Page {
+    private static File selectedFile;
     private final SplitPane pageRootLayout;
     private final Stage primaryStage;
-    private static File selectedFile;
 
     public SettingsPage(Stage primaryStage) {
         super(PageType.SettingsPage);
@@ -31,8 +31,8 @@ public class SettingsPage extends Page{
         this.tab.setContent(this.pageRootLayout);
     }
 
-    public static void setFileValue(File file){
-        selectedFile=file;
+    public static void setFileValue(File file) {
+        selectedFile = file;
     }
 
     private void loadUI() {
@@ -52,15 +52,15 @@ public class SettingsPage extends Page{
         TextField masukanSetting1 = new TextField();
         Button pilihFile = new Button("Pilih file");
         pilihFile.setOnAction(
-            new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(final ActionEvent e) {
-                    FileChooser fileChooser = new FileChooser();
-                    fileChooser.setTitle("Open Resource File");
-                    File fileSaved = fileChooser.showOpenDialog(primaryStage);  
-                    SettingsPage.setFileValue(fileSaved);
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(final ActionEvent e) {
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.setTitle("Open Resource File");
+                        File fileSaved = fileChooser.showOpenDialog(primaryStage);
+                        SettingsPage.setFileValue(fileSaved);
+                    }
                 }
-            }
         );
         barangContainer.add(labelSetting1, 0, 0);
         barangContainer.add(labelPenjelasanSetting1, 0, 1);
@@ -95,12 +95,12 @@ public class SettingsPage extends Page{
         VBox kanan = new VBox();
         kanan.getChildren().addAll(settingScroll);
 
-        this.pageRootLayout.getItems().addAll(kiri,kanan);
-        
+        this.pageRootLayout.getItems().addAll(kiri, kanan);
+
     }
 
     private void setStyleSheet() {
         this.pageRootLayout.getStyleClass().add("page-root-layout");
-        this.pageRootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/settings-page.css");
+        this.pageRootLayout.getStylesheets().add("css/settings-page.css");
     }
 }
