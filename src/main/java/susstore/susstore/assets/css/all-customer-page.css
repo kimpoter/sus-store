@@ -16,3 +16,90 @@
     -fx-background: transparent;
     -fx-background-color: transparent;
 }
+
+.input-label-all-customer {
+    -fx-text-fill: "#D2D6E3";
+    -fx-padding: 10px 0;
+}
+
+.input-all-customer {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 6px;
+    -fx-text-fill: "#D2D6E3";
+}
+
+.input-all-customer:focus {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.input-all-customer:selected {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.membership-status-container-all-customer {
+    -fx-spacing: 10px;
+    -fx-padding: 10px 0;
+}
+
+.choice-box {
+    -fx-background-color: "#3B4873";
+    -fx-pref-width: 145px;
+    -fx-mark-color: "#D2D6E3";
+}
+
+.choice-box > .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.choice-box .context-menu {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 5px;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 10px;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.form-actions-container-all-customer {
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+.form-container-all-customer {
+    -fx-alignment: center;
+}
+
+.action-button-all-customer {
+    -fx-background-radius: 10px;
+    -fx-padding: 4px 6px;
+    -fx-pref-width: 100px;
+}
+
+.cancel-button-all-customer {
+    -fx-background-color: "#37446B";
+    -fx-text-fill: "#D2D6E3";
+}
+
+.save-button-all-customer {
+    -fx-background-color: "#84CC16";
+    -fx-text-fill: "#1E1E1E";
+}
+
+.action-buttons-container-all-customer {
+    -fx-padding: 10px;
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+}
+
+.membership-status-container-all-customer {
+    -fx-alignment: center;
+}

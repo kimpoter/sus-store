@@ -1,20 +1,19 @@
 package susstore.susstore.view.page;
 
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 
 public class KasirPage extends Page {
     private final SplitPane pageRootLayout;
-    private final ScrollPane scrollPane;
 
     public KasirPage() {
         super(PageType.Kasir);
         this.pageRootLayout = new SplitPane();
-        this.scrollPane = new ScrollPane();
         loadUI();
         setStyleSheet();
         this.tab.setContent(this.pageRootLayout);
@@ -30,13 +29,33 @@ public class KasirPage extends Page {
                 barangContainer.add(barangCard.getComponent(), row, col, 1, 1);
             }
         }
-        this.scrollPane.setContent(barangContainer);
-        this.scrollPane.setFitToWidth(true);
+        ScrollPane barangContainerScroll = new ScrollPane();
+        barangContainerScroll.setContent(barangContainer);
+        barangContainerScroll.setFitToWidth(true);
+
+        ChoiceBox categoryChoices = new ChoiceBox();
+        categoryChoices.getItems().add("Alat Tulis");
+        categoryChoices.getItems().add("Perabotan");
+
+        TextField searchInput = new TextField();
+        Button searchButton = new Button("Search");
+        searchInput.setPromptText("Search...");
+        HBox searchContainer = new HBox();
+        searchContainer.getChildren().addAll(searchInput, searchButton);
+
+        BorderPane filterAndSearchContainer = new BorderPane();
+        filterAndSearchContainer.setLeft(categoryChoices);
+        filterAndSearchContainer.setRight(searchContainer);
+
+        BorderPane barangAndFiltersContainer = new BorderPane();
+        barangAndFiltersContainer.setTop(filterAndSearchContainer);
+        barangAndFiltersContainer.setCenter(barangContainerScroll);
+
 
         // right pane
         BorderPane allActionContainer = new BorderPane();
 
-        this.pageRootLayout.getItems().addAll(this.scrollPane, allActionContainer);
+        this.pageRootLayout.getItems().addAll(barangAndFiltersContainer, allActionContainer);
     }
 
     private void setStyleSheet() {
