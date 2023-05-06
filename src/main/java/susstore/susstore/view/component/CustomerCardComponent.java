@@ -70,7 +70,7 @@ public class CustomerCardComponent {
         this.statusAndActionsContainer.getStyleClass().add("status-actions-container");
         this.nameAndPhoneContainer.getStyleClass().add("name-phone-container");
         this.componentRootLayout.getStyleClass().add("root-component-layout");
-        this.componentRootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/customer-card-component.css");
+        this.componentRootLayout.getStylesheets().add("css/customer-card-component.css");
     }
 
     public Pane getComponent() {

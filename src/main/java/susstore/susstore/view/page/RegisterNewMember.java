@@ -79,6 +79,6 @@ public class RegisterNewMember extends Page {
         this.pageRootLayout.getStyleClass().add("page-root-layout");
         this.actionButtonsContainer.getStyleClass().add("action-buttons-container");
         this.formContainer.getStyleClass().add("form-container");
-        this.pageRootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/register-new-member.css");
+        this.pageRootLayout.getStylesheets().add("css/register-new-member.css");
     }
 }

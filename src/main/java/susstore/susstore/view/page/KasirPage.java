@@ -60,6 +60,6 @@ public class KasirPage extends Page {
 
     private void setStyleSheet() {
         this.pageRootLayout.getStyleClass().add("page-root-layout");
-        this.pageRootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/kasir-page.css");
+        this.pageRootLayout.getStylesheets().add("css/kasir-page.css");
     }
 }
