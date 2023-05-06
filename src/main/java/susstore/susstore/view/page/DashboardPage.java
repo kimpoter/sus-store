@@ -5,10 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.AuthorCardComponent;
 import susstore.susstore.view.component.DateTimeComponent;
 
-public class DashboardPage {
+public class DashboardPage extends Page {
     private final VBox layout;
     private final Pane rootLayout;
     private final HBox authorLayout;
@@ -16,6 +17,7 @@ public class DashboardPage {
 
 
     public DashboardPage(Pane rootLayout) {
+        super(PageType.DashBoardPage);
         this.layout = new VBox();
         this.rootLayout = rootLayout;
         this.authorLayout = new HBox();

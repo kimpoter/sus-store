@@ -32,4 +32,5 @@
 
 .tab-pane .tab-content-area {
     -fx-background-color: "#2C3656";
+    -fx-alignment: center;
 }

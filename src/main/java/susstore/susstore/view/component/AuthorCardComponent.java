@@ -20,10 +20,6 @@ public class AuthorCardComponent {
     }
 
     private void loadUI() {
-        // image placeholder
-//        ImageView imageView = new ImageView();
-//        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/src/main/java/susstore/susstore/assets/jihu-4.jpg")));
-//        imageView.setImage(image);
         Circle imagePlaceholder = new Circle(0, 0, 50);
         Image image = new Image("/src/main/java/susstore/susstore/assets/jihu-4.jpg", false);
         imagePlaceholder.setFill(new ImagePattern(image));

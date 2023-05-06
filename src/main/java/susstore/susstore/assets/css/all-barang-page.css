@@ -1,0 +1,106 @@
+.page-root-layout{
+    -fx-background-color: transparent;
+}
+.barang-container {
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.image-choose-button-container {
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+}
+
+.form-actions-container {
+    -fx-alignment: top-center;
+    -fx-spacing: 20px;
+    -fx-padding: 30px 20px;
+    -fx-pref-width: 400px;
+}
+
+.choose-image-button {
+    -fx-background-color: "#37446B";
+    -fx-text-fill: "#D2D6E3";
+}
+
+.input-container-all-barang {
+    -fx-alignment: center;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+.input-label-all-barang {
+    -fx-text-fill: "#D2D6E3";
+    -fx-padding: 10px 0;
+}
+
+.input-all-barang {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 6px;
+    -fx-text-fill: "#D2D6E3";
+}
+
+.choices-all-barang {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 1px;
+    -fx-mark-color: "#D2D6E3";
+}
+
+.choices-all-barang > .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.choices-all-barang .context-menu {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 5px;
+}
+
+.choices-all-barang .menu-item:focused {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 10px;
+}
+
+.choices-all-barang .menu-item > .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.stock-container-all-barang {
+    -fx-padding: 0 5px 0 0;
+}
+
+.category-container-all-barang {
+    -fx-padding: 0 0 0 5px;
+}
+
+.action-button-all-barang {
+    -fx-background-radius: 10px;
+    -fx-padding: 4px 6px;
+    -fx-pref-width: 100px;
+}
+
+.cancel-button-all-barang {
+    -fx-background-color: "#37446B";
+    -fx-text-fill: "#D2D6E3";
+}
+
+.save-button-all-barang {
+    -fx-background-color: "#84CC16";
+    -fx-text-fill: "#1E1E1E";
+}
+
+.action-buttons-container-all-barang {
+    -fx-padding: 10px;
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+}
