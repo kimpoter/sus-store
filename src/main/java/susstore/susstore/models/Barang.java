@@ -1,4 +1,4 @@
-package susstore.susstore;
+package susstore.susstore.models;
 
 import java.awt.image.BufferedImage;
 import java.util.UUID;

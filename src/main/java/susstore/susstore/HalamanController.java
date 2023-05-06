@@ -1,5 +1,8 @@
 package susstore.susstore;
 
+import susstore.susstore.models.Barang;
+import susstore.susstore.models.Bill;
+
 import java.util.ArrayList;
 import java.util.List;
 

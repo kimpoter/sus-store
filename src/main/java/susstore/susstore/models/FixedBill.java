@@ -1,4 +1,4 @@
-package susstore.susstore;
+package susstore.susstore.models;
 
 import java.util.List;
 import java.util.ArrayList;

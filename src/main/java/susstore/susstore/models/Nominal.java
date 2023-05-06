@@ -1,7 +1,6 @@
-package susstore.susstore;
+package susstore.susstore.models;
 
 import java.util.Map;
-import java.util.HashMap;
 
 public class Nominal implements Comparable<Nominal> {
     private String mataUang;
