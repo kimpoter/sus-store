@@ -1,9 +1,6 @@
 package susstore.susstore.models;
 
-
-import susstore.susstore.datastore.Storable;
-
-public abstract class Bill implements Storable {
+public abstract class Bill {
 
     protected int id;
     protected int idUser;
@@ -23,9 +20,4 @@ public abstract class Bill implements Storable {
     }
 
     public abstract Nominal getBillTotal();
-
-    @Override
-    public String getStorableId() {
-        return Integer.toString(this.id);
-    }
 }

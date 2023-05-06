@@ -1,11 +1,9 @@
 package susstore.susstore.models;
 
-import susstore.susstore.datastore.Storable;
-
 import java.awt.image.BufferedImage;
 import java.util.UUID;
 
-public class Barang implements Storable {
+public class Barang {
     protected UUID id;
     protected String namaBarang;
     protected int stok;
@@ -83,10 +81,5 @@ public class Barang implements Storable {
             throw new Exception("Tidak cukup stok");
         }
         this.stok -= jumlah;
-    }
-
-    @Override
-    public String getStorableId() {
-        return this.id.toString();
     }
 }

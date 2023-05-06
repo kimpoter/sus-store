@@ -1,8 +1,6 @@
 package susstore.susstore.models;
 
-import susstore.susstore.datastore.Storable;
-
-public class Customer implements Storable {
+public class Customer {
     private static int jumlahCustomer;
     protected int id;
     protected int jumlahTransaksi;
@@ -31,10 +29,4 @@ public class Customer implements Storable {
         // do nothing (..yet, probably until user credit system is added)
         return new Nominal(harga);
     }
-
-    @Override
-    public String getStorableId() {
-        return Integer.toString(this.id);
-    }
-
 }
