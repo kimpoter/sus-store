@@ -1,6 +1,8 @@
 package susstore.susstore.models;
 
 
+import susstore.susstore.datastore.Storable;
+
 public abstract class Bill implements Storable {
 
     protected int id;

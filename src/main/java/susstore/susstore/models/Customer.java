@@ -1,4 +1,7 @@
 package susstore.susstore.models;
+
+import susstore.susstore.datastore.Storable;
+
 public class Customer implements Storable {
     private static int jumlahCustomer;
     protected int id;

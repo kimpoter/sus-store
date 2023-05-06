@@ -1,5 +1,7 @@
 package susstore.susstore.models;
 
+import susstore.susstore.datastore.Storable;
+
 import java.awt.image.BufferedImage;
 import java.util.UUID;
 

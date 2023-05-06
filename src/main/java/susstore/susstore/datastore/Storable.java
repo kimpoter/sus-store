@@ -1,4 +1,4 @@
-package susstore.susstore.models;
+package susstore.susstore.datastore;
 
 import java.io.Serializable;
 

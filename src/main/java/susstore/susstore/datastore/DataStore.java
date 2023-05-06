@@ -1,7 +1,5 @@
 package susstore.susstore.datastore;
 
-import susstore.susstore.models.Storable;
-
 import java.util.List;
 
 public class DataStore {
