@@ -33,7 +33,7 @@ public class MainWindow {
         this.rootLayout.setCenter(this.contentLayout);
 
         Scene scene = new Scene(this.rootLayout, 600, 400);
-        scene.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/mainwindow.css");
+        scene.getStylesheets().add("css/mainwindow.css");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.setMinHeight(700);

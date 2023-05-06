@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import susstore.susstore.MainApp;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.AuthorCardComponent;
 import susstore.susstore.view.component.DateTimeComponent;
@@ -39,7 +40,7 @@ public class DashboardPage extends Page {
         this.layout.getStyleClass().add("vbox-layout");
 
         this.rootLayout.getChildren().add(this.layout);
-        this.rootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/dashboardpage.css");
+        this.rootLayout.getStylesheets().add("css/dashboardpage.css");
     }
 
     private void dateTimeNode() {

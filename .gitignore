@@ -11,6 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
+# pom.xml
+dependency-reduced-pom.xml
 
 ### Eclipse ###
 .apt_generated

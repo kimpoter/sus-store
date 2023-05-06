@@ -21,14 +21,14 @@ public class AuthorCardComponent {
 
     private void loadUI() {
         Circle imagePlaceholder = new Circle(0, 0, 50);
-        Image image = new Image("/src/main/java/susstore/susstore/assets/jihu-4.jpg", false);
+        Image image = new Image("images/jihu-4.jpg", false);
         imagePlaceholder.setFill(new ImagePattern(image));
         imagePlaceholder.getStyleClass().add("imagePlaceholder");
 
         Label name = new Label("Name");
 
         this.rootLayout.getChildren().addAll(imagePlaceholder, name);
-        this.rootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/authorcardcomponent.css");
+        this.rootLayout.getStylesheets().add("css/authorcardcomponent.css");
     }
 
     public VBox getRootLayout() {

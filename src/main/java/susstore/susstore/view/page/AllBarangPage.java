@@ -44,7 +44,7 @@ public class AllBarangPage extends Page {
 
         // edit barang
         Rectangle imageContainer = new Rectangle(0, 0, 180, 180);
-        Image image = new Image("/src/main/java/susstore/susstore/assets/barang.jpg", false);
+        Image image = new Image("images/barang.jpg", false);
         imageContainer.setFill(new ImagePattern(image));
         Button chooseImageButton = new Button("Choose Image");
         chooseImageButton.getStyleClass().add("choose-image-button");
@@ -126,6 +126,6 @@ public class AllBarangPage extends Page {
 
     private void setStyleSheet() {
         this.pageRootLayout.getStyleClass().add("page-root-layout");
-        this.pageRootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/all-barang-page.css");
+        this.pageRootLayout.getStylesheets().add("css/all-barang-page.css");
     }
 }

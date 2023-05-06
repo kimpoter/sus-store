@@ -101,6 +101,6 @@ public class AllCustomerPage extends Page {
 
     private void setStylesheet() {
         this.pageRootLayout.getStyleClass().add("page-root-layout");
-        this.pageRootLayout.getStylesheets().add("/src/main/java/susstore/susstore/assets/css/all-customer-page.css");
+        this.pageRootLayout.getStylesheets().add("css/all-customer-page.css");
     }
 }
