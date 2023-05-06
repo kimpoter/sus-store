@@ -35,6 +35,7 @@ public class PageManager {
         pages.put(PageType.EditCustomerPage.name(), (String) -> new EditCustomerPage(this.joinDataTest));
         pages.put(PageType.AllBarang.name(), (String) -> new AllBarangPage(primaryStage));
         pages.put(PageType.Kasir.name(), (String) -> new KasirPage());
+        pages.put(PageType.SettingsPage.name(), (String) -> new SettingsPage(primaryStage));
     }
 
     public void addTab(PageType pageType) {
@@ -53,5 +54,9 @@ public class PageManager {
 
     public TabPane getTabPane() {
         return this.tabPane;
+    }
+
+    public Stage getStage(){
+        return this.primaryStage;
     }
 }

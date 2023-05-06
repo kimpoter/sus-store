@@ -1,6 +1,7 @@
 package susstore.susstore.view;
 
 public enum PageType {
+    SettingsPage("Settings Page"),
     DashBoardPage("Dashboard Page"),
     AllCustomerPage("All Customer Page"),
     RegisterNewMember("Register New Member"),
