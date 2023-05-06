@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import susstore.susstore.view.BarangCardType;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 
@@ -31,8 +32,8 @@ public class AllBarangPage extends Page {
         barangContainer.getStyleClass().add("barang-container");
         for (int col = 0; col < 10; col++) {
             for (int row = 0; row < 4; row++) {
-                BarangCardComponent barangCard = new BarangCardComponent();
-                barangContainer.add(barangCard.getComponent(), row, col, 1, 1);
+//                BarangCardComponent barangCard = new BarangCardComponent(BarangCardType.Gudang, this.bi);
+//                barangContainer.add(barangCard.getComponent(), row, col, 1, 1);
             }
         }
 

@@ -1,23 +1,35 @@
 package susstore.susstore.view.page;
 
-import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import susstore.susstore.models.Barang;
+import susstore.susstore.models.Bill;
+import susstore.susstore.models.TemporaryBill;
+import susstore.susstore.view.BarangCardType;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 import susstore.susstore.view.component.BillCardComponent;
 
+import java.util.HashMap;
+
 public class KasirPage extends Page {
     private final SplitPane pageRootLayout;
+    private final ObservableList<Node> bills;
+    private String selectedUser;
+    private TemporaryBill temporaryBill;
 
-    public KasirPage() {
+    public KasirPage(ObservableList<Node> bills) {
         super(PageType.Kasir);
         this.pageRootLayout = new SplitPane();
+        this.bills = bills;
         loadUI();
         setStyleSheet();
         this.tab.setContent(this.pageRootLayout);
@@ -29,7 +41,7 @@ public class KasirPage extends Page {
         barangContainer.getStyleClass().add("barang-container");
         for (int col = 0; col < 10; col++) {
             for (int row = 0; row < 4; row++) {
-                BarangCardComponent barangCard = new BarangCardComponent();
+                BarangCardComponent barangCard = new BarangCardComponent(BarangCardType.Kasir, this.bills);
                 barangContainer.add(barangCard.getComponent(), row, col, 1, 1);
             }
         }
@@ -37,9 +49,10 @@ public class KasirPage extends Page {
         barangContainerScroll.setContent(barangContainer);
         barangContainerScroll.setFitToWidth(true);
 
-        ChoiceBox categoryChoices = new ChoiceBox();
+        ChoiceBox<String> categoryChoices = new ChoiceBox<>();
         categoryChoices.getItems().add("Alat Tulis");
         categoryChoices.getItems().add("Perabotan");
+
 
         TextField searchInput = new TextField();
         Button searchButton = new Button("\uf002;");
@@ -60,7 +73,7 @@ public class KasirPage extends Page {
         barangAndFiltersContainer.setCenter(barangContainerScroll);
 
         // right container
-        ComboBox customerInput = new ComboBox();
+        ComboBox<String> customerInput = new ComboBox<>();
         customerInput.setEditable(true);
         customerInput.setPromptText("Choose Customer");
         customerInput.getStyleClass().add("customer-input-kasir");
@@ -68,12 +81,45 @@ public class KasirPage extends Page {
         for (int i = 0; i < 50; i++) {
             customerInput.getItems().add(Integer.toString(i));
         }
+        Button okButton = new Button("OK");
+        HBox customerAndOkContainer = new HBox();
+        customerAndOkContainer.setSpacing(10);
+        customerAndOkContainer.setAlignment(Pos.CENTER);
+        customerAndOkContainer.getChildren().addAll(customerInput, okButton);
+
+        okButton.setOnAction(e -> {
+            this.selectedUser = customerInput.getSelectionModel().getSelectedItem();
+        });
+
+        TextField pointInput = new TextField();
+        pointInput.setPromptText("Point");
+        pointInput.getStyleClass().add("input-kasir");
+
+        BorderPane customerAndPointContainer = new BorderPane();
+        Insets customerAndPointContainerSpacing = new Insets(0, 20, 0, 20);
+        BorderPane.setMargin(customerAndOkContainer, customerAndPointContainerSpacing);
+        BorderPane.setMargin(pointInput, customerAndPointContainerSpacing);
+        BorderPane.setAlignment(customerAndOkContainer, Pos.CENTER);
+        BorderPane.setAlignment(pointInput, Pos.CENTER);
+        customerAndPointContainer.setLeft(customerAndOkContainer);
+        customerAndPointContainer.setRight(pointInput);
 
         Label billLabel = new Label("Current Bill:");
         billLabel.getStyleClass().addAll("label-kasir", "bill-label-kasir");
         VBox billElementsContainer = new VBox();
+        this.bills.addListener((ListChangeListener<? super Node>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    for (Node item : c.getAddedSubList()) {
+                        billElementsContainer.getChildren().add(item);
+                    }
+                }
+            }
+        });
+        billElementsContainer.getChildren().addAll(this.bills);
         for (int i = 0; i < 100; i++) {
-            billElementsContainer.getChildren().add(new BillCardComponent().getComponent());
+
+//            billElementsContainer.getChildren().add(new BillCardComponent().getComponent());
         }
         billElementsContainer.getStyleClass().add("bill-elements-container-kasir");
 
@@ -103,7 +149,7 @@ public class KasirPage extends Page {
 
         BorderPane allActionContainer = new BorderPane();
         BorderPane.setAlignment(customerInput, Pos.CENTER);
-        allActionContainer.setTop(customerInput);
+        allActionContainer.setTop(customerAndPointContainer);
         allActionContainer.setCenter(billContainer);
         allActionContainer.setBottom(actionButtonsContainer);
         allActionContainer.getStyleClass().add("all-action-container-kasir");

@@ -9,8 +9,6 @@
     -fx-padding: 10px;
     -fx-pref-width: 200px;
     -fx-max-width: 200px;
-    -fx-pref-height: 250px;
-    -fx-max-height: 250px;
     -fx-background-color: "#37446B";
     -fx-background-radius: 10px;
     -fx-alignment: center;
@@ -63,4 +61,21 @@
     -fx-font-family: "Font Awesome 6 Free Solid";
     -fx-font-size: 16px;
     -fx-text-fill: "#D41976";
+}
+
+.add-tochart-action-container-barang-card {
+    -fx-background-color: "#2C3656";
+    -fx-padding: 10px;
+}
+
+.minus-button-barang-card {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#D41976";
+}
+
+.plus-button-barang-card {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#0EA5E9";
 }

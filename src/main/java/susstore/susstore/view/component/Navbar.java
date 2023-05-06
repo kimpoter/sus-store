@@ -41,6 +41,7 @@ public class Navbar {
         this.menuItems.get(MenuType.Customer.name()).add(PageType.AllCustomerPage.getName());
         this.menuItems.get(MenuType.Customer.name()).add(PageType.RegisterNewMember.getName());
         this.menuItems.get(MenuType.Customer.name()).add(PageType.EditCustomerPage.getName());
+        this.menuItems.get(MenuType.Customer.name()).add(PageType.TransactionHistory.getName());
 
         // barang menu items
         this.menuItems.get(MenuType.Barang.name()).add(PageType.AllBarang.getName());
