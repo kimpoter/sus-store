@@ -31,11 +31,12 @@ public class PageManager {
     }
 
     private void initializePages() {
-        this.pages.put(PageType.AllCustomerPage.getName(), (String) -> new AllCustomerPage(this.joinDataTest));
-        this.pages.put(PageType.RegisterNewMember.getName(), (String) -> new RegisterNewMember());
-        this.pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
-        this.pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage));
-        this.pages.put(PageType.Kasir.getName(), (String) -> new KasirPage());
+        pages.put(PageType.AllCustomerPage.name(), (String) -> new AllCustomerPage(this.joinDataTest));
+        pages.put(PageType.RegisterNewMember.name(), (String) -> new RegisterNewMember());
+        pages.put(PageType.EditCustomerPage.name(), (String) -> new EditCustomerPage(this.joinDataTest));
+        pages.put(PageType.AllBarang.name(), (String) -> new AllBarangPage(primaryStage));
+        pages.put(PageType.Kasir.name(), (String) -> new KasirPage());
+        pages.put(PageType.SettingsPage.name(), (String) -> new SettingsPage(primaryStage));
     }
 
     public void addTab(String pageName) {
@@ -59,5 +60,9 @@ public class PageManager {
 
     public TabPane getTabPane() {
         return this.tabPane;
+    }
+
+    public Stage getStage() {
+        return this.primaryStage;
     }
 }

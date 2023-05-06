@@ -1,5 +1,6 @@
 package susstore.susstore.view.component;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import susstore.susstore.view.MenuType;
 import susstore.susstore.view.PageType;
@@ -30,9 +31,11 @@ public class Navbar {
     }
 
     private void initializeMenuItems() {
+
         for (MenuType menu : MenuType.values()) {
             this.menuItems.put(menu.name(), new ArrayList<>());
         }
+        this.menuItems.get(MenuType.Settings.name()).add(PageType.SettingsPage.getName());
 
         // customer menu items
         this.menuItems.get(MenuType.Customer.name()).add(PageType.AllCustomerPage.getName());
