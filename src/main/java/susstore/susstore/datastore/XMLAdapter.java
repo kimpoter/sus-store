@@ -1,18 +1,27 @@
 package susstore.susstore.datastore;
-
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 import java.io.File;
 
+// Added dependency: (taruh di pom.xml)
+//<dependency>
+//<groupId>org.simpleframework</groupId>
+//<artifactId>simple-xml</artifactId>
+//<version>2.7.1</version>
+//</dependency>
 
-class test {
-    public String a;
-    public test(String a) {
-        this.a = a;
-    }
-}
+//class Test {
+//    public Test() {
+//        // required no-argument constructor
+//    }
+//
+//    @Element
+//    public String a;
+//    public Test(String a) {
+//        this.a = a;
+//    }
+//}
 
 public class XMLAdapter<T> extends FileAdapter<T>{
 
@@ -21,22 +30,34 @@ public class XMLAdapter<T> extends FileAdapter<T>{
     }
 
     @Override
-    public void storeObject(T obj) {
+    public void storeObject(T obj) throws Exception  {
+        File outputFile = new File(this.targetFile);
 
+        Serializer serializer = new Persister();
+
+        serializer.write(obj, outputFile);
     }
 
     @Override
-    public T loadObject() throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(this.objClass);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        T data = (T) unmarshaller.unmarshal(new File(this.targetFile));
+    public T loadObject() throws Exception {
+        File inputFile = new File(this.targetFile);
+
+        Serializer serializer = new Persister();
+
+        T data = (T) serializer.read(this.objClass, inputFile);
+
         return data;
     }
 
-    public static void main(String[] args) throws JAXBException {
-        XMLAdapter<test> adapter = new XMLAdapter<>("test.xml", test.class);
-        test x = adapter.loadObject();
-        System.out.println(x.a);
-    }
+//    public static void main(String[] args) {
+//        String filename = "D:\\University\\sus-store\\src\\main\\java\\susstore\\susstore\\datastore\\test.xml";
+//        XMLAdapter<Test> adapter = new XMLAdapter<>(filename, Test.class);
+//        try {
+//            adapter.storeObject(new Test("abcd"));
+//        } catch (Exception e) {
+//            System.out.println("exception");
+//        }
+//
+//    }
     
 }
