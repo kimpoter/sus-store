@@ -1,8 +1,9 @@
-package susstore.susstore;
+package susstore.susstore.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import susstore.susstore.SubscriberManager;
 import susstore.susstore.datastore.Storable;
 
 public class UserController {

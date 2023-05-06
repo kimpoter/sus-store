@@ -1,5 +1,6 @@
-package susstore.susstore;
+package susstore.susstore.controller;
 
+import susstore.susstore.SubscriberManager;
 import susstore.susstore.datastore.Storable;
 
 import java.util.ArrayList;
