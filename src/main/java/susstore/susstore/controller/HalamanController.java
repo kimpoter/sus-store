@@ -1,4 +1,4 @@
-package susstore.susstore;
+package susstore.susstore.controller;
 
 import susstore.susstore.models.Barang;
 import susstore.susstore.models.Bill;
