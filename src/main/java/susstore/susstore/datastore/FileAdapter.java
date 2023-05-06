@@ -8,4 +8,12 @@ public abstract class FileAdapter<T> implements ObjectStore<T> {
         this.targetFile = targetFile;
         this.objClass = objClass;
     }
+
+    public String getTargetFile() {
+        return targetFile;
+    }
+
+    public void setTargetFile(String targetFile) {
+        this.targetFile = targetFile;
+    }
 }
