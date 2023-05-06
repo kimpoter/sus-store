@@ -1,10 +1,8 @@
 package susstore.susstore;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import susstore.susstore.view.MainWindow;
 
 
 public class MainApp extends Application {
@@ -14,9 +12,6 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        VBox vBox = new VBox(new Label("A JavaFX Label"));
-        Scene scene = new Scene(vBox);
-        stage.setScene(scene);
-        stage.show();
+        new MainWindow(stage);
     }
 }
