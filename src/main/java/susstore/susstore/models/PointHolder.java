@@ -1,4 +1,4 @@
-package susstore.susstore;
+package susstore.susstore.models;
 
 public interface PointHolder {
     public static final String POINT_CURRENCY = "IDR";

@@ -1,4 +1,4 @@
-package susstore.susstore;
+package susstore.susstore.models;
 public class Customer implements Storable {
     private static int jumlahCustomer;
     protected int id;

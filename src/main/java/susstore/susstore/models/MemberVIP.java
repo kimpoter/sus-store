@@ -1,4 +1,4 @@
-package susstore.susstore;
+package susstore.susstore.models;
 
 public class MemberVIP extends Member {
     private static final double VIP_DISCOUNT = 0.10;

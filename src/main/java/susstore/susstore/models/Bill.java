@@ -1,4 +1,4 @@
-package susstore.susstore;
+package susstore.susstore.models;
 
 
 public abstract class Bill implements Storable {
