@@ -1,6 +1,6 @@
 package susstore.susstore;
 
-import susstore.susstore.models.Storable;
+import susstore.susstore.datastore.Storable;
 
 import java.util.ArrayList;
 import java.util.List;
