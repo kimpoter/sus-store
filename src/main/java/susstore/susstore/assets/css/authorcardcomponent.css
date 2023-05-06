@@ -1,0 +1,14 @@
+VBox {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.imagePlaceholder {
+    -fx-stroke: "#2C3656";
+    -fx-stroke-width: 10px;
+}
+
+.label {
+    -fx-text-fill: "#D2D6E3";
+    -fx-alignment: center;
+}

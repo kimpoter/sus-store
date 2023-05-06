@@ -1,0 +1,19 @@
+.page-root-layout{
+    -fx-background-color: transparent;
+}
+
+.barang-container {
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
