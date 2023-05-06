@@ -3,14 +3,14 @@ package susstore.susstore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarangController {
+public class FixedBillController {
     private int dataStore;
     private SubscriberManager subscribers;
 
     // TEMPORARY LIST TO STORE
-    private List<Storable> barangs;
+    private List<Storable> fixedBills;
 
-    public BarangController(){
-        this.barangs = new ArrayList<Storable>();
+    public FixedBillController(){
+        this.fixedBills = new ArrayList<Storable>();
     }
 }
