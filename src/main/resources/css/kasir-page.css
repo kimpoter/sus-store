@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "Font Awesome 6 Free Solid";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/fa-solid.otf");
+}
+
 .page-root-layout{
     -fx-background-color: transparent;
 }
@@ -16,4 +23,133 @@
 .scroll-pane {
     -fx-background: transparent;
     -fx-background-color: transparent;
+}
+
+.filter-search-container-kasir {
+    -fx-padding: 20px 20px 10px 20px;
+}
+
+.choice-box {
+    -fx-background-color: "#3B4873";
+    -fx-pref-width: 145px;
+    -fx-mark-color: "#D2D6E3";
+}
+
+.choice-box > .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.choice-box .context-menu {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 5px;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 10px;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.input-kasir {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 6px;
+    -fx-text-fill: "#D2D6E3";
+}
+
+.input-kasir:focus {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.input-kasir:selected {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.search-container-kasir {
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+}
+
+.search-button-kasir {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#D2D6E3";
+    -fx-background-color: transparent;
+}
+
+.bill-elements-container-kasir {
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-spacing: 5px;
+}
+
+.bill-container-kasir {
+    -fx-spacing: 10px;
+}
+
+.label-kasir {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.total-container-kasir {
+    -fx-padding: 0 20px;
+}
+
+.bill-label-kasir {
+    -fx-padding: 0 20px;
+}
+
+.action-button-kasir {
+    -fx-background-radius: 10px;
+    -fx-padding: 4px 6px;
+    -fx-pref-width: 100px;
+}
+
+.cancel-button-kasir {
+    -fx-background-color: "#37446B";
+    -fx-text-fill: "#D2D6E3";
+}
+
+.checkout-button-kasir {
+    -fx-background-color: "#84CC16";
+    -fx-text-fill: "#1E1E1E";
+}
+
+.action-buttons-container-kasir {
+    -fx-padding: 10px;
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+}
+
+.bill-label-kasir {
+    -fx-padding: 20px 20px 0 20px;
+    -fx-font-size: 18px;
+}
+
+.customer-input-kasir {
+    -fx-background-color: "#3B4873";
+}
+
+.customer-input-kasir .text-input {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 6px;
+    -fx-text-fill: "#D2D6E3";
+}
+
+.customer-input-kasir .arrow-button {
+    -fx-background-color: "#3B4873";
+}
+
+.customer-input-kasir .arrow-button .arrow {
+    -fx-mark-color: "#D2D6E3";
+}
+
+.all-action-container-kasir {
+    -fx-padding: 20px 0 0 0;
 }

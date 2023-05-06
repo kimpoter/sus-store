@@ -1,0 +1,6 @@
+.component-root-layout {
+    -fx-alignment: center;
+    -fx-padding: 10px;
+    -fx-background-color: "#37446B";
+    -fx-background-radius: 10px;
+}

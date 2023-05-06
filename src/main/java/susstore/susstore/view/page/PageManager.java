@@ -7,6 +7,7 @@ import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.JoinDataTest;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class PageManager {
@@ -30,25 +31,30 @@ public class PageManager {
     }
 
     private void initializePages() {
-        pages.put(PageType.AllCustomerPage.name(), (String) -> new AllCustomerPage(this.joinDataTest));
-        pages.put(PageType.RegisterNewMember.name(), (String) -> new RegisterNewMember());
-        pages.put(PageType.EditCustomerPage.name(), (String) -> new EditCustomerPage(this.joinDataTest));
-        pages.put(PageType.AllBarang.name(), (String) -> new AllBarangPage(primaryStage));
-        pages.put(PageType.Kasir.name(), (String) -> new KasirPage());
+        this.pages.put(PageType.AllCustomerPage.getName(), (String) -> new AllCustomerPage(this.joinDataTest));
+        this.pages.put(PageType.RegisterNewMember.getName(), (String) -> new RegisterNewMember());
+        this.pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
+        this.pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage));
+        this.pages.put(PageType.Kasir.getName(), (String) -> new KasirPage());
     }
 
-    public void addTab(PageType pageType) {
-        if (tabs.containsKey(pageType.name())) {
-            this.tabPane.getSelectionModel().select(tabs.get(pageType.name()));
+    public void addTab(String pageName) {
+        if (tabs.containsKey(pageName)) {
+            this.tabPane.getSelectionModel().select(tabs.get(pageName));
         } else {
-            Tab newTab = this.pages.get(pageType.name()).apply(pageType.name()).getPage();
+            Tab newTab = this.pages.get(pageName).apply(pageName).getPage();
             newTab.setOnCloseRequest(e -> {
-                this.tabs.remove(pageType.name());
+                this.tabs.remove(pageName);
             });
-            this.tabs.put(pageType.name(), newTab);
+            this.tabs.put(pageName, newTab);
             this.tabPane.getTabs().add(newTab);
             this.tabPane.getSelectionModel().selectLast();
         }
+    }
+
+    public void addTab(String pageName, Function<String, Page> externalPage) {
+        this.pages.put(pageName, externalPage);
+        this.addTab(pageName);
     }
 
     public TabPane getTabPane() {
