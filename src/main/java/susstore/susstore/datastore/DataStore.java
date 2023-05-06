@@ -14,16 +14,18 @@ public class DataStore<T> {
     private ObjectStore<T[]> store;
     private List<T> data;
 
-    public DataStore(String targetFile, Class<T> objClass, TYPE type) throws Exception {
+    public DataStore(String targetFile, Class<T> objClass, TYPE type) {
+        T[] dummyObj = (T[]) Array.newInstance(objClass, 0);
+        Class<T[]> objArrayClass = (Class<T[]>) dummyObj.getClass();
         switch (type) {
             case JSON:
-                this.store = new JSONAdapter<T[]>(targetFile, objClass);
+                this.store = new JSONAdapter<T[]>(targetFile, objArrayClass);
                 break;
             case XML:
-                this.store = new XMLAdapter<T[]>(targetFile, objClass);
+                this.store = new XMLAdapter<T[]>(targetFile, objArrayClass);
                 break;
             case OBJ:
-                this.store = new OBJAdapter<T[]>(targetFile, objClass);
+                this.store = new OBJAdapter<T[]>(targetFile, objArrayClass);
                 break;
         }
         try {
@@ -31,7 +33,6 @@ public class DataStore<T> {
         }
         catch(Exception e) {
             this.data = new ArrayList<T>();
-            throw e;
         }
     }
     public void storeData() throws Exception {
