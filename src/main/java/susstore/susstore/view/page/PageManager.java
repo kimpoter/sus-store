@@ -9,9 +9,8 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 public class PageManager {
-    private static int tabCount = 0;
     private final HashMap<String, Function<String, Page>> pages;
-    private final HashMap<String, Integer> tabs;
+    private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
 
@@ -39,10 +38,13 @@ public class PageManager {
         if (tabs.containsKey(pageType.name())) {
             this.tabPane.getSelectionModel().select(tabs.get(pageType.name()));
         } else {
-            this.tabs.put(pageType.name(), tabCount);
-            this.tabPane.getTabs().add(this.pages.get(pageType.name()).apply(pageType.name()).getPage());
+            Tab newTab = this.pages.get(pageType.name()).apply(pageType.name()).getPage();
+            newTab.setOnCloseRequest(e -> {
+                this.tabs.remove(pageType.name());
+            });
+            this.tabs.put(pageType.name(), newTab);
+            this.tabPane.getTabs().add(newTab);
             this.tabPane.getSelectionModel().selectLast();
-            tabCount++;
         }
     }
 

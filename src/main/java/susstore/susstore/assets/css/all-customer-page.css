@@ -1,7 +1,11 @@
-.page-root-layout {
+.page-root-layout{
+    -fx-background-color: transparent;
+}
+
+.customers-container-all-customer {
     -fx-alignment: top-center;
     -fx-spacing: 20px;
-    -fx-padding: 50px 0;
+    -fx-padding: 15px;
 }
 
 .scroll-pane .viewport {

@@ -1,6 +1,7 @@
 .page-root-layout{
     -fx-background-color: transparent;
 }
+
 .barang-container {
     -fx-hgap: 10px;
     -fx-vgap: 10px;
@@ -103,4 +104,8 @@
     -fx-padding: 10px;
     -fx-spacing: 20px;
     -fx-alignment: center;
+}
+
+.image-input-container-all-barang {
+    -fx-spacing: 20px;
 }

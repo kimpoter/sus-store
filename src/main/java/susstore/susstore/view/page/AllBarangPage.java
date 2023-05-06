@@ -101,6 +101,10 @@ public class AllBarangPage extends Page {
         inputContainer.getChildren().addAll(namaBarangContainer, stockCategoryContainer, hargaBarangContainer, hargaBeliBarangContainer);
         inputContainer.getStyleClass().addAll("input-container-all-barang");
 
+        VBox imageAndInputContainer = new VBox();
+        imageAndInputContainer.getStyleClass().add("image-input-container-all-barang");
+        imageAndInputContainer.getChildren().addAll(imageAndChooseButtonContainer, inputContainer);
+
         Button cancelButton = new Button("Cancel");
         Button saveButton = new Button("Save");
         HBox actionButtonsContainer = new HBox();
@@ -109,9 +113,12 @@ public class AllBarangPage extends Page {
         actionButtonsContainer.getStyleClass().add("action-buttons-container-all-barang");
         actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);
 
-        VBox formAndActionsContainer = new VBox();
+        BorderPane formAndActionsContainer = new BorderPane();
         formAndActionsContainer.getStyleClass().add("form-actions-container");
-        formAndActionsContainer.getChildren().addAll(imageAndChooseButtonContainer, inputContainer, actionButtonsContainer);
+        formAndActionsContainer.setCenter(imageAndInputContainer);
+        formAndActionsContainer.setBottom(actionButtonsContainer);
+//        formAndActionsContainer.setCenter();
+//        formAndActionsContainer.getChildren().addAll(imageAndChooseButtonContainer, inputContainer, actionButtonsContainer);
 
         this.pageRootLayout.setDividerPositions(0.65, 0.35);
         this.pageRootLayout.getItems().addAll(barangContainerScroll, formAndActionsContainer);
