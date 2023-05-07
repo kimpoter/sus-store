@@ -18,6 +18,7 @@ public class SubscriberManager {
 
     public void notifysubs(String s) {
         for (Subscriber subscriber : subs) {
+            if(subscriber!=null)
             subscriber.update(s);
         }
     }

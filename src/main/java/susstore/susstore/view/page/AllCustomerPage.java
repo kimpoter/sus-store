@@ -28,18 +28,16 @@ public class AllCustomerPage extends Page implements Subscriber{
 
     public void update(String s){
         VBox customersContainer = new VBox();
-        customerController.addCustomer(new Customer());
         for(Customer c : customerController.getCustomers()){
-            CustomerCardComponent card = new CustomerCardComponent();
+            CustomerCardComponent card = new CustomerCardComponent(c);
             customersContainer.getChildren().add(card.getComponent());
         }
     }
 
     private void loadUI() {
         VBox customersContainer = new VBox();
-        customerController.addCustomer(new Customer());
         for(Customer c : customerController.getCustomers()){
-            CustomerCardComponent card = new CustomerCardComponent();
+            CustomerCardComponent card = new CustomerCardComponent(c);
             customersContainer.getChildren().add(card.getComponent());
         }
         

@@ -55,7 +55,6 @@ public class AllMemberPage extends Page implements Subscriber{
         }
         else{
         VBox customersContainer = new VBox();
-        customerController.addCustomer(new Customer());
         for(Member m : customerController.getMembers()){
             MemberCardComponent card = new MemberCardComponent(m,updateMemberController);
             customersContainer.getChildren().add(card.getComponent());

@@ -53,6 +53,7 @@ public class UserController {
 
     public void addMember(Member c){
         this.members.add(c);
+        this.addCustomer(c);
         this.subscribers.notifysubs("add-member");
     }
 
