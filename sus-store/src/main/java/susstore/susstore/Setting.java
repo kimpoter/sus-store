@@ -13,10 +13,12 @@ public class Setting {
     private static Setting instance;
     private String path;
 
-    private final Configuration configuration;
+    private String extension;
+
+    private ArrayList<String> plugins;
 
     private Setting() {
-        this.configuration = new Configuration("", new ArrayList<String>());
+        this.plugins = new ArrayList<String>();
     }
 
     public static Setting getInstance() {
@@ -36,31 +38,33 @@ public class Setting {
     }
 
     public void setExtension(String extension) {
-        this.configuration.extension = extension;
+        this.extension = extension;
     }
 
     public String getExtension()
     {
-        return this.configuration.extension;
+        return this.extension;
     }
 
     public void addPlugins(String plugin) {
-        this.configuration.plugins.add(plugin);
+        this.plugins.add(plugin);
     }
 
     public String getPlugin(int index)
     {
-        return this.configuration.plugins.get(index);
+        return this.plugins.get(index);
     }
 
     public void load() {
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-            Configuration configuration = gson.fromJson(new FileReader(this.path), Configuration.class);
+//            Configuration configuration = gson.fromJson(new FileReader(this.path), Configuration.class);
 
-            this.configuration.extension = configuration.extension;
-            this.configuration.plugins = configuration.plugins;
+            Setting setting = gson.fromJson(new FileReader(this.path), Setting.class);
+
+            this.extension = setting.extension;
+            this.plugins = setting.plugins;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,16 +72,11 @@ public class Setting {
 
     public void save() {
         try {
-            Configuration configuration = new Configuration(
-                    this.configuration.extension,
-                    this.configuration.plugins
-            );
-
             Gson gson = new Gson();
 
             Writer writer = Files.newBufferedWriter(Paths.get(this.path));
 
-            gson.toJson(configuration, writer);
+            gson.toJson(this, writer);
 
             writer.flush();
 
@@ -87,35 +86,24 @@ public class Setting {
         }
     }
 
-//    public static void main(String[] args)
-//    {
-//        Setting setting = new Setting();
-//        setting.setPath("sus-store/src/main/resources/settings.json");
-//        setting.setExtension("json");
-//        setting.addPlugins("test.jar");
-//        setting.addPlugins("tes2.jar");
-//
-//        setting.save();
-//
-//        Setting haha = new Setting();
-//
-//        haha.setPath("sus-store/src/main/resources/settings.json");
-//        haha.load();
-//
-//        System.out.println(haha.getPath());
-//        System.out.println(haha.getExtension());
-//        System.out.println(haha.getPlugin(0));
-//        System.out.println(haha.getPlugin(1));
-//    }
+    public static void main(String[] args)
+    {
+        Setting setting = new Setting();
+        setting.setPath("sus-store/src/main/resources/settings.json");
+        setting.setExtension("json");
+        setting.addPlugins("test.jar");
+        setting.addPlugins("tes2.jar");
 
-    class Configuration {
-        private String extension;
+        setting.save();
 
-        private ArrayList<String> plugins;
+        Setting haha = new Setting();
 
-        public Configuration(String extension, ArrayList<String> plugins) {
-            this.extension = extension;
-            this.plugins = plugins;
-        }
+        haha.setPath("sus-store/src/main/resources/settings.json");
+        haha.load();
+
+        System.out.println(haha.getPath());
+        System.out.println(haha.getExtension());
+        System.out.println(haha.getPlugin(0));
+        System.out.println(haha.getPlugin(1));
     }
 }

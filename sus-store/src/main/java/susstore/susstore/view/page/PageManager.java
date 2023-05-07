@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Function;
 
+import susstore.susstore.Setting;
 import susstore.susstore.controller.BarangController;
 import susstore.susstore.controller.UserController;
 
@@ -22,11 +23,13 @@ public class PageManager {
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
+    private static Setting setting = Setting.getInstance();
     private final TemporaryBillController temporaryBillController;
     private UserController customerController;
     private BarangController barangController;
 
     public PageManager(Stage primaryStage) {
+        setting.setPath("sus-store/sus-store/src/main/resources/setting.json");
         this.pages = new HashMap<>();
         this.tabs = new HashMap<>();
         this.tabPane = new TabPane();
@@ -35,6 +38,7 @@ public class PageManager {
         this.barangController = new BarangController();
         this.customerController = new UserController();
         this.temporaryBillController = new TemporaryBillController();
+        
         loadUI();
     }
 

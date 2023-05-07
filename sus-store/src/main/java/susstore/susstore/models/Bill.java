@@ -2,24 +2,25 @@ package susstore.susstore.models;
 
 import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.api.*;
-import susstore.susstore.report.Printable;
 
 import java.util.UUID;
 
-public abstract class Bill implements Transaction, Printable
+public abstract class Bill implements Transaction, Storable
 {
-    protected Integer biilID;
+    protected UUID biilID;
 
     protected UUID userID;
 
-    public Bill(Integer billID, UUID userID)
+    public Bill(UUID userID)
     {
-        this.biilID = billID;
+        this.biilID = UUID.randomUUID();
         this.userID = userID;
     }
 
+    protected Bill() {}
+
     @Override
-    public Integer getID()
+    public UUID getID()
     {
         return this.biilID;
     }
@@ -29,15 +30,5 @@ public abstract class Bill implements Transaction, Printable
         return this.userID;
     }
 
-    public abstract Double getBillTotal();
-
-    public String getStorableId()
-    {
-        return this.biilID.toString();
-    }
-
-    @Override
-    public String toText() {
-        return "test";
-    }
+    public abstract double getBillTotal();
 }

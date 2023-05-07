@@ -52,6 +52,8 @@ public class Member extends Customer implements UseCurrency, UsePoin
         this.userPoin   = other.userPoin;
     }
 
+    protected Member() {}
+
     public String getNama()
     {
         return this.nama;
