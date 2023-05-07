@@ -8,7 +8,7 @@ public class CurrencyIDR implements Currency, Poin
 
     private CurrencyIDR()
     {
-        IDR = new CurrencyIDR();
+        //IDR = new CurrencyIDR();
     }
 
     public static Currency getInstance()
