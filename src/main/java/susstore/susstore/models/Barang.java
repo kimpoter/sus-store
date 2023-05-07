@@ -10,11 +10,11 @@ public class Barang implements Storable {
     protected String namaBarang;
     protected int stok;
     protected String kategori;
-    protected BufferedImage gambar;
+    protected String gambar;
     protected Nominal hargaBarang;
     protected Nominal hargaBeliBarang;
 
-    public Barang(String namaBarang, int stok, String kategori, BufferedImage gambar, Nominal hargaBarang, Nominal hargaBeliBarang) {
+    public Barang(String namaBarang, int stok, String kategori, String gambar, Nominal hargaBarang, Nominal hargaBeliBarang) {
         this.id                 = UUID.randomUUID();
         this.namaBarang         = namaBarang;
         this.stok               = stok;
@@ -41,7 +41,7 @@ public class Barang implements Storable {
         return kategori;
     }
 
-    public BufferedImage getGambar() {
+    public String getGambar() {
         return gambar;
     }
 
@@ -65,7 +65,7 @@ public class Barang implements Storable {
         this.kategori = kategori;
     }
 
-    public void setGambar(BufferedImage gambar) {
+    public void setGambar(String gambar) {
         this.gambar = gambar;
     }
 

@@ -11,12 +11,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import susstore.susstore.models.Barang;
 
 public class BarangCardComponent {
     private final BorderPane componentRootLayout;
+    private Barang barang;
 
-    public BarangCardComponent() {
+    public BarangCardComponent(Barang barang) {
         this.componentRootLayout = new BorderPane();
+        this.barang = barang;
         loadUI();
         setStyleSheet();
     }
@@ -24,9 +27,9 @@ public class BarangCardComponent {
     private void loadUI() {
         Rectangle imageContainer = new Rectangle(0, 0, 180, 180);
         imageContainer.getStyleClass().add("image-container");
-        Image image = new Image("images/barang.jpg", false);
+        Image image = new Image(barang.getGambar(), false);
         imageContainer.setFill(new ImagePattern(image));
-        Label nameLabel = new Label("Nama Barang");
+        Label nameLabel = new Label(barang.getNamaBarang());
 
         VBox imageAndNameContainer = new VBox();
         imageAndNameContainer.getStyleClass().add("image-name-container");
@@ -45,8 +48,8 @@ public class BarangCardComponent {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageAndNameContainer, actionsContainer);
 
-        Label priceLabel = new Label("Rp10000");
-        Label stockLabel = new Label("Sotck: 99");
+        Label priceLabel = new Label(barang.getHargaBarang().getNominal()+"");
+        Label stockLabel = new Label("Stock: " + barang.getStok());
         stockLabel.getStyleClass().add("stock-label");
 
         BorderPane priceAndStockContainer = new BorderPane();

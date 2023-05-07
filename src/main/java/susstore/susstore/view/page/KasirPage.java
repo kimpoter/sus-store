@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 import susstore.susstore.view.component.BillCardComponent;
+import susstore.susstore.models.Barang;
+import susstore.susstore.models.Nominal;
 
 public class KasirPage extends Page {
     private final SplitPane pageRootLayout;
@@ -29,7 +31,7 @@ public class KasirPage extends Page {
         barangContainer.getStyleClass().add("barang-container");
         for (int col = 0; col < 10; col++) {
             for (int row = 0; row < 4; row++) {
-                BarangCardComponent barangCard = new BarangCardComponent();
+                BarangCardComponent barangCard = new BarangCardComponent(new Barang("tes1", 2, "makanan", "images/barang.jpg", new Nominal(), new Nominal()));
                 barangContainer.add(barangCard.getComponent(), row, col, 1, 1);
             }
         }

@@ -16,7 +16,7 @@ public class SubscriberManager {
         subs.remove(subscriber);
     }
 
-    public void notify(String eventType) {
+    public void notifysubs() {
         for (Subscriber subscriber : subs) {
             subscriber.update();
         }

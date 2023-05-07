@@ -9,6 +9,7 @@ import susstore.susstore.view.component.JoinDataTest;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Function;
+import susstore.susstore.controller.BarangController;
 
 public class PageManager {
     protected final JoinDataTest joinDataTest;
@@ -16,6 +17,7 @@ public class PageManager {
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
+    private BarangController barangController;
 
     public PageManager(Stage primaryStage) {
         this.pages = new HashMap<>();
@@ -23,6 +25,7 @@ public class PageManager {
         this.tabPane = new TabPane();
         this.joinDataTest = new JoinDataTest();
         this.primaryStage = primaryStage;
+        this.barangController = new BarangController();
         loadUI();
     }
 
@@ -34,7 +37,7 @@ public class PageManager {
         pages.put(PageType.AllCustomerPage.getName(), (String) -> new AllCustomerPage(this.joinDataTest));
         pages.put(PageType.RegisterNewMember.getName(), (String) -> new RegisterNewMember());
         pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
-        pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage));
+        pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage,this.barangController));
         pages.put(PageType.Kasir.getName(), (String) -> new KasirPage());
         pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
     }
