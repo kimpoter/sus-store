@@ -23,6 +23,7 @@ import susstore.susstore.view.component.BillCardComponent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class KasirPage extends Page implements Subscriber {
     private final SplitPane pageRootLayout;
@@ -56,8 +57,8 @@ public class KasirPage extends Page implements Subscriber {
         this.tab.setContent(this.pageRootLayout);
     }
 
-    @Override
-    public void update() {
+
+    public void update(String s) {
         loadBarang();
     }
 
@@ -67,40 +68,36 @@ public class KasirPage extends Page implements Subscriber {
 
     private void loadTemporaryBill() {
         loadTemporaryBills();
-        System.out.println("BAAAAJJAJAJJA:::" + this.temporaryBills.get(0).getDaftar().size());
-        int userId;
+        UUID userId;
         if (this.customerInput.getValue() == null || Objects.equals(this.customerInput.getValue(), "")) {
-            userId = 999;
+            userId = UUID.randomUUID();
         } else {
-            userId = Integer.parseInt(this.customerInput.getValue());
+            userId = UUID.fromString(this.customerInput.getValue());
         }
         for (TemporaryBill temporaryBill : this.temporaryBills) {
-            System.out.println("TEMPORARY BILL ID: " + temporaryBill.getIdUser());
-            if (temporaryBill.getIdUser() == userId) {
+            if (temporaryBill.getUserID() == userId) {
                 this.temporaryBill = temporaryBill;
                 System.out.println("AFJLJFLJSDLJFLKJFSKJFISHFISHFOISHH");
             }
         }
-        System.out.println("BJJFJDS BAWAH::" + this.temporaryBill.getDaftar().size());
     }
 
 
     private void loadBarang() {
         int index = 0;
-        int userId;
+        UUID userId;
         loadTemporaryBills();
         if (this.customerInput.getValue() == null || Objects.equals(this.customerInput.getValue(), "")) {
-            userId = 999;
+            userId = null;
         } else {
-            userId = Integer.parseInt(this.customerInput.getValue());
+            userId = UUID.fromString(this.customerInput.getValue());
         }
-        if (userId > -1) {
+        if (userId != null) {
             this.billElementsContainer.getChildren().clear();
             System.out.println("USER ID:::::: " + userId);
             this.temporaryBill = null;
             for (TemporaryBill temporaryBill : this.temporaryBills) {
-                System.out.println("TEMPORARY BILL ID: " + temporaryBill.getIdUser());
-                if (temporaryBill.getIdUser() == userId) {
+                if (temporaryBill.getUserID() == userId) {
                     this.temporaryBill = temporaryBill;
                 }
             }
@@ -159,7 +156,7 @@ public class KasirPage extends Page implements Subscriber {
             if (this.temporaryBill == null) {
                 this.totalPriceLabel.setText("");
             } else {
-                this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal().getNominal());
+                this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
             }
         });
         HBox customerAndOkContainer = new HBox();
@@ -189,15 +186,15 @@ public class KasirPage extends Page implements Subscriber {
                         this.billElementsContainer.getChildren().add(bill);
                     }
                     loadTemporaryBill();
-                    System.out.println("TEMPORARYBILLDAFTAR:::" + this.temporaryBill.getDaftar().size());
-                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal().getNominal());
+                    System.out.println("TEMPORARYBILLDAFTAR:::" + this.temporaryBill.getDaftarEntry().size());
+                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
                 }
                 if (c.wasRemoved()) {
                     for (Node bill : c.getRemoved()) {
                         this.billElementsContainer.getChildren().remove(bill);
                     }
                     loadTemporaryBill();
-                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal().getNominal());
+                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
                 }
             }
         });
@@ -205,7 +202,7 @@ public class KasirPage extends Page implements Subscriber {
 
         this.booleanProperty.addListener(((observable, oldValue, newValue) -> {
             loadTemporaryBill();
-            this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal().getNominal());
+            this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
         }));
 
         ScrollPane billScroll = new ScrollPane();

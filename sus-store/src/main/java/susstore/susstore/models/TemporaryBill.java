@@ -23,8 +23,9 @@ public class TemporaryBill extends Bill implements UseCurrency {
         return this.daftarEntry;
     }
 
-    public void addProduct(Product newProduct, Integer jumlah) {
+    public int addProduct(Product newProduct, Integer jumlah) {
         daftarEntry.add(new TemporaryBillEntry(newProduct, jumlah));
+        return daftarEntry.size() - 1;
     }
 
     public void removeBarang(int index) {
@@ -58,25 +59,3 @@ public class TemporaryBill extends Bill implements UseCurrency {
     }
 }
 
-class TemporaryBillEntry {
-    private Product product;
-
-    private Integer jumlah;
-
-    public TemporaryBillEntry(Product product, Integer jumlah) {
-        this.product = product;
-        this.jumlah = jumlah;
-    }
-
-    public Product getProduct() {
-        return this.product;
-    }
-
-    public Integer getJumlah() {
-        return this.jumlah;
-    }
-
-    public void setJumlah(Integer jumlah) {
-        this.jumlah = jumlah;
-    }
-}

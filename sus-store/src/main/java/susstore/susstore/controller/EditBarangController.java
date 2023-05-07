@@ -1,4 +1,6 @@
-package susstore.susstore;
+package susstore.susstore.controller;
+
+import susstore.susstore.Subscriber;
 
 import java.util.concurrent.Flow.Subscription;
 
@@ -7,7 +9,7 @@ public class EditBarangController implements Subscriber {
 
     }
 
-    public void update() {
-        
+    public void update(String s) {
+
     }
 }

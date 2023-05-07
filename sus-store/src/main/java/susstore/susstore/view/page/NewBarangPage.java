@@ -21,9 +21,8 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import susstore.susstore.models.Nominal;
 
-public class NewBarangPage extends Page{
+public class NewBarangPage extends Page {
     private final VBox pageRootLayout;
     private final Stage primaryStage;
     private String imagePath;
@@ -36,7 +35,7 @@ public class NewBarangPage extends Page{
     private ScrollPane barangContainerScroll;
     private Rectangle imageContainer;
 
-    public NewBarangPage(Stage primaryStage,BarangController barangController) {
+    public NewBarangPage(Stage primaryStage, BarangController barangController) {
         super(PageType.NewBarang);
         this.pageRootLayout = new VBox();
         this.primaryStage = primaryStage;
@@ -49,12 +48,12 @@ public class NewBarangPage extends Page{
     private void loadUI() {
         // barang
         GridPane barangContainer = new GridPane();
-        imagePath="images/default.jpg";
+        imagePath = "images/default.jpg";
         barangContainer.getStyleClass().add("barang-container");
-        int index=0;
-        for(Barang b : barangController.getBarangs()){
+        int index = 0;
+        for (Barang b : barangController.getBarangs()) {
             BarangCardComponent barangCard = new BarangCardComponent(b);
-            barangContainer.add(barangCard.getComponent(), index%4, index/4, 1, 1);
+            barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
             index++;
         }
 
@@ -69,18 +68,18 @@ public class NewBarangPage extends Page{
         Image image = new Image(imagePath, false);
         imageContainer.setFill(new ImagePattern(image));
         Button chooseImageButton = new Button("Choose Image");
-        
+
         chooseImageButton.getStyleClass().add("choose-image-button");
         chooseImageButton.setOnAction(
-            e -> {
-                FileChooser fileChooser = new FileChooser();
-                File fileSaved = fileChooser.showOpenDialog(primaryStage); 
-                if(fileSaved!=null){
-                    this.imagePath = fileSaved.getAbsolutePath();
-                    Image imagenew = new Image(imagePath, false);
-                    imageContainer.setFill(new ImagePattern(imagenew));
+                e -> {
+                    FileChooser fileChooser = new FileChooser();
+                    File fileSaved = fileChooser.showOpenDialog(primaryStage);
+                    if (fileSaved != null) {
+                        this.imagePath = fileSaved.getAbsolutePath();
+                        Image imagenew = new Image(imagePath, false);
+                        imageContainer.setFill(new ImagePattern(imagenew));
+                    }
                 }
-            } 
         );
 
         VBox imageAndChooseButtonContainer = new VBox();
@@ -98,8 +97,8 @@ public class NewBarangPage extends Page{
         stockInput = new TextField();
         stockInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, 
-                String newValue) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
                 if (!newValue.matches("\\d*")) {
                     stockInput.setText(newValue.replaceAll("[^\\d]", ""));
                 }
@@ -130,9 +129,9 @@ public class NewBarangPage extends Page{
         hargaBarangInput = new TextField();
         hargaBarangInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, 
-                String newValue) {
-                if (!newValue.matches("\\d*\\.?\\d+") || !newValue.matches("\\d*\\.?") ){
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*\\.?\\d+") || !newValue.matches("\\d*\\.?")) {
                     hargaBarangInput.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             }
@@ -146,8 +145,8 @@ public class NewBarangPage extends Page{
         hargaBeliBarangInput = new TextField();
         hargaBeliBarangInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, 
-                String newValue) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
                 if (!newValue.matches("\\d*\\.?\\d+") || !newValue.matches("\\d*\\.?")) {
                     hargaBeliBarangInput.setText(newValue.replaceAll("[^\\d]", ""));
                 }
@@ -172,13 +171,13 @@ public class NewBarangPage extends Page{
         cancelButton.getStyleClass().addAll("action-button-all-barang", "cancel-button-all-barang");
         saveButton.getStyleClass().addAll("action-button-all-barang", "save-button-all-barang");
         saveButton.setOnAction(
-            e->this.barangController.addBarang(new Barang(namaBarangInput.getText(), 
-            Integer.parseInt(stockInput.getText()), 
-            "makanan", 
-            imagePath, 
-            new Nominal("IDR",Double.parseDouble(hargaBarangInput.getText())), 
-            new Nominal("IDR",Double.parseDouble(hargaBeliBarangInput.getText()))
-            ))
+                e -> this.barangController.addBarang(new Barang(namaBarangInput.getText(),
+                        Integer.parseInt(stockInput.getText()),
+                        "makanan",
+                        imagePath,
+                        Double.parseDouble(hargaBarangInput.getText()),
+                        Double.parseDouble(hargaBeliBarangInput.getText())
+                ))
         );
         actionButtonsContainer.getStyleClass().add("action-buttons-container-all-barang");
         actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);

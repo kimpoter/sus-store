@@ -17,7 +17,7 @@ import susstore.susstore.controller.BarangController;
 
 import java.util.ArrayList;
 import java.util.List;
-import susstore.susstore.models.Nominal;
+
 
 public class AllBarangPage extends Page implements Subscriber {
     private final SplitPane pageRootLayout;
@@ -38,13 +38,13 @@ public class AllBarangPage extends Page implements Subscriber {
         this.tab.setContent(this.pageRootLayout);
     }
 
-    public void update(String s){
+    public void update(String s) {
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
-        int index=0;
-        for(Barang b : barangController.getBarangs()){
+        int index = 0;
+        for (Barang b : barangController.getBarangs()) {
             BarangCardComponent barangCard = new BarangCardComponent(b);
-            barangContainer.add(barangCard.getComponent(), index%4, index/4, 1, 1);
+            barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
             index++;
         }
         barangContainerScroll.setContent(barangContainer);
@@ -53,10 +53,10 @@ public class AllBarangPage extends Page implements Subscriber {
     private void loadUI() {
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
-        int index=0;
-        for(Barang b : barangController.getBarangs()){
+        int index = 0;
+        for (Barang b : barangController.getBarangs()) {
             BarangCardComponent barangCard = new BarangCardComponent(b);
-            barangContainer.add(barangCard.getComponent(), index%4, index/4, 1, 1);
+            barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
             index++;
         }
 
@@ -72,7 +72,7 @@ public class AllBarangPage extends Page implements Subscriber {
         imageContainer.setFill(new ImagePattern(image));
         Button chooseImageButton = new Button("Choose Image");
         chooseImageButton.setOnAction(
-            e->this.barangController.addBarang(new Barang("tes4", 2, "makanan", "images/barang.jpg", new Nominal(), new Nominal()))
+                e -> this.barangController.addBarang(new Barang("tes4", 2, "makanan", "images/barang.jpg", 100.0, 100.0))
         );
         chooseImageButton.getStyleClass().add("choose-image-button");
 

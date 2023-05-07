@@ -15,36 +15,30 @@ public class TemporaryBillController {
     // TEMPORARY LIST TO STORE
     private List<TemporaryBill> temporaryBills;
 
-    public TemporaryBillController()
-    {
+    public TemporaryBillController() {
         this.temporaryBills = new ArrayList<TemporaryBill>();
         this.subscribers = new SubscriberManager();
     }
 
-    public TemporaryBillController(List<TemporaryBill> temporaryBills)
-    {
+    public TemporaryBillController(List<TemporaryBill> temporaryBills) {
         this.temporaryBills = temporaryBills;
         this.subscribers = new SubscriberManager();
     }
 
-    public void setTemporaryBills(List<TemporaryBill> temporaryBills)
-    {
-        this.temporaryBills = temporaryBills;
-    }
-
-    public void addTemporaryBill(TemporaryBill temporaryBill)
-    {
+    public void addTemporaryBill(TemporaryBill temporaryBill) {
         this.temporaryBills.add(temporaryBill);
-        this.subscribers.notifysubs();
+        this.subscribers.notifysubs("");
     }
 
-    public List<TemporaryBill> getTemporaryBills()
-    {
+    public List<TemporaryBill> getTemporaryBills() {
         return this.temporaryBills;
     }
 
-    public void addSubscriber(Subscriber s)
-    {
+    public void setTemporaryBills(List<TemporaryBill> temporaryBills) {
+        this.temporaryBills = temporaryBills;
+    }
+
+    public void addSubscriber(Subscriber s) {
         this.subscribers.subscribe(s);
     }
 }

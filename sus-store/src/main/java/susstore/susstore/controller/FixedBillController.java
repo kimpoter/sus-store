@@ -15,36 +15,30 @@ public class FixedBillController {
     // TEMPORARY LIST TO STORE
     private List<FixedBill> fixedBills;
 
-    public FixedBillController()
-    {
+    public FixedBillController() {
         this.fixedBills = new ArrayList<FixedBill>();
         this.subscribers = new SubscriberManager();
     }
 
-    public FixedBillController(List<FixedBill> fixedBills)
-    {
+    public FixedBillController(List<FixedBill> fixedBills) {
         this.fixedBills = fixedBills;
         this.subscribers = new SubscriberManager();
     }
 
-    public void setFixedBills(List<FixedBill> fixedBills)
-    {
-        this.fixedBills = fixedBills;
-    }
-
-    public void addFixedBill(FixedBill fixedBill)
-    {
+    public void addFixedBill(FixedBill fixedBill) {
         this.fixedBills.add(fixedBill);
-        this.subscribers.notifysubs();
+        this.subscribers.notifysubs("");
     }
 
-    public List<FixedBill> getFixedBills()
-    {
+    public List<FixedBill> getFixedBills() {
         return this.fixedBills;
     }
 
-    public void addSubscriber(Subscriber s)
-    {
+    public void setFixedBills(List<FixedBill> fixedBills) {
+        this.fixedBills = fixedBills;
+    }
+
+    public void addSubscriber(Subscriber s) {
         this.subscribers.subscribe(s);
     }
 }
