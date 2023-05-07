@@ -1,10 +1,10 @@
 package susstore.susstore.models;
 
-import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.api.Currency;
 import susstore.susstore.models.api.Product;
 import susstore.susstore.models.api.UseCurrency;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class FixedBill extends Bill implements UseCurrency {
@@ -41,6 +41,10 @@ public class FixedBill extends Bill implements UseCurrency {
         this.totalHarga += entryHarga * jumlah;
     }
 
+    public ArrayList<BarangSnapshot> getDaftar() {
+        return new ArrayList<>(this.daftarBarang);
+    }
+
     @Override
     public double getBillTotal() {
         return currency.getValue(this.totalHarga);
@@ -50,43 +54,4 @@ public class FixedBill extends Bill implements UseCurrency {
     public void setCurrency(Currency c) {
         currency = c;
     }
-}
-
-class BarangSnapshot implements Storable {
-    private String namaBarang;
-
-    private Currency currency = CurrencyIDR.getInstance();
-
-    private double hargaBarang;
-
-    private int jumlahBarang;
-
-    public BarangSnapshot(
-            String namaBarang,
-            Double hargaBarang,
-            Integer jumlahBarang
-    ) {
-        this.namaBarang = namaBarang;
-        this.hargaBarang = hargaBarang;
-        this.jumlahBarang = jumlahBarang;
-    }
-
-    private BarangSnapshot() {}
-
-    public String getNamaBarang() {
-        return namaBarang;
-    }
-
-    public double getHargaBarang() {
-        return this.hargaBarang;
-    }
-
-    public int getJumlahBarang() {
-        return this.jumlahBarang;
-    }
-
-    public void setCurrency(Currency c) {
-        this.currency = c;
-    }
-
 }
