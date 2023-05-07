@@ -1,9 +1,11 @@
 package susstore.susstore.models;
 
+import susstore.susstore.datastore.Storable;
+
 import java.awt.image.BufferedImage;
 import java.util.UUID;
 
-public class Barang {
+public class Barang implements Storable {
     protected UUID id;
     protected String namaBarang;
     protected int stok;
