@@ -1,5 +1,6 @@
 package susstore.susstore.models;
 
+import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.api.Currency;
 import susstore.susstore.models.api.Product;
 import susstore.susstore.models.api.UseCurrency;
@@ -7,17 +8,15 @@ import susstore.susstore.models.api.UseCurrency;
 import java.util.ArrayList;
 
 public class FixedBill extends Bill implements UseCurrency {
-    private static Integer fixedBillCount;
     private static Currency currency = CurrencyIDR.getInstance();
     private ArrayList<BarangSnapshot> daftarBarang;
-    private Double totalHarga;
+    private double totalHarga;
 
     public FixedBill(TemporaryBill bill) {
-        super(fixedBillCount, bill.getUserID());
-        fixedBillCount++;
+        super(bill.getUserID());
 
         this.totalHarga = 0.0;
-        this.daftarBarang = new ArrayList<BarangSnapshot>();
+        this.daftarBarang = new ArrayList<>();
 
         ArrayList<TemporaryBillEntry> billEntries = bill.getDaftarEntry();
         for (TemporaryBillEntry belanjaan : billEntries) {
@@ -25,11 +24,13 @@ public class FixedBill extends Bill implements UseCurrency {
         }
     }
 
+    private FixedBill() {}
+
     private void addEntry(TemporaryBillEntry entry) {
         Product product = entry.getProduct();
         int jumlah = entry.getJumlah();
 
-        Double entryHarga = product.getHargaJual();
+        double entryHarga = product.getHargaJual();
         BarangSnapshot newEntry = new BarangSnapshot(
                 product.getNama(),
                 entryHarga,
@@ -41,7 +42,7 @@ public class FixedBill extends Bill implements UseCurrency {
     }
 
     @Override
-    public Double getBillTotal() {
+    public double getBillTotal() {
         return currency.getValue(this.totalHarga);
     }
 
@@ -51,14 +52,14 @@ public class FixedBill extends Bill implements UseCurrency {
     }
 }
 
-class BarangSnapshot {
+class BarangSnapshot implements Storable {
     private String namaBarang;
 
     private Currency currency = CurrencyIDR.getInstance();
 
-    private Double hargaBarang;
+    private double hargaBarang;
 
-    private Integer jumlahBarang;
+    private int jumlahBarang;
 
     public BarangSnapshot(
             String namaBarang,
@@ -70,15 +71,17 @@ class BarangSnapshot {
         this.jumlahBarang = jumlahBarang;
     }
 
+    private BarangSnapshot() {}
+
     public String getNamaBarang() {
         return namaBarang;
     }
 
-    public Double getHargaBarang() {
+    public double getHargaBarang() {
         return this.hargaBarang;
     }
 
-    public Integer getJumlahBarang() {
+    public int getJumlahBarang() {
         return this.jumlahBarang;
     }
 
