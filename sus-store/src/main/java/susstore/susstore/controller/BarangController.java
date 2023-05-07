@@ -7,12 +7,11 @@ import susstore.susstore.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BarangController {
-    private int dataStore;
     private SubscriberManager subscribers;
 
-    // TEMPORARY LIST TO STORE
     private List<Barang> barangs;
 
     public BarangController(){
@@ -41,5 +40,23 @@ public class BarangController {
 
     public void addSubscriber(Subscriber s){
         this.subscribers.subscribe(s);
+    }
+
+    public void editBarang(UUID idbarang,String nama, Integer stok, String kategori, String imagepath, Double hargaBarang, Double hargabelibarang){
+        Barang b = getBarangByID(idbarang);
+        b.setNama(nama);
+        b.setHargaBeli(hargabelibarang);
+        b.setHargaJual(hargaBarang);
+        b.setKategori(kategori);
+        b.setPathGambar(imagepath);
+        b.setStok(stok);
+        this.subscribers.notifysubs("add-barang");
+    }
+    
+    public Barang getBarangByID(UUID idbarang){
+        for(Barang b: barangs){
+            if(b.getID()==idbarang)return b;
+        }
+        return null;
     }
 }

@@ -43,8 +43,6 @@ public class PageManager {
 
     public void loadUI() {
         initializePages();
-
-        PluginManager.register("plugin-bar/target/plugin-bar-1.0-SNAPSHOT-jar-with-dependencies.jar");
     }
 
     private void initializePages() {

@@ -10,13 +10,17 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import susstore.susstore.view.PageType;
-import susstore.susstore.view.component.BarangCardComponent;
+import susstore.susstore.view.component.BarangEditCardComponent;
 import susstore.susstore.models.Barang;
 import susstore.susstore.Subscriber;
 import susstore.susstore.controller.BarangController;
+import susstore.susstore.controller.EditBarangController;
+import javafx.stage.FileChooser;
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class AllBarangPage extends Page implements Subscriber {
@@ -26,28 +30,49 @@ public class AllBarangPage extends Page implements Subscriber {
     private ScrollPane barangContainerScroll;
     private BorderPane formAndActionsContainer;
     private TextField namaBarangInput;
+    private EditBarangController editBarangController;
+    private TextField stockInput;
+    private ChoiceBox<String> categoryChoices;
+    private TextField hargaBarangInput;
+    private TextField hargaBeliBarangInput;
+    private Rectangle imageContainer;
+    private String imagePath;
 
     public AllBarangPage(Stage primaryStage, BarangController barangController) {
         super(PageType.AllBarang);
         this.pageRootLayout = new SplitPane();
         this.primaryStage = primaryStage;
         this.barangController = barangController;
+        this.editBarangController = new EditBarangController();
         loadUI();
         setStyleSheet();
         barangController.addSubscriber(this);
+        editBarangController.addSubscriber(this);
         this.tab.setContent(this.pageRootLayout);
     }
 
     public void update(String s) {
+        if(s=="choose-new-barang"){
+            Image image = new Image(editBarangController.getBarang().getPathGambar(), false);
+            imageContainer.setFill(new ImagePattern(image));
+            this.namaBarangInput.setText(editBarangController.getBarang().getNama());
+            this.stockInput.setText(editBarangController.getBarang().getStok()+"");
+            this.categoryChoices.getSelectionModel().select(editBarangController.getBarang().getKategori());
+            this.hargaBarangInput.setText(editBarangController.getBarang().getHargaJual() +"");
+            this.hargaBeliBarangInput.setText(editBarangController.getBarang().getHargaBeli()+"");
+            this.imagePath = editBarangController.getBarang().getPathGambar();
+        }
+        else{
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
         int index = 0;
         for (Barang b : barangController.getBarangs()) {
-            BarangCardComponent barangCard = new BarangCardComponent(b);
+            BarangEditCardComponent barangCard = new BarangEditCardComponent(b,editBarangController);
             barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
             index++;
         }
         barangContainerScroll.setContent(barangContainer);
+        }
     }
 
     private void loadUI() {
@@ -55,7 +80,7 @@ public class AllBarangPage extends Page implements Subscriber {
         barangContainer.getStyleClass().add("barang-container");
         int index = 0;
         for (Barang b : barangController.getBarangs()) {
-            BarangCardComponent barangCard = new BarangCardComponent(b);
+            BarangEditCardComponent barangCard = new BarangEditCardComponent(b,editBarangController);
             barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
             index++;
         }
@@ -67,12 +92,20 @@ public class AllBarangPage extends Page implements Subscriber {
         BorderPane allActionContainer = new BorderPane();
 
         // edit barang
-        Rectangle imageContainer = new Rectangle(0, 0, 180, 180);
+        imageContainer = new Rectangle(0, 0, 180, 180);
         Image image = new Image("images/barang.jpg", false);
         imageContainer.setFill(new ImagePattern(image));
         Button chooseImageButton = new Button("Choose Image");
         chooseImageButton.setOnAction(
-                e -> this.barangController.addBarang(new Barang("tes4", 2, "makanan", "images/barang.jpg", 100.0, 100.0))
+            e->{
+            FileChooser fileChooser = new FileChooser();
+            File fileSaved = fileChooser.showOpenDialog(primaryStage);
+            if (fileSaved != null) {
+                this.imagePath = fileSaved.getAbsolutePath();
+                Image imagenew = new Image(imagePath, false);
+                imageContainer.setFill(new ImagePattern(imagenew));
+            }
+        }
         );
         chooseImageButton.getStyleClass().add("choose-image-button");
 
@@ -88,7 +121,7 @@ public class AllBarangPage extends Page implements Subscriber {
         namaBarangContainer.getChildren().addAll(namaBarangLabel, namaBarangInput);
 
         Label stockLabel = new Label("Stok:");
-        TextField stockInput = new TextField();
+        stockInput = new TextField();
         VBox stockContainer = new VBox();
         stockLabel.getStyleClass().add("input-label-all-barang");
         stockInput.getStyleClass().add("input-all-barang");
@@ -96,7 +129,7 @@ public class AllBarangPage extends Page implements Subscriber {
         stockContainer.getChildren().addAll(stockLabel, stockInput);
 
         Label categoryLabel = new Label("Kategori:");
-        ChoiceBox categoryChoices = new ChoiceBox();
+        categoryChoices = new ChoiceBox();
         categoryChoices.getItems().add("Peralatan Rumah");
         categoryChoices.getItems().add("Alat Tulis");
         VBox categoryContainer = new VBox();
@@ -111,14 +144,14 @@ public class AllBarangPage extends Page implements Subscriber {
         stockCategoryContainer.setRight(categoryContainer);
 
         Label hargaBarangLabel = new Label("Harga Barang:");
-        TextField hargaBarangInput = new TextField();
+        hargaBarangInput = new TextField();
         VBox hargaBarangContainer = new VBox();
         hargaBarangLabel.getStyleClass().add("input-label-all-barang");
         hargaBarangInput.getStyleClass().add("input-all-barang");
         hargaBarangContainer.getChildren().addAll(hargaBarangLabel, hargaBarangInput);
 
         Label hargaBeliBarangLabel = new Label("Harga Beli Barang:");
-        TextField hargaBeliBarangInput = new TextField();
+        hargaBeliBarangInput = new TextField();
         VBox hargaBeliBarangContainer = new VBox();
         hargaBeliBarangLabel.getStyleClass().add("input-label-all-barang");
         hargaBeliBarangInput.getStyleClass().add("input-all-barang");
@@ -134,6 +167,20 @@ public class AllBarangPage extends Page implements Subscriber {
 
         Button cancelButton = new Button("Cancel");
         Button saveButton = new Button("Save");
+        saveButton.setOnAction(
+                e -> {
+                    if(editBarangController.getBarang()!=null)
+                    this.barangController.editBarang(editBarangController.getBarang().getID(),
+                        namaBarangInput.getText(),
+                        Integer.parseInt(stockInput.getText()),
+                        "makanan",
+                        imagePath,
+                        Double.parseDouble(hargaBarangInput.getText()),
+                        Double.parseDouble(hargaBeliBarangInput.getText())
+                );
+
+                }
+        );
         HBox actionButtonsContainer = new HBox();
         cancelButton.getStyleClass().addAll("action-button-all-barang", "cancel-button-all-barang");
         saveButton.getStyleClass().addAll("action-button-all-barang", "save-button-all-barang");
