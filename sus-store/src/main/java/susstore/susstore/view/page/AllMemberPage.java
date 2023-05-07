@@ -14,7 +14,7 @@ import susstore.susstore.models.Customer;
 import susstore.susstore.models.Member;
 import susstore.susstore.Subscriber;
 
-public class AllMemberPage extends Page implements Subscriber{
+public class AllMemberPage extends Page implements Subscriber {
     private final SplitPane pageRootLayout;
     private UserController customerController;
     private UpdateMemberController updateMemberController;
@@ -28,7 +28,7 @@ public class AllMemberPage extends Page implements Subscriber{
         super(PageType.AllMemberPage);
         this.pageRootLayout = new SplitPane();
         this.customerController = customerController;
-        
+
         this.tab.setContent(this.pageRootLayout);
         this.customerController.addSubscriber(this);
         this.updateMemberController = new UpdateMemberController();
@@ -38,40 +38,38 @@ public class AllMemberPage extends Page implements Subscriber{
         setStylesheet();
     }
 
-    public void update(String s){
-        if(s=="set-choosen-member"){
-            if(updateMemberController.getChoosenMember()==null){
+    public void update(String s) {
+        if (s == "set-choosen-member") {
+            if (updateMemberController.getChoosenMember() == null) {
                 this.nameInput.setText("");
                 this.phoneNumberInput.setText("");
                 this.membershipChoices.getSelectionModel().select(0);
                 this.statusChoices.getSelectionModel().select(0);
-            }
-            else{
+            } else {
                 this.nameInput.setText(updateMemberController.getChoosenMember().getNama());
                 this.phoneNumberInput.setText(updateMemberController.getChoosenMember().getNoTelp());
-                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getMembership().name());
-                this.statusChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getStatus()?0:1);
+                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getNama());
+                this.statusChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getStatus() ? 0 : 1);
             }
-        }
-        else{
-        VBox customersContainer = new VBox();
-        for(Member m : customerController.getMembers()){
-            MemberCardComponent card = new MemberCardComponent(m,updateMemberController);
-            customersContainer.getChildren().add(card.getComponent());
-        }
-        customersContainerScroll.setContent(customersContainer);
-        customersContainer.getStyleClass().add("customers-container-all-customer");
+        } else {
+            VBox customersContainer = new VBox();
+            for (Member m : customerController.getMembers()) {
+                MemberCardComponent card = new MemberCardComponent(m, updateMemberController);
+                customersContainer.getChildren().add(card.getComponent());
+            }
+            customersContainerScroll.setContent(customersContainer);
+            customersContainer.getStyleClass().add("customers-container-all-customer");
         }
     }
 
     private void loadUI() {
         VBox customersContainer = new VBox();
-        customerController.addMember(new Member(new Customer(),"test","08124"));
-        for(Member m : customerController.getMembers()){
-            MemberCardComponent card = new MemberCardComponent(m,updateMemberController);
+        customerController.addMember(new Member(new Customer(), "test", "08124"));
+        for (Member m : customerController.getMembers()) {
+            MemberCardComponent card = new MemberCardComponent(m, updateMemberController);
             customersContainer.getChildren().add(card.getComponent());
         }
-        
+
         customersContainer.getStyleClass().add("customers-container-all-customer");
 
         customersContainerScroll.setContent(customersContainer);
@@ -127,21 +125,21 @@ public class AllMemberPage extends Page implements Subscriber{
         actionButtonsContainer.getStyleClass().add("action-buttons-container-all-customer");
         actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);
 
-        cancelButton.setOnAction(event ->{
+        cancelButton.setOnAction(event -> {
             updateMemberController.setChoosenMember(null);
         });
         saveButton.setOnAction(event -> {
-            if(updateMemberController.getChoosenMember()!=null){
-                if(this.nameInput.getText()!="" && this.phoneNumberInput.getText()!=""){
+            if (updateMemberController.getChoosenMember() != null) {
+                if (this.nameInput.getText() != "" && this.phoneNumberInput.getText() != "") {
                     this.customerController.editMember(
-                        updateMemberController.getChoosenMember().getId(),
-                        this.nameInput.getText(),
-                        this.phoneNumberInput.getText(),
-                        this.membershipChoices.getSelectionModel().getSelectedItem().toString(),
-                        this.statusChoices.getSelectionModel().isSelected(0)?true:false
+                            updateMemberController.getChoosenMember().getUserID(),
+                            this.nameInput.getText(),
+                            this.phoneNumberInput.getText(),
+                            this.membershipChoices.getSelectionModel().getSelectedItem().toString(),
+                            this.statusChoices.getSelectionModel().isSelected(0) ? true : false
                     );
                 }
-                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getMembership().name());
+                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getNama());
                 updateMemberController.setChoosenMember(null);
             }
         });

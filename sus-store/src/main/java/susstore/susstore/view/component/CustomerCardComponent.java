@@ -21,7 +21,7 @@ public class CustomerCardComponent {
         this.idAndMembershipContainer = new VBox();
         this.statusAndActionsContainer = new HBox();
         this.nameAndPhoneContainer = new VBox();
-        this.containedCustomer=c;
+        this.containedCustomer = c;
         loadUI();
     }
 
@@ -29,7 +29,7 @@ public class CustomerCardComponent {
         // left
         Label membershipLabel = new Label("VIP");
         membershipLabel.getStyleClass().add("membership-label");
-        Label idLabel = new Label(containedCustomer.getId()+"");
+        Label idLabel = new Label(containedCustomer.getUserID() + "");
         idLabel.getStyleClass().add("id-label");
 
         this.idAndMembershipContainer.getChildren().addAll(membershipLabel, idLabel);
@@ -49,7 +49,7 @@ public class CustomerCardComponent {
         editButton.getStyleClass().add("edit-action-button");
 
         Label statusLabel = new Label("ACTIVE");
-        Label transactionLabel = new Label(containedCustomer.getJumlahTransaksi() +" transactions");
+        Label transactionLabel = new Label(containedCustomer.getJumlahTransaksi() + " transactions");
         statusLabel.getStyleClass().addAll("status-label", "status-label-active");
         transactionLabel.getStyleClass().add("transaction-label");
 

@@ -70,13 +70,13 @@ public class Member extends Customer implements UseCurrency, UsePoin
         this.status = status;
     }
 
-    public MEMBERSHIP getMembership() {
-        return membership;
-    }
-
-    protected void setMembership() {
-        this.membership = MEMBERSHIP.MEMBER;
-    }
+//    public MEMBERSHIP getMembership() {
+//        return membership;
+//    }
+//
+//    protected void setMembership() {
+//        this.membership = MEMBERSHIP.MEMBER;
+//    }
 
     @Override
     public double bayar(double harga)

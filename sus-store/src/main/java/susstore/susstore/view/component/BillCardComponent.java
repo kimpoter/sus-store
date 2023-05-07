@@ -27,16 +27,16 @@ public class BillCardComponent {
         Label amount = new Label();
         amount.textProperty().bind(initialAmount);
         Label x = new Label("x");
-        Label namaBarang = new Label(this.barang.getNamaBarang());
+        Label namaBarang = new Label(this.barang.getNama());
         HBox amountAndNamaBarangContainer = new HBox();
         amountAndNamaBarangContainer.getStyleClass().add("amount-nama-container-bill-card");
         amountAndNamaBarangContainer.getChildren().addAll(amount, x, namaBarang);
 
-        Label priceLabel = new Label("IDR " + this.barang.getHargaBarang().getNominal() * Integer.parseInt(initialAmount.get()));
+        Label priceLabel = new Label("IDR " + this.barang.getHargaJual() * Integer.parseInt(initialAmount.get()));
         initialAmount.addListener((observable, oldValue, newValue) -> {
             System.out.println("OLDVALUE:::" + oldValue);
             System.out.println("NEWVALUE:::" + newValue);
-            priceLabel.setText("IDR " + this.barang.getHargaBarang().getNominal() * Integer.parseInt(newValue));
+            priceLabel.setText("IDR " + this.barang.getHargaJual() * Integer.parseInt(newValue));
         });
 
 

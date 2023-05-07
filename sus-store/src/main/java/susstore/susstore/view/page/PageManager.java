@@ -3,6 +3,7 @@ package susstore.susstore.view.page;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import susstore.susstore.controller.TemporaryBillController;
 import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.JoinDataTest;
@@ -10,6 +11,7 @@ import susstore.susstore.view.component.JoinDataTest;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Function;
+
 import susstore.susstore.controller.BarangController;
 import susstore.susstore.controller.UserController;
 
@@ -21,6 +23,7 @@ public class PageManager {
     private final TabPane tabPane;
     private final Stage primaryStage;
     private final TemporaryBillController temporaryBillController;
+    private UserController customerController;
     private BarangController barangController;
 
     public PageManager(Stage primaryStage) {
@@ -42,12 +45,12 @@ public class PageManager {
     }
 
     private void initializePages() {
-        pages.put(PageType.AllCustomerPage.getName(), (String) -> new AllCustomerPage(this.joinDataTest));
+        pages.put(PageType.AllCustomerPage.getName(), (String) -> new AllCustomerPage(this.customerController));
         pages.put(PageType.RegisterNewMember.getName(), (String) -> new RegisterNewMember());
         pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
-        pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage,this.barangController));
-        pages.put(PageType.NewBarang.getName(),(String) -> new NewBarangPage(primaryStage,this.barangController));
-        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage());
+        pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage, this.barangController));
+        pages.put(PageType.NewBarang.getName(), (String) -> new NewBarangPage(primaryStage, this.barangController));
+        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController));
         pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
         pages.put(PageType.AllMemberPage.getName(), (String) -> new AllMemberPage(this.customerController));
     }
