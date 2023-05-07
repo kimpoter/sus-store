@@ -1,8 +1,11 @@
 package susstore.susstore.models;
 
-public class MemberVIP extends Member {
-    private static final double VIP_DISCOUNT = 0.10;
-    public MemberVIP(Member other) {
+public class MemberVIP extends Member
+{
+    private static final double VIP_DISCOUNT = 0.1;
+
+    public MemberVIP(Member other)
+    {
         super(other);
         setMembership();
     }
@@ -13,16 +16,16 @@ public class MemberVIP extends Member {
     }
 
     @Override
-    public Nominal bayar(Nominal harga) {
-        double newValue = harga.getNominal() * (1 - VIP_DISCOUNT);
-        Nominal hargaVIP = new Nominal(harga.getMataUang(), newValue);
-        return super.bayar(hargaVIP);
+    public double bayar(double harga)
+    {
+        double newValue = currency.getValue(harga) * (1 - VIP_DISCOUNT);
+        return super.bayar(newValue);
     }
 
     @Override
-    public Nominal bayar(Nominal harga, int point) {
-        double newValue = harga.getNominal() * (1 - VIP_DISCOUNT);
-        Nominal hargaVIP = new Nominal(harga.getMataUang(), newValue);
-        return super.bayar(hargaVIP, point);
+    public double bayar(double harga, int poin)
+    {
+        double newValue = currency.getValue(harga) * (1 - VIP_DISCOUNT);
+        return super.bayar(newValue, poin);
     }
 }

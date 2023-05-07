@@ -3,6 +3,7 @@ package susstore.susstore.view.page;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.JoinDataTest;
 
@@ -35,6 +36,8 @@ public class PageManager {
 
     public void loadUI() {
         initializePages();
+
+        PluginManager.register("plugin-bar/target/plugin-bar-1.0-SNAPSHOT-jar-with-dependencies.jar");
     }
 
     private void initializePages() {

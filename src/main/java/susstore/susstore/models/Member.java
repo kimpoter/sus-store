@@ -1,41 +1,53 @@
 package susstore.susstore.models;
 
-import java.lang.Math;
+import susstore.susstore.models.api.Currency;
+import susstore.susstore.models.api.Poin;
+import susstore.susstore.models.api.UseCurrency;
+import susstore.susstore.models.api.UsePoin;
 
-public class Member extends Customer implements PointHolder {
+public class Member extends Customer implements UseCurrency, UsePoin
+{
     private static final boolean ACTIVE = true;
-    private static int INITIAL_POINT = 0;
-    public enum MEMBERSHIP {
-        MEMBER,
-        VIP
-    }
-    protected String nama;
-    protected String noTelp;
-    protected Boolean status;
-    protected int point;
-    protected MEMBERSHIP membership;
 
-    public Member(Customer other, String nama, String noTelp) {
+    private static final double pointConversionRate = 0.01;
+
+    protected  String nama;
+
+    protected String noTelp;
+
+    protected boolean status;
+
+    protected Poin poin = CurrencyIDR.getPoinInstance();
+
+    protected int userPoin;
+
+    public Member(
+            Customer other,
+            String nama,
+            String noTelp
+    )
+    {
         super(other);
-        this.nama = nama;
+        this.nama   = nama;
         this.noTelp = noTelp;
         this.status = ACTIVE;
-        this.point = INITIAL_POINT;
-        setMembership();
+        
+        this.userPoin   = 0;
     }
 
-    public Member(Member other) {
+    public Member(Member other)
+    {
         super(other);
-        this.nama = other.nama;
+        this.nama   = other.nama;
         this.noTelp = other.noTelp;
         this.status = other.status;
-        this.point = other.point;
-        setMembership();
-        this.membership = MEMBERSHIP.MEMBER;
+        
+        this.userPoin   = other.userPoin;
     }
 
-    public String getNama() {
-        return nama;
+    public String getNama()
+    {
+        return this.nama;
     }
 
     public void setNama(String nama) {
@@ -50,11 +62,11 @@ public class Member extends Customer implements PointHolder {
         this.noTelp = noTelp;
     }
 
-    public Boolean getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -67,59 +79,58 @@ public class Member extends Customer implements PointHolder {
     }
 
     @Override
-    public Nominal bayar(Nominal harga) {
-        Nominal hargaFinal = super.bayar(harga);
+    public double bayar(double harga)
+    {
+        double hargaTotal = super.bayar(harga);
 
-        // calculate point, and add it to member
-        addPoint(nominalToPoint(hargaFinal));
-        return hargaFinal;
+        addPoin((int)(hargaTotal * pointConversionRate));
+
+        return hargaTotal;
     }
 
-    public Nominal bayar(Nominal harga, int point) {
-        Nominal convertedNominal = new Nominal(harga);
-        convertedNominal.convertNominal(POINT_CURRENCY);
-        Nominal pointDiscount = new Nominal(POINT_CURRENCY, point);
+    public double bayar(double harga, int poinBayar)
+    {
+        double poinToCurrency = poin.convertCurrency(poinBayar);
 
-        if(pointDiscount.compareTo(harga) > 0) {
-            this.point -= Math.ceil(convertedNominal.getNominal());
-            convertedNominal.setNominal(0);
+        double convertedHarga = currency.getValue(harga);
+
+        if (poinToCurrency > convertedHarga)
+        {
+            this.userPoin -= currency.convertPoin(convertedHarga);
+            convertedHarga = 0;
         }
-        else {
-            convertedNominal.subtractNominal(pointDiscount);
+        else
+        {
+            convertedHarga -= poinToCurrency;
         }
-        convertedNominal.convertNominal(harga.getMataUang());
-        return bayar(convertedNominal);
+
+        return bayar(convertedHarga);
     }
 
     @Override
-    public int nominalToPoint(Nominal nominal) {
-        Nominal convertedNominal = new Nominal(nominal);
-        convertedNominal.convertNominal(POINT_CURRENCY);
+    public void setCurrency(Currency c)
+    {
+        currency = c;
+    }
 
-        // calculate point, and add it to member
-        int totalPoint = (int)(convertedNominal.getNominal() * POINT_DEFAULT_RATE);
 
-        return totalPoint;
+    @Override
+    public void addPoin(int poin) {
+        this.userPoin += poin;
     }
 
     @Override
-    public void addPoint(int point) {
-        this.point += point;
+    public void usePoin(int poin) {
+        this.userPoin -= poin;
     }
 
     @Override
-    public void usePoint(int point) {
-        if(point > this.point) throw new InsufficientPointException();
-        this.point -= point;
+    public void setPoin(int poin) {
+        this.userPoin = poin;
     }
 
     @Override
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
-    @Override
-    public int getPoint() {
-        return this.point;
+    public int getPoin() {
+        return this.userPoin;
     }
 }

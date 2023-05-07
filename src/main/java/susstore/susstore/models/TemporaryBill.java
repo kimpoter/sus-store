@@ -1,68 +1,96 @@
 package susstore.susstore.models;
 
-import java.util.List;
+import susstore.susstore.models.TemporaryBillEntry;
+import susstore.susstore.models.api.Currency;
+import susstore.susstore.models.api.Product;
+import susstore.susstore.models.api.UseCurrency;
+
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class TemporaryBill extends Bill {
-    private static int temporaryBillCount = 0;
-    protected List<TemporaryBillEntry> daftar;
+public class TemporaryBill extends Bill implements UseCurrency
+{
+    private static Integer temporaryBillCount = 0;
 
-    public TemporaryBill(int idUser) {
-        super(temporaryBillCount, idUser);
+    private ArrayList<TemporaryBillEntry> daftarEntry;
+
+    public TemporaryBill(UUID userID)
+    {
+        super(temporaryBillCount, userID);
+
         temporaryBillCount++;
-        this.daftar = new ArrayList<TemporaryBillEntry>();
+        this.daftarEntry = new ArrayList<TemporaryBillEntry>();
     }
 
-    public List<TemporaryBillEntry> getDaftar() {
-        return new ArrayList<TemporaryBillEntry>(daftar);
+    public ArrayList<TemporaryBillEntry> getDaftarEntry()
+    {
+        return this.daftarEntry;
     }
 
-    public void addBarang(Barang newBarang, int jumlah) {
-        daftar.add(new TemporaryBillEntry(newBarang, jumlah));
+    public void addProduct(Product newProduct, Integer jumlah)
+    {
+        daftarEntry.add(new TemporaryBillEntry(newProduct, jumlah));
     }
 
-    public void removeBarang(int idx) {
-        daftar.remove(idx);
+    public void removeBarang(int index)
+    {
+        daftarEntry.remove(index);
     }
 
-    public boolean isBillValid() {
+    public boolean isBillValid()
+    {
         boolean valid = true;
-        for (TemporaryBillEntry belanjaan : this.daftar
-             ) {
-            valid &= belanjaan.getBarang().getStok() >= belanjaan.getJumlah();
+
+        for (TemporaryBillEntry belanjaan : this.daftarEntry)
+        {
+            valid &= belanjaan.getProduct().getStok() >= belanjaan.getJumlah();
         }
+
         return valid;
     }
 
     @Override
-    public Nominal getBillTotal() {
-        Nominal totalPrice = new Nominal();
-        for (TemporaryBillEntry belanjaan : this.daftar
-             ) {
-            totalPrice.addNominal(belanjaan.getBarang().getHargaBarang(), belanjaan.getJumlah());
+    public Double getBillTotal() {
+        Double totalPrice = 0.0;
+
+        for (TemporaryBillEntry belanjaan : this.daftarEntry)
+        {
+            totalPrice += belanjaan.getProduct().getHargaJual() * belanjaan.getJumlah();
         }
+
         return totalPrice;
+    }
+
+    @Override
+    public void setCurrency(Currency c) {
+
     }
 }
 
-class TemporaryBillEntry {
-    private Barang barang;
-    private int jumlah;
+class TemporaryBillEntry
+{
+    private Product product;
 
-    public TemporaryBillEntry(Barang barang, int jumlah) {
-        this.barang = barang;
+    private Integer jumlah;
+
+    public TemporaryBillEntry(Product product, Integer jumlah)
+    {
+        this.product = product;
         this.jumlah = jumlah;
     }
 
-    public Barang getBarang() {
-        return barang;
+    public Product getProduct()
+    {
+        return this.product;
     }
 
-    public int getJumlah() {
-        return jumlah;
+    public Integer getJumlah()
+    {
+        return this.jumlah;
     }
 
-    public void setJumlah(int jumlah) {
+    public void setJumlah(Integer jumlah)
+    {
         this.jumlah = jumlah;
     }
 }

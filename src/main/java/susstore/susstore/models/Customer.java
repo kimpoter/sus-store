@@ -1,40 +1,48 @@
 package susstore.susstore.models;
 
-import susstore.susstore.datastore.Storable;
+import susstore.susstore.models.api.Currency;
+import susstore.susstore.models.api.User;
 
-public class Customer implements Storable {
-    private static int jumlahCustomer;
-    protected int id;
+public class Customer implements User
+{
+    private static int jumlahCustomer = 0;
+
+    protected Currency currency = CurrencyIDR.getInstance();
+
+    protected int userID;
+
     protected int jumlahTransaksi;
 
-    public Customer() {
-        this.id = jumlahCustomer;
+    public Customer()
+    {
+        this.userID             = jumlahCustomer;
         Customer.jumlahCustomer++;
-        this.jumlahTransaksi = 1;
+        this.jumlahTransaksi    = 1;
     }
 
-    public Customer(Customer other) {
-        this.id = other.id;
-        this.jumlahTransaksi = other.jumlahTransaksi;
+    protected Customer(Customer other)
+    {
+        this.userID             = other.userID;
+        this.jumlahTransaksi    = other.jumlahTransaksi;
     }
 
-    /* Getter & Setter */
-    public int getId() {
-        return id;
+    public int getUserID()
+    {
+        return this.userID;
     }
 
-    public int getJumlahTransaksi() {
-        return jumlahTransaksi;
+    public int getJumlahTransaksi()
+    {
+        return this.jumlahTransaksi;
     }
 
-    public Nominal bayar(Nominal harga) {
-        // do nothing (..yet, probably until user credit system is added)
-        return new Nominal(harga);
+    @Override
+    public double bayar(double nominal) {
+        return currency.getValue(nominal);
     }
 
     @Override
     public String getStorableId() {
-        return Integer.toString(this.id);
+        return Integer.toString(this.userID);
     }
-
 }
