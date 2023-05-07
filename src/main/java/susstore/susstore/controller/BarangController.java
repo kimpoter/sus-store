@@ -15,33 +15,31 @@ public class BarangController {
     // TEMPORARY LIST TO STORE
     private List<Barang> barangs;
 
-    public BarangController() {
+    public BarangController(){
         this.barangs = new ArrayList<Barang>();
         this.subscribers = new SubscriberManager();
     }
 
-    public BarangController(List<Barang> barang) {
+    public BarangController(List<Barang> barang){
         this.barangs = barang;
         this.subscribers = new SubscriberManager();
     }
 
-    public void addBarang(Barang b) {
-        this.barangs.add(b);
-        System.out.println("add");
-        this.subscribers.notifysubs();
-    }
-
-    public List<Barang> getBarangs() {
-        return this.barangs;
-    }
-
-    public void setBarangs(List<Barang> barang) {
+    public void setBarangs(List<Barang> barang){
         this.barangs = barang;
         //this.subscribers.notify();
     }
 
-    public void addSubscriber(Subscriber s) {
-        System.out.println("adddsubs");
+    public void addBarang(Barang b){
+        this.barangs.add(b);
+        this.subscribers.notifysubs("add-barang");
+    }
+
+    public List<Barang> getBarangs(){
+        return this.barangs;
+    }
+
+    public void addSubscriber(Subscriber s){
         this.subscribers.subscribe(s);
     }
 }

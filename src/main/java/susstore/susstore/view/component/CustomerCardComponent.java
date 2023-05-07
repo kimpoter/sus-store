@@ -6,18 +6,22 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import susstore.susstore.models.Customer;
+
 
 public class CustomerCardComponent {
     private final BorderPane componentRootLayout;
     private final VBox idAndMembershipContainer;
     private final HBox statusAndActionsContainer;
     private final VBox nameAndPhoneContainer;
+    private Customer containedCustomer;
 
-    public CustomerCardComponent() {
+    public CustomerCardComponent(Customer c) {
         this.componentRootLayout = new BorderPane();
         this.idAndMembershipContainer = new VBox();
         this.statusAndActionsContainer = new HBox();
         this.nameAndPhoneContainer = new VBox();
+        this.containedCustomer=c;
         loadUI();
     }
 
@@ -25,7 +29,7 @@ public class CustomerCardComponent {
         // left
         Label membershipLabel = new Label("VIP");
         membershipLabel.getStyleClass().add("membership-label");
-        Label idLabel = new Label("999999");
+        Label idLabel = new Label(containedCustomer.getId()+"");
         idLabel.getStyleClass().add("id-label");
 
         this.idAndMembershipContainer.getChildren().addAll(membershipLabel, idLabel);
@@ -45,7 +49,7 @@ public class CustomerCardComponent {
         editButton.getStyleClass().add("edit-action-button");
 
         Label statusLabel = new Label("ACTIVE");
-        Label transactionLabel = new Label("99999 transactions");
+        Label transactionLabel = new Label(containedCustomer.getJumlahTransaksi() +" transactions");
         statusLabel.getStyleClass().addAll("status-label", "status-label-active");
         transactionLabel.getStyleClass().add("transaction-label");
 

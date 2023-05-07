@@ -1,5 +1,5 @@
 package susstore.susstore;
 
 public interface Subscriber {
-    void update();
+    void update(String s);
 }

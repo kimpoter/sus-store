@@ -7,7 +7,7 @@ public class UtamaController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

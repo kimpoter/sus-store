@@ -9,13 +9,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 import susstore.susstore.models.Barang;
 import susstore.susstore.Subscriber;
 import susstore.susstore.controller.BarangController;
 
+import java.util.ArrayList;
+import java.util.List;
 import susstore.susstore.models.Nominal;
 
 public class AllBarangPage extends Page implements Subscriber {
@@ -37,28 +38,25 @@ public class AllBarangPage extends Page implements Subscriber {
         this.tab.setContent(this.pageRootLayout);
     }
 
-    public void update() {
+    public void update(String s){
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
-        int index = 0;
-        for (Barang b : barangController.getBarangs()) {
+        int index=0;
+        for(Barang b : barangController.getBarangs()){
             BarangCardComponent barangCard = new BarangCardComponent(b);
-            barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
+            barangContainer.add(barangCard.getComponent(), index%4, index/4, 1, 1);
             index++;
         }
         barangContainerScroll.setContent(barangContainer);
     }
 
     private void loadUI() {
-        // barang
-
-
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
-        int index = 0;
-        for (Barang b : barangController.getBarangs()) {
+        int index=0;
+        for(Barang b : barangController.getBarangs()){
             BarangCardComponent barangCard = new BarangCardComponent(b);
-            barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
+            barangContainer.add(barangCard.getComponent(), index%4, index/4, 1, 1);
             index++;
         }
 
@@ -74,7 +72,7 @@ public class AllBarangPage extends Page implements Subscriber {
         imageContainer.setFill(new ImagePattern(image));
         Button chooseImageButton = new Button("Choose Image");
         chooseImageButton.setOnAction(
-                e -> this.barangController.addBarang(new Barang("tes4", 2, "makanan", "images/barang.jpg", new Nominal(), new Nominal()))
+            e->this.barangController.addBarang(new Barang("tes4", 2, "makanan", "images/barang.jpg", new Nominal(), new Nominal()))
         );
         chooseImageButton.getStyleClass().add("choose-image-button");
 
@@ -142,7 +140,7 @@ public class AllBarangPage extends Page implements Subscriber {
         actionButtonsContainer.getStyleClass().add("action-buttons-container-all-barang");
         actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);
 
-        BorderPane formAndActionsContainer = new BorderPane();
+        formAndActionsContainer = new BorderPane();
         formAndActionsContainer.getStyleClass().add("form-actions-container");
         formAndActionsContainer.setCenter(imageAndInputContainer);
         formAndActionsContainer.setBottom(actionButtonsContainer);

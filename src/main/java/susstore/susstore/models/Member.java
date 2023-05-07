@@ -31,6 +31,7 @@ public class Member extends Customer implements UseCurrency, UsePoin
         this.nama   = nama;
         this.noTelp = noTelp;
         this.status = ACTIVE;
+        
         this.userPoin   = 0;
     }
 
@@ -40,6 +41,7 @@ public class Member extends Customer implements UseCurrency, UsePoin
         this.nama   = other.nama;
         this.noTelp = other.noTelp;
         this.status = other.status;
+        
         this.userPoin   = other.userPoin;
     }
 
@@ -66,6 +68,14 @@ public class Member extends Customer implements UseCurrency, UsePoin
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public MEMBERSHIP getMembership() {
+        return membership;
+    }
+
+    protected void setMembership() {
+        this.membership = MEMBERSHIP.MEMBER;
     }
 
     @Override

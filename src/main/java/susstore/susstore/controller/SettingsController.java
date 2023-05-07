@@ -9,7 +9,7 @@ public class SettingsController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
 
     }
 }
