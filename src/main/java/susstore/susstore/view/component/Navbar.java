@@ -46,6 +46,7 @@ public class Navbar {
         // barang menu items
         this.menuItems.get(MenuType.Barang.name()).add(PageType.AllBarang.getName());
         this.menuItems.get(MenuType.Barang.name()).add(PageType.Kasir.getName());
+        this.menuItems.get(MenuType.Barang.name()).add(PageType.NewBarang.getName());
     }
 
     private void initializeMenus() {

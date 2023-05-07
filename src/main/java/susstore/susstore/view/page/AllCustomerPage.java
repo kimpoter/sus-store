@@ -9,6 +9,7 @@ import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.CustomerCardComponent;
 import susstore.susstore.view.component.JoinDataTest;
 
+
 public class AllCustomerPage extends Page {
     private final SplitPane pageRootLayout;
     private final JoinDataTest joinDataTest;

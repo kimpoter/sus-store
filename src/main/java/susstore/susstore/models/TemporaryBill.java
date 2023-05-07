@@ -17,8 +17,9 @@ public class TemporaryBill extends Bill {
         return new ArrayList<TemporaryBillEntry>(daftar);
     }
 
-    public void addBarang(Barang newBarang, int jumlah) {
+    public int addBarang(Barang newBarang, int jumlah) {
         daftar.add(new TemporaryBillEntry(newBarang, jumlah));
+        return daftar.size() - 1;
     }
 
     public void removeBarang(int idx) {
@@ -28,7 +29,7 @@ public class TemporaryBill extends Bill {
     public boolean isBillValid() {
         boolean valid = true;
         for (TemporaryBillEntry belanjaan : this.daftar
-             ) {
+        ) {
             valid &= belanjaan.getBarang().getStok() >= belanjaan.getJumlah();
         }
         return valid;
@@ -38,31 +39,10 @@ public class TemporaryBill extends Bill {
     public Nominal getBillTotal() {
         Nominal totalPrice = new Nominal();
         for (TemporaryBillEntry belanjaan : this.daftar
-             ) {
+        ) {
             totalPrice.addNominal(belanjaan.getBarang().getHargaBarang(), belanjaan.getJumlah());
         }
         return totalPrice;
     }
 }
 
-class TemporaryBillEntry {
-    private Barang barang;
-    private int jumlah;
-
-    public TemporaryBillEntry(Barang barang, int jumlah) {
-        this.barang = barang;
-        this.jumlah = jumlah;
-    }
-
-    public Barang getBarang() {
-        return barang;
-    }
-
-    public int getJumlah() {
-        return jumlah;
-    }
-
-    public void setJumlah(int jumlah) {
-        this.jumlah = jumlah;
-    }
-}

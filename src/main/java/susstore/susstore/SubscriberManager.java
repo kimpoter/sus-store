@@ -2,6 +2,7 @@ package susstore.susstore;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class SubscriberManager {
     List<Subscriber> subs = new ArrayList<>();
 
@@ -16,8 +17,9 @@ public class SubscriberManager {
         subs.remove(subscriber);
     }
 
-    public void notify(String eventType) {
+    public void notifysubs() {
         for (Subscriber subscriber : subs) {
+            System.out.println("inside subs");
             subscriber.update();
         }
     }

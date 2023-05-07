@@ -1,5 +1,6 @@
 package susstore.susstore.models;
 
+import java.awt.image.BufferedImage;
 import java.util.Map;
 
 public class Nominal implements Comparable<Nominal> {

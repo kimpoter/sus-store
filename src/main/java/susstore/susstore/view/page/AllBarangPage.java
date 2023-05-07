@@ -9,35 +9,60 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import susstore.susstore.view.BarangCardType;
+
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
+import susstore.susstore.models.Barang;
+import susstore.susstore.Subscriber;
+import susstore.susstore.controller.BarangController;
 
-public class AllBarangPage extends Page {
+import susstore.susstore.models.Nominal;
+
+public class AllBarangPage extends Page implements Subscriber {
     private final SplitPane pageRootLayout;
     private final Stage primaryStage;
+    private BarangController barangController;
+    private ScrollPane barangContainerScroll;
+    private BorderPane formAndActionsContainer;
+    private TextField namaBarangInput;
 
-    public AllBarangPage(Stage primaryStage) {
+    public AllBarangPage(Stage primaryStage, BarangController barangController) {
         super(PageType.AllBarang);
         this.pageRootLayout = new SplitPane();
         this.primaryStage = primaryStage;
+        this.barangController = barangController;
         loadUI();
         setStyleSheet();
+        barangController.addSubscriber(this);
         this.tab.setContent(this.pageRootLayout);
+    }
+
+    public void update() {
+        GridPane barangContainer = new GridPane();
+        barangContainer.getStyleClass().add("barang-container");
+        int index = 0;
+        for (Barang b : barangController.getBarangs()) {
+            BarangCardComponent barangCard = new BarangCardComponent(b);
+            barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
+            index++;
+        }
+        barangContainerScroll.setContent(barangContainer);
     }
 
     private void loadUI() {
         // barang
+
+
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
-        for (int col = 0; col < 10; col++) {
-            for (int row = 0; row < 4; row++) {
-//                BarangCardComponent barangCard = new BarangCardComponent(BarangCardType.Gudang, this.bi);
-//                barangContainer.add(barangCard.getComponent(), row, col, 1, 1);
-            }
+        int index = 0;
+        for (Barang b : barangController.getBarangs()) {
+            BarangCardComponent barangCard = new BarangCardComponent(b);
+            barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
+            index++;
         }
 
-        ScrollPane barangContainerScroll = new ScrollPane();
+        barangContainerScroll = new ScrollPane();
         barangContainerScroll.setContent(barangContainer);
         barangContainerScroll.setFitToWidth(true);
 
@@ -48,6 +73,9 @@ public class AllBarangPage extends Page {
         Image image = new Image("images/barang.jpg", false);
         imageContainer.setFill(new ImagePattern(image));
         Button chooseImageButton = new Button("Choose Image");
+        chooseImageButton.setOnAction(
+                e -> this.barangController.addBarang(new Barang("tes4", 2, "makanan", "images/barang.jpg", new Nominal(), new Nominal()))
+        );
         chooseImageButton.getStyleClass().add("choose-image-button");
 
         VBox imageAndChooseButtonContainer = new VBox();
@@ -55,7 +83,7 @@ public class AllBarangPage extends Page {
         imageAndChooseButtonContainer.getChildren().addAll(imageContainer, chooseImageButton);
 
         Label namaBarangLabel = new Label("Nama Barang:");
-        TextField namaBarangInput = new TextField();
+        namaBarangInput = new TextField();
         VBox namaBarangContainer = new VBox();
         namaBarangLabel.getStyleClass().add("input-label-all-barang");
         namaBarangInput.getStyleClass().add("input-all-barang");

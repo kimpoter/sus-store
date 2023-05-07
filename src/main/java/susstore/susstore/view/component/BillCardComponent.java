@@ -1,22 +1,24 @@
 package susstore.susstore.view.component;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import susstore.susstore.models.Barang;
 
 public class BillCardComponent {
     private final BorderPane componentRootLayout;
     private final SimpleStringProperty initialAmount;
-    private final String name;
+    private Barang barang;
 
 
-    public BillCardComponent(SimpleStringProperty initialAmount, String name) {
+    public BillCardComponent(SimpleStringProperty initialAmount, Barang barang) {
         this.componentRootLayout = new BorderPane();
         this.initialAmount = initialAmount;
-        this.name = name;
+        this.barang = barang;
         loadUI();
         setStyleSheet();
     }
@@ -25,12 +27,18 @@ public class BillCardComponent {
         Label amount = new Label();
         amount.textProperty().bind(initialAmount);
         Label x = new Label("x");
-        Label namaBarang = new Label(this.name);
+        Label namaBarang = new Label(this.barang.getNamaBarang());
         HBox amountAndNamaBarangContainer = new HBox();
         amountAndNamaBarangContainer.getStyleClass().add("amount-nama-container-bill-card");
         amountAndNamaBarangContainer.getChildren().addAll(amount, x, namaBarang);
 
-        Label priceLabel = new Label("30000");
+        Label priceLabel = new Label("IDR " + this.barang.getHargaBarang().getNominal() * Integer.parseInt(initialAmount.get()));
+        initialAmount.addListener((observable, oldValue, newValue) -> {
+            System.out.println("OLDVALUE:::" + oldValue);
+            System.out.println("NEWVALUE:::" + newValue);
+            priceLabel.setText("IDR " + this.barang.getHargaBarang().getNominal() * Integer.parseInt(newValue));
+        });
+
 
         Insets spacing = new Insets(10);
         BorderPane.setMargin(amountAndNamaBarangContainer, spacing);

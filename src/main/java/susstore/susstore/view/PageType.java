@@ -8,6 +8,7 @@ public enum PageType {
     EditCustomerPage("Edit Customer Page"),
     TransactionHistory("Transaction History"),
     AllBarang("All Barang"),
+    NewBarang("New Barang"),
     Kasir("Kasir");
 
     private final String name;

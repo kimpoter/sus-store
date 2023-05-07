@@ -2,6 +2,7 @@ package susstore.susstore.view.component;
 
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -16,17 +17,48 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import susstore.susstore.controller.TemporaryBillController;
+import susstore.susstore.models.Barang;
+import susstore.susstore.models.TemporaryBill;
+import susstore.susstore.models.TemporaryBillEntry;
 import susstore.susstore.view.BarangCardType;
+import susstore.susstore.view.PageType;
+import susstore.susstore.view.page.PageManager;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class BarangCardComponent {
     private final BorderPane componentRootLayout;
-    private final BarangCardType type;
-    private final ObservableList<Node> bills;
+    private final PageType pageType;
+    public int temporaryBillEntryIndex;
+    private ObservableList<Node> bills;
+    private TemporaryBill temporaryBill;
+    private int userId;
+    private Node billCard;
+    private TemporaryBillController temporaryBillController;
+    private Barang barang;
+    private TemporaryBillEntry temporaryBillEntry;
+    private SimpleBooleanProperty simpleBooleanProperty;
 
-    public BarangCardComponent(BarangCardType type, ObservableList<Node> bills) {
+    public BarangCardComponent(Barang barang) {
+        this.barang = barang;
+        this.pageType = PageType.AllBarang;
+        this.bills = null;
+        this.componentRootLayout = new BorderPane();
+        loadUI();
+        setStyleSheet();
+    }
+
+    public BarangCardComponent(int userId, Barang barang, ObservableList<Node> bills, TemporaryBillController temporaryBillController, TemporaryBill temporaryBill, SimpleBooleanProperty simpleBooleanProperty) {
         this.componentRootLayout = new BorderPane();
         this.bills = bills;
-        this.type = type;
+        this.barang = barang;
+        this.userId = userId;
+        this.temporaryBill = temporaryBill;
+        this.pageType = PageType.Kasir;
+        this.temporaryBillController = temporaryBillController;
+        this.simpleBooleanProperty = simpleBooleanProperty;
         loadUI();
         setStyleSheet();
     }
@@ -34,9 +66,9 @@ public class BarangCardComponent {
     private void loadUI() {
         Rectangle imageContainer = new Rectangle(0, 0, 180, 180);
         imageContainer.getStyleClass().add("image-container");
-        Image image = new Image("images/barang.jpg", false);
+        Image image = new Image(barang.getGambar(), false);
         imageContainer.setFill(new ImagePattern(image));
-        Label nameLabel = new Label("Nama Barang");
+        Label nameLabel = new Label(barang.getNamaBarang());
 
         VBox imageAndNameContainer = new VBox();
         imageAndNameContainer.getStyleClass().add("image-name-container");
@@ -46,7 +78,7 @@ public class BarangCardComponent {
         Button editButton = new Button("\ue4c7;");
         deleteButton.getStyleClass().add("delete-action-button");
         editButton.getStyleClass().add("edit-action-button");
-        
+
         BorderPane actionsContainer = new BorderPane();
         actionsContainer.setLeft(editButton);
         actionsContainer.setRight(deleteButton);
@@ -56,7 +88,7 @@ public class BarangCardComponent {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageAndNameContainer, actionsContainer);
 
-        if (this.type.equals(BarangCardType.Kasir)) {
+        if (this.pageType.equals(PageType.Kasir)) {
             stackPane.getChildren().remove(actionsContainer);
 
             SimpleIntegerProperty selectedAmount = new SimpleIntegerProperty(0);
@@ -72,15 +104,52 @@ public class BarangCardComponent {
             minusButton.getStyleClass().add("minus-button-barang-card");
             plusButton.getStyleClass().add("plus-button-barang-card");
 
+            if (this.temporaryBill != null) {
+                System.out.println("TEMPBILL: " + this.temporaryBill.getDaftar().size());
+                int i = 0;
+                for (TemporaryBillEntry temporaryBillEntry : this.temporaryBill.getDaftar()) {
+                    System.out.println("TEMPORARYBILL ENTRY ID: " + temporaryBillEntry.getBarang().getId());
+                    System.out.println("BARANG ID: " + this.barang.getId());
+                    if (temporaryBillEntry.getBarang().getId() == this.barang.getId()) {
+                        selectedAmount.set(temporaryBillEntry.getJumlah());
+                        this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
+                        this.bills.add(this.billCard);
+                        this.temporaryBillEntry = temporaryBillEntry;
+                        this.temporaryBillEntryIndex = i;
+                    }
+                    i++;
+                }
+                System.out.println("THIS BILL SIZE: " + this.bills.size());
+            }
+
             minusButton.setOnAction(event -> {
                 if (selectedAmount.get() > 0) {
                     selectedAmount.set(selectedAmount.get() - 1);
-                    this.bills.add(new Button("Add"));
-                    this.bills.add(new BillCardComponent(selectedAmountString, "new barang").getComponent());
+                    this.temporaryBillEntry.setJumlah(selectedAmount.get());
+                    this.simpleBooleanProperty.set(!this.simpleBooleanProperty.get());
+                    if (selectedAmount.get() == 0) {
+                        this.temporaryBill.removeBarang(temporaryBillEntryIndex);
+                        this.bills.remove(this.billCard);
+                    }
                 }
             });
             plusButton.setOnAction(event -> {
-                selectedAmount.set(selectedAmount.get() + 1);
+                if (selectedAmount.get() < this.barang.getStok()) {
+                    if (this.temporaryBill == null) {
+                        this.temporaryBillController.addTemporaryBill(new TemporaryBill(userId));
+                        this.temporaryBill = this.temporaryBillController.getTemporaryBills().get(this.temporaryBillController.getTemporaryBillsLength() - 1);
+                    }
+                    if (selectedAmount.get() == 0) {
+                        this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
+                        this.temporaryBillEntryIndex = this.temporaryBill.addBarang(barang, 1);
+                        this.temporaryBillEntry = this.temporaryBill.getDaftar().get(temporaryBillEntryIndex);
+                        this.bills.add(this.billCard);
+                    } else {
+                        this.temporaryBillEntry.setJumlah(selectedAmount.get() + 1);
+                        this.simpleBooleanProperty.set(!this.simpleBooleanProperty.get());
+                    }
+                    selectedAmount.set(selectedAmount.get() + 1);
+                }
             });
 
             addToChartActionContainer.setLeft(minusButton);
@@ -91,8 +160,8 @@ public class BarangCardComponent {
             this.componentRootLayout.setCenter(addToChartActionContainer);
         }
 
-        Label priceLabel = new Label("Rp10000");
-        Label stockLabel = new Label("Sotck: 99");
+        Label priceLabel = new Label(barang.getHargaBarang().getNominal() + "");
+        Label stockLabel = new Label("Stock: " + barang.getStok());
         stockLabel.getStyleClass().add("stock-label");
 
         BorderPane priceAndStockContainer = new BorderPane();
