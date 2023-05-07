@@ -38,6 +38,7 @@ public class PageManager {
         pages.put(PageType.RegisterNewMember.getName(), (String) -> new RegisterNewMember());
         pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
         pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage,this.barangController));
+        pages.put(PageType.NewBarang.getName(),(String) -> new NewBarangPage(primaryStage,this.barangController));
         pages.put(PageType.Kasir.getName(), (String) -> new KasirPage());
         pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
     }

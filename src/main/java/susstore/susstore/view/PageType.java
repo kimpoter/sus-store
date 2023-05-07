@@ -7,6 +7,7 @@ public enum PageType {
     RegisterNewMember("Register New Member"),
     EditCustomerPage("Edit Customer Page"),
     AllBarang("All Barang"),
+    NewBarang("New Barang"),
     Kasir("Kasir");
 
     private final String name;
