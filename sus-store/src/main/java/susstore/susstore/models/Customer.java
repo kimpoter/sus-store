@@ -3,27 +3,30 @@ package susstore.susstore.models;
 import susstore.susstore.models.api.Currency;
 import susstore.susstore.models.api.User;
 
-public class Customer implements User {
-    private static int jumlahCustomer = 0;
+import java.util.UUID;
 
-    protected Currency currency = CurrencyIDR.getInstance();
+public class Customer implements User
+{
+    protected static Currency currency = CurrencyIDR.getInstance();
 
-    protected int userID;
+    protected UUID userID;
 
     protected int jumlahTransaksi;
 
-    public Customer() {
-        this.userID = jumlahCustomer;
-        Customer.jumlahCustomer++;
-        this.jumlahTransaksi = 1;
+    public Customer()
+    {
+        this.userID = UUID.randomUUID();
+        this.jumlahTransaksi = 0;
     }
 
-    protected Customer(Customer other) {
+    protected Customer(Customer other)
+    {
         this.userID = other.userID;
         this.jumlahTransaksi = other.jumlahTransaksi;
     }
 
-    public int getUserID() {
+    public UUID getUserID()
+    {
         return this.userID;
     }
 
@@ -33,8 +36,7 @@ public class Customer implements User {
 
     @Override
     public double bayar(double nominal) {
+        this.jumlahTransaksi++;
         return currency.getValue(nominal);
     }
-
-
 }

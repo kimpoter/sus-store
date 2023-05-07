@@ -7,6 +7,10 @@ import susstore.susstore.models.api.UsePoin;
 
 public class Member extends Customer implements UseCurrency, UsePoin
 {
+    public enum MEMBERSHIP {
+        MEMBER,
+        VIP
+    }
     private static final boolean ACTIVE = true;
 
     private static final double pointConversionRate = 0.01;
@@ -14,10 +18,11 @@ public class Member extends Customer implements UseCurrency, UsePoin
     protected  String nama;
 
     protected String noTelp;
+    protected MEMBERSHIP membership;
 
     protected boolean status;
 
-    protected Poin poin = CurrencyIDR.getPoinInstance();
+    protected static Poin poin = CurrencyIDR.getPoinInstance();
 
     protected int userPoin;
 
@@ -30,6 +35,7 @@ public class Member extends Customer implements UseCurrency, UsePoin
         super(other);
         this.nama   = nama;
         this.noTelp = noTelp;
+        setMembership();
         this.status = ACTIVE;
         
         this.userPoin   = 0;
@@ -40,6 +46,7 @@ public class Member extends Customer implements UseCurrency, UsePoin
         super(other);
         this.nama   = other.nama;
         this.noTelp = other.noTelp;
+        setMembership();
         this.status = other.status;
         
         this.userPoin   = other.userPoin;
@@ -70,13 +77,13 @@ public class Member extends Customer implements UseCurrency, UsePoin
         this.status = status;
     }
 
-//    public MEMBERSHIP getMembership() {
-//        return membership;
-//    }
-//
-//    protected void setMembership() {
-//        this.membership = MEMBERSHIP.MEMBER;
-//    }
+    public MEMBERSHIP getMembership() {
+        return membership;
+    }
+
+    protected void setMembership() {
+        this.membership = MEMBERSHIP.MEMBER;
+    }
 
     @Override
     public double bayar(double harga)
