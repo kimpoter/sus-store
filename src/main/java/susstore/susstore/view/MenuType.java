@@ -4,7 +4,8 @@ public enum MenuType {
     Settings("Settings"),
     Customer("Customer"),
     Barang("Barang"),
-    AboutUs("About Us");
+    AboutUs("About Us"),
+    Plugins("Plugins");
 
     private final String name;
 
