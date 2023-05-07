@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class JSONAdapter<T> extends FileAdapter<T> {
 
-    public JSONAdapter(String targetFile, Class objClass) {
+    public JSONAdapter(String targetFile, Class<T> objClass) {
         super(targetFile, objClass);
     }
 

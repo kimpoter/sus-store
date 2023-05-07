@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 
 public class OBJAdapter<T> extends FileAdapter<T> {
-    public OBJAdapter(String targetFile, Class<?> objClass) {
+    public OBJAdapter(String targetFile, Class<T> objClass) {
         super(targetFile, objClass);
     }
 
@@ -23,6 +23,7 @@ public class OBJAdapter<T> extends FileAdapter<T> {
     public T loadObject() throws Exception {
         FileInputStream fileInputStream = new FileInputStream(this.targetFile);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        @SuppressWarnings("unchecked")
         T data = (T) objectInputStream.readObject();
         objectInputStream.close();
         return data;

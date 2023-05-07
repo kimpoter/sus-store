@@ -25,7 +25,7 @@ import java.io.File;
 
 public class XMLAdapter<T> extends FileAdapter<T>{
 
-    public XMLAdapter(String targetFile, Class<?> objClass) {
+    public XMLAdapter(String targetFile, Class<T> objClass) {
         super(targetFile, objClass);
     }
 
