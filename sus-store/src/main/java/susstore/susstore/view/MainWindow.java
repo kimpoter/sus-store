@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.component.Navbar;
 import susstore.susstore.view.page.DashboardPage;
 import susstore.susstore.view.page.PageManager;
@@ -35,11 +36,8 @@ public class MainWindow {
         return window;
     }
 
-    public static MainWindow getInstance() throws Exception
+    public static MainWindow getInstance()
     {
-        if (window == null)
-            throw new Exception();
-
         return window;
     }
 

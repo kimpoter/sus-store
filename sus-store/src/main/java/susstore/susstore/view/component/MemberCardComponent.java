@@ -30,9 +30,9 @@ public class MemberCardComponent {
 
     private void loadUI() {
         // left
-        Label membershipLabel = new Label(containMember.getMembership().name());
+        Label membershipLabel = new Label(containMember.getNama());
         membershipLabel.getStyleClass().add("membership-label");
-        Label idLabel = new Label(containMember.getId()+"");
+        Label idLabel = new Label(containMember.getUserID() + "");
         idLabel.getStyleClass().add("id-label");
 
         this.idAndMembershipContainer.getChildren().addAll(membershipLabel, idLabel);
@@ -49,12 +49,12 @@ public class MemberCardComponent {
         Button editButton = new Button("\uf4ff;");
         editButton.getStyleClass().add("edit-action-button");
         editButton.setOnAction(
-            e->{
-                updateMemberController.setChoosenMember(containMember);
-            }
+                e -> {
+                    updateMemberController.setChoosenMember(containMember);
+                }
         );
 
-        Label statusLabel = new Label(containMember.getStatus()? "ACTIVE" : "INACTIVE");
+        Label statusLabel = new Label(containMember.getStatus() ? "ACTIVE" : "INACTIVE");
         statusLabel.getStyleClass().addAll("status-label", "status-label-active");
 
         VBox statusAndTransactionContainer = new VBox();

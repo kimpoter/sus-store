@@ -19,7 +19,10 @@ import javafx.scene.shape.Rectangle;
 import susstore.susstore.controller.TemporaryBillController;
 import susstore.susstore.models.Barang;
 import susstore.susstore.models.TemporaryBill;
+import susstore.susstore.models.TemporaryBillEntry;
 import susstore.susstore.view.PageType;
+
+import java.util.UUID;
 
 public class BarangCardComponent {
     private final BorderPane componentRootLayout;
@@ -27,7 +30,7 @@ public class BarangCardComponent {
     public int temporaryBillEntryIndex;
     private ObservableList<Node> bills;
     private TemporaryBill temporaryBill;
-    private int userId;
+    private UUID userId;
     private Node billCard;
     private TemporaryBillController temporaryBillController;
     private Barang barang;
@@ -43,7 +46,7 @@ public class BarangCardComponent {
         setStyleSheet();
     }
 
-    public BarangCardComponent(int userId, Barang barang, ObservableList<Node> bills, TemporaryBillController temporaryBillController, TemporaryBill temporaryBill, SimpleBooleanProperty simpleBooleanProperty) {
+    public BarangCardComponent(UUID userId, Barang barang, ObservableList<Node> bills, TemporaryBillController temporaryBillController, TemporaryBill temporaryBill, SimpleBooleanProperty simpleBooleanProperty) {
         this.componentRootLayout = new BorderPane();
         this.bills = bills;
         this.barang = barang;
@@ -59,9 +62,9 @@ public class BarangCardComponent {
     private void loadUI() {
         Rectangle imageContainer = new Rectangle(0, 0, 180, 180);
         imageContainer.getStyleClass().add("image-container");
-        Image image = new Image(barang.getGambar(), false);
+        Image image = new Image(barang.getPathGambar(), false);
         imageContainer.setFill(new ImagePattern(image));
-        Label nameLabel = new Label(barang.getNamaBarang());
+        Label nameLabel = new Label(barang.getNama());
 
         VBox imageAndNameContainer = new VBox();
         imageAndNameContainer.getStyleClass().add("image-name-container");
@@ -98,12 +101,9 @@ public class BarangCardComponent {
             plusButton.getStyleClass().add("plus-button-barang-card");
 
             if (this.temporaryBill != null) {
-                System.out.println("TEMPBILL: " + this.temporaryBill.getDaftar().size());
                 int i = 0;
-                for (TemporaryBillEntry temporaryBillEntry : this.temporaryBill.getDaftar()) {
-                    System.out.println("TEMPORARYBILL ENTRY ID: " + temporaryBillEntry.getBarang().getId());
-                    System.out.println("BARANG ID: " + this.barang.getId());
-                    if (temporaryBillEntry.getBarang().getId() == this.barang.getId()) {
+                for (TemporaryBillEntry temporaryBillEntry : this.temporaryBill.getDaftarEntry()) {
+                    if (temporaryBillEntry.getProduct().getID() == this.barang.getID()) {
                         selectedAmount.set(temporaryBillEntry.getJumlah());
                         this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
                         this.bills.add(this.billCard);
@@ -129,13 +129,13 @@ public class BarangCardComponent {
             plusButton.setOnAction(event -> {
                 if (selectedAmount.get() < this.barang.getStok()) {
                     if (this.temporaryBill == null) {
-                        this.temporaryBillController.addTemporaryBill(new TemporaryBill(userId));
-                        this.temporaryBill = this.temporaryBillController.getTemporaryBills().get(this.temporaryBillController.getTemporaryBillsLength() - 1);
+                        this.temporaryBillController.addTemporaryBill(new TemporaryBill(UUID.randomUUID()));
+                        this.temporaryBill = this.temporaryBillController.getTemporaryBills().get(this.temporaryBillController.getTemporaryBills().size() - 1);
                     }
                     if (selectedAmount.get() == 0) {
                         this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
-                        this.temporaryBillEntryIndex = this.temporaryBill.addBarang(barang, 1);
-                        this.temporaryBillEntry = this.temporaryBill.getDaftar().get(temporaryBillEntryIndex);
+                        this.temporaryBillEntryIndex = this.temporaryBill.addProduct(barang, 1);
+                        this.temporaryBillEntry = this.temporaryBill.getDaftarEntry().get(temporaryBillEntryIndex);
                         this.bills.add(this.billCard);
                     } else {
                         this.temporaryBillEntry.setJumlah(selectedAmount.get() + 1);
@@ -153,7 +153,7 @@ public class BarangCardComponent {
             this.componentRootLayout.setCenter(addToChartActionContainer);
         }
 
-        Label priceLabel = new Label(barang.getHargaBarang().getNominal() + "");
+        Label priceLabel = new Label(barang.getHargaJual() + "");
         Label stockLabel = new Label("Stock: " + barang.getStok());
         stockLabel.getStyleClass().add("stock-label");
 
