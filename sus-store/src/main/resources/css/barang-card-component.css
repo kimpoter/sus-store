@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "Font Awesome 6 Free Solid";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/fa-solid.otf");
+}
+
+.component-root-layout {
+    -fx-padding: 10px;
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
+    -fx-background-color: "#37446B";
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+}
+
+.image-container {
+    -fx-background-radius: 10px;
+}
+
+.label {
+     -fx-text-fill: "#D2D6E3";
+     -fx-alignment: center;
+}
+
+.stock-label {
+    -fx-padding: 4px 6px;
+    -fx-background-color: "#EAB308";
+    -fx-background-radius: 10px;
+    -fx-text-fill: "#242C46";
+}
+
+.price-stock-container {
+    -fx-alignment: center;
+    -fx-padding: 10px 0 0 0;
+}
+
+.image-name-container {
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+    -fx-padding: 0 0 10px 0;
+}
+
+.actions-container {
+    -fx-pref-height: 30px;
+    -fx-padding: 10px;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-padding: 2px 4px;
+}
+
+.edit-action-button {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#0EA5E9";
+}
+
+.delete-action-button {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#D41976";
+}
+
+.add-tochart-action-container-barang-card {
+    -fx-background-color: "#2C3656";
+    -fx-padding: 10px;
+}
+
+.minus-button-barang-card {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#D41976";
+}
+
+.plus-button-barang-card {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#0EA5E9";
+}

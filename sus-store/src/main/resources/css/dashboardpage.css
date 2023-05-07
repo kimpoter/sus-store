@@ -1,0 +1,7 @@
+.vbox-layout {
+    -fx-spacing: 50px;
+}
+
+.hbox-layout {
+    -fx-spacing: 25px;
+}

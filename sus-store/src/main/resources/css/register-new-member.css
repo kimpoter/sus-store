@@ -1,0 +1,84 @@
+.page-root-layout{
+    -fx-spacing: 30px;
+    -fx-alignment: center;
+    -fx-padding: 20px 10px;
+}
+
+.button {
+    -fx-background-radius: 10px;
+    -fx-padding: 4px 6px;
+    -fx-pref-width: 100px;
+}
+
+.save-button {
+    -fx-background-color: "#84CC16";
+    -fx-text-fill: "#1E1E1E";
+}
+
+.cancel-button {
+    -fx-background-color: "#37446B";
+    -fx-text-fill: "#D2D6E3";
+}
+
+.action-buttons-container{
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+}
+
+.form-container {
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+    -fx-max-width: 300px;
+}
+
+.input-label {
+    -fx-text-fill: "#D2D6E3";
+    -fx-padding: 10px 0;
+}
+
+.text-field {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 6px;
+    -fx-text-fill: "#D2D6E3";
+}
+
+.text-field:focus {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.text-field:selected {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.membership-status-container {
+    -fx-spacing: 10px;
+    -fx-padding: 10px 0;
+}
+
+.choice-box {
+    -fx-background-color: "#3B4873";
+    -fx-pref-width: 145px;
+    -fx-mark-color: "#D2D6E3";
+}
+
+.choice-box > .label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.choice-box .context-menu {
+    -fx-background-color: "#3B4873";
+    -fx-padding: 5px;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: "#242C46";
+    -fx-background-radius: 10px;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: "#D2D6E3";
+}

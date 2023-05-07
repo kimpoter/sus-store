@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "Font Awesome 6 Free Solid";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/fa-solid.otf");
+}
+
+.component-root-layout {
+    -fx-max-width: 800px;
+    -fx-max-height: 200px;
+    -fx-background-color: "#37446B";
+    -fx-background-radius: 20px;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: "#D3A107";
+    -fx-border-radius: 20px;
+    -fx-padding: 10px 20px;
+}
+
+.label-customer-transaction-card {
+    -fx-text-fill: "#D2D6E3";
+}

@@ -1,0 +1,36 @@
+.root {
+    -fx-background-color: "#242C46";
+    -fx-text-fill: "#D2D6E3";
+}
+
+.tab-pane {
+    -fx-tab-min-width: 150px;
+    -fx-tab-max-width: 150px;
+}
+
+.tab-pane .tab-header-area .tab:selected {
+    -fx-background-color: "#2C3656";
+}
+
+.tab-pane .tab-header-area .tab {
+    -fx-background-color: "#242C46";
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-inset: 0;
+}
+
+.tab-pane .tab-header-area .tab .tab-label {
+    -fx-text-fill: "#D2D6E3";
+    -fx-pref-width: 150px;
+    -fx-alignment: center-left;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: "#242C46";
+}
+
+.tab-pane .tab-content-area {
+    -fx-background-color: "#2C3656";
+    -fx-alignment: center;
+}

@@ -1,0 +1,95 @@
+@font-face {
+    font-family: "Font Awesome 6 Free Solid";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/fa-solid.otf");
+}
+
+.root-component-layout {
+    -fx-max-width: 800px;
+    -fx-max-height: 300px;
+    -fx-background-color: "#37446B";
+    -fx-background-radius: 20px;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: "#D3A107";
+    -fx-border-radius: 20px;
+    -fx-padding: 10px 20px;
+}
+
+.id-membership-container {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.status-actions-container {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.label {
+    -fx-text-fill: "#D2D6E3";
+}
+
+.membership-label {
+    -fx-padding: 2px 6px;
+    -fx-text-fill: "#2C3656";
+    -fx-background-color: "#D3A107";
+    -fx-background-radius: 10px;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-padding: 2px 4px;
+}
+
+.edit-action-button {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#0EA5E9";
+}
+
+.delete-action-button {
+    -fx-font-family: "Font Awesome 6 Free Solid";
+    -fx-font-size: 16px;
+    -fx-text-fill: "#D41976";
+}
+
+.delete-action-button: hover {
+    -fx-text-fill: pink;
+}
+
+.status-transaction-container {
+    -fx-spacing: 5px;
+    -fx-alignment: center;
+}
+
+.status-label {
+    -fx-padding: 2px 6px;
+    -fx-background-radius: 10px;
+}
+
+.status-label-active {
+    -fx-text-fill: "#2C3656";
+    -fx-background-color: "#9FE3CD";
+}
+
+.status-label-disabled {
+    -fx-text-fill: "#2C3656";
+    -fx-background-color: "#EEA3C8";
+}
+
+.status-label-none {
+    -fx-text-fill: "#D2D6E3";
+    -fx-background-color: "#2C3656";
+}
+
+.name-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+.name-phone-container {
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 20px;
+}
