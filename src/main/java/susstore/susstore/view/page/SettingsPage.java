@@ -17,7 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
-public class SettingsPage extends Page{
+public class SettingsPage extends Page {
     private final SplitPane pageRootLayout;
     private final Stage primaryStage;
     private Label filePath;
@@ -33,13 +33,13 @@ public class SettingsPage extends Page{
         this.tab.setContent(this.pageRootLayout);
     }
 
-    public 
 
     public void addNewSettings(String s1, String s2){
         Label labelSetting1 = new Label(s1);
         Label labelPenjelasanSetting1 = new Label(s2);
         this.settingContainer.add(labelSetting1, 0, 7);
         this.settingContainer.add(labelPenjelasanSetting1, 0, 8);
+    
     }
 
     private void loadUI() {

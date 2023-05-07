@@ -11,7 +11,7 @@ import java.util.*;
 public class Navbar {
     private final MenuBar menuBar;
     private final Map<String, Menu> menus;
-    private final Map<String, List<PageType>> menuItems;
+    private final Map<String, List<String>> menuItems;
     private final PageManager pageManager;
 
     public Navbar(PageManager pageManager) {
@@ -35,18 +35,16 @@ public class Navbar {
         for (MenuType menu : MenuType.values()) {
             this.menuItems.put(menu.name(), new ArrayList<>());
         }
-        this.menuItems.get(MenuType.Settings.name()).add(PageType.SettingsPage);
+        this.menuItems.get(MenuType.Settings.name()).add(PageType.SettingsPage.getName());
 
         // customer menu items
-        this.menuItems.get(MenuType.Customer.name()).add(PageType.AllCustomerPage);
-        this.menuItems.get(MenuType.Customer.name()).add(PageType.RegisterNewMember);
-        this.menuItems.get(MenuType.Customer.name()).add(PageType.EditCustomerPage);
+        this.menuItems.get(MenuType.Customer.name()).add(PageType.AllCustomerPage.getName());
+        this.menuItems.get(MenuType.Customer.name()).add(PageType.RegisterNewMember.getName());
+        this.menuItems.get(MenuType.Customer.name()).add(PageType.EditCustomerPage.getName());
 
         // barang menu items
-        this.menuItems.get(MenuType.Barang.name()).add(PageType.AllBarang);
-        this.menuItems.get(MenuType.Barang.name()).add(PageType.Kasir);
-
-        //this.menus.get(MenuType.Settings.name()).setOnAction(ActionEvent->pageManager.addTab(PageType.SettingsPage));
+        this.menuItems.get(MenuType.Barang.name()).add(PageType.AllBarang.getName());
+        this.menuItems.get(MenuType.Barang.name()).add(PageType.Kasir.getName());
     }
 
     private void initializeMenus() {
@@ -56,9 +54,9 @@ public class Navbar {
     }
 
     private void addMenuItems() {
-        for (Map.Entry<String, List<PageType>> menuItem : this.menuItems.entrySet()) {
-            for (PageType menuItemName : menuItem.getValue()) {
-                MenuItem mItem = new MenuItem(menuItemName.getName());
+        for (Map.Entry<String, List<String>> menuItem : this.menuItems.entrySet()) {
+            for (String menuItemName : menuItem.getValue()) {
+                MenuItem mItem = new MenuItem(menuItemName);
                 mItem.setOnAction(actionEvent -> pageManager.addTab(menuItemName));
                 menus.get(menuItem.getKey()).getItems().add(mItem);
             }
@@ -77,5 +75,12 @@ public class Navbar {
 
     public MenuBar getMenuBar() {
         return this.menuBar;
+    }
+
+    public void addNewMenu(String pageName) {
+        this.menuItems.get(MenuType.Plugins.name()).add(pageName);
+        MenuItem newMenuItem = new MenuItem(pageName);
+        newMenuItem.setOnAction(e -> pageManager.addTab(pageName));
+        menus.get(MenuType.Plugins.name()).getItems().add(newMenuItem);
     }
 }
