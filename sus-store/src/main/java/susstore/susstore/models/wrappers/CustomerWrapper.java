@@ -22,4 +22,7 @@ public class CustomerWrapper implements Storable {
         return customerList;
     }
 
+    public List<Member> getMemberList() {
+        return memberList;
+    }
 }
