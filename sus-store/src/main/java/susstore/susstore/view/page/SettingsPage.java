@@ -7,6 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import susstore.susstore.Setting;
+import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 import javafx.stage.FileChooser;
@@ -23,6 +25,7 @@ public class SettingsPage extends Page {
     private Label filePath;
     private File selectedFile;
     private GridPane settingContainer;
+    private static Setting setting = Setting.getInstance();
 
     public SettingsPage(Stage primaryStage) {
         super(PageType.SettingsPage);
@@ -80,6 +83,17 @@ public class SettingsPage extends Page {
         categoryChoices.getItems().add("XML");
         categoryChoices.getItems().add("OBJ");
 
+        Button addPlugin = new Button();
+        addPlugin.setOnAction(
+            e -> {
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JAR files(.jar)", "*.jar");
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().add(extFilter);
+                File fileSaved = fileChooser.showOpenDialog(primaryStage);
+                setting.addPlugins(fileSaved.getAbsolutePath());
+                PluginManager.register(fileSaved.getAbsolutePath());
+            }
+        );
         settingContainer.add(labelSetting2, 0, 4);
         settingContainer.add(labelPenjelasanSetting2, 0, 5);
         settingContainer.add(categoryChoices, 0, 6);
