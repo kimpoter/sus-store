@@ -1,31 +1,37 @@
 package susstore.susstore.models;
 
-
 import susstore.susstore.datastore.Storable;
+import susstore.susstore.models.api.*;
 
-public abstract class Bill implements Storable {
+import java.util.UUID;
 
-    protected int id;
-    protected int idUser;
+public abstract class Bill implements Transaction
+{
+    protected Integer biilID;
 
-    public Bill(int id, int idUser) {
-        this.id = id;
-        this.idUser = idUser;
+    protected UUID userID;
+
+    public Bill(Integer billID, UUID userID)
+    {
+        this.biilID = billID;
+        this.userID = userID;
     }
-
-    /* Getter & Setter */
-    public int getId() {
-        return id;
-    }
-
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public abstract Nominal getBillTotal();
 
     @Override
-    public String getStorableId() {
-        return Integer.toString(this.id);
+    public Integer getID()
+    {
+        return this.biilID;
+    }
+
+    public UUID getUserID()
+    {
+        return this.userID;
+    }
+
+    public abstract Double getBillTotal();
+
+    public String getStorableId()
+    {
+        return this.biilID.toString();
     }
 }
