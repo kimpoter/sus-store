@@ -7,32 +7,30 @@ public class DataStoreController<T extends Storable> {
         XML
     }
 
-    private String targetFile;
-    private TYPE type;
-    private Class<T> objClass;
+    private final Class<T> objClass;
     private DataStore<T> dataStore;
     private T data;
 
-    public DataStoreController(Class<T> objClass, String targetFile, TYPE type) {
-        this.targetFile = targetFile;
+    public DataStoreController(Class<T> objClass, String targetPath, TYPE type) {
         this.objClass = objClass;
-        this.targetFile = targetFile;
-        changeTarget(targetFile, type);
+        changeTarget(targetPath, type);
         this.data = null;
     }
 
     public void changeTarget(String targetFile, TYPE type) {
         switch (type) {
-            case JSON:
-                this.dataStore = new JSONAdapter<>(targetFile, this.objClass);
-                break;
-            case XML:
-                this.dataStore = new XMLAdapter<>(targetFile, this.objClass);
-                break;
-            case OBJ:
-                this.dataStore = new OBJAdapter<>(targetFile, this.objClass);
-                break;
+            case JSON -> this.dataStore = new JSONAdapter<>(targetFile, this.objClass);
+            case XML -> this.dataStore = new XMLAdapter<>(targetFile, this.objClass);
+            case OBJ -> this.dataStore = new OBJAdapter<>(targetFile, this.objClass);
         }
+    }
+
+    public void setTargetPath(String targetPath) {
+        this.dataStore.setTargetPath(targetPath);
+    }
+
+    public String getTargetPath() {
+        return this.dataStore.getTargetPath();
     }
 
     public void setData(T data) {
