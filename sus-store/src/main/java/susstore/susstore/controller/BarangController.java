@@ -3,6 +3,7 @@ package susstore.susstore.controller;
 import susstore.susstore.SubscriberManager;
 import susstore.susstore.datastore.DataStoreController;
 import susstore.susstore.datastore.Storable;
+import susstore.susstore.datastore.DataStoreController.TYPE;
 import susstore.susstore.models.Barang;
 import susstore.susstore.models.wrappers.BarangWrapper;
 import susstore.susstore.Subscriber;
@@ -43,7 +44,7 @@ public class BarangController {
 
     public void setBarangs(List<Barang> barang){
         this.barangs = barang;
-        //this.subscribers.notify();
+        this.subscribers.notify();
     }
 
     public void addBarang(Barang b){
@@ -60,6 +61,17 @@ public class BarangController {
         return this.barangs;
     }
 
+    public void loadData(String s, TYPE t){
+        this.dataStoreController.changeTarget(s+"/Barang." + t.name().toLowerCase(), t);
+        this.dataStoreController.setTargetPath(s+"/Barang"+ t.name().toLowerCase());
+        try {
+            this.barangs = this.dataStoreController.loadData().getBarangList();
+            this.subscribers.notifysubs("new-data");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
+    }
     public void addSubscriber(Subscriber s){
         this.subscribers.subscribe(s);
     }

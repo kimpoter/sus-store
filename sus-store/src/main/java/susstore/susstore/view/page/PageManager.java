@@ -65,7 +65,7 @@ public class PageManager {
         pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage, this.barangController));
         pages.put(PageType.NewBarang.getName(), (String) -> new NewBarangPage(primaryStage, this.barangController));
         pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController, this.customerController, this.fixedBillController));
-        pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
+        pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage,this.barangController,this.customerController,this.fixedBillController,this.temporaryBillController));
         pages.put(PageType.AllMemberPage.getName(), (String) -> new AllMemberPage(this.customerController));
     }
 

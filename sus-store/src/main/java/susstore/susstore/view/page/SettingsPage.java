@@ -12,6 +12,14 @@ import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
+import susstore.susstore.controller.BarangController;
+import susstore.susstore.controller.FixedBillController;
+import susstore.susstore.controller.TemporaryBillController;
+import susstore.susstore.controller.UserController;
+import susstore.susstore.datastore.DataStoreController;
+import susstore.susstore.datastore.DataStoreController.TYPE;
+import susstore.susstore.models.api.User;
 
 import java.io.File;
 
@@ -26,9 +34,18 @@ public class SettingsPage extends Page {
     private File selectedFile;
     private GridPane settingContainer;
     private static Setting setting = Setting.getInstance();
+    private BarangController barangController;
+    private UserController userController;
+    private TemporaryBillController temporaryBillController;
+    private FixedBillController fixedBillController;
+    private ChoiceBox<TYPE> categoryChoices;
 
-    public SettingsPage(Stage primaryStage) {
+    public SettingsPage(Stage primaryStage,BarangController  barangController, UserController userController, FixedBillController fixedBillController, TemporaryBillController temporaryBillController) {
         super(PageType.SettingsPage);
+        this.barangController=barangController;
+        this.userController=userController;
+        this.temporaryBillController=temporaryBillController;
+        this.fixedBillController=fixedBillController;
         this.pageRootLayout = new SplitPane();
         this.primaryStage = primaryStage;
         loadUI();
@@ -65,10 +82,12 @@ public class SettingsPage extends Page {
 
         pilihFile.setOnAction(
             e -> {
-                FileChooser fileChooser = new FileChooser();
-                File fileSaved = fileChooser.showOpenDialog(primaryStage);
-                this.selectedFile = fileSaved;
-                this.filePath.setText("File yang dipilih adalah : " + selectedFile.getAbsolutePath());
+                DirectoryChooser fileChooser = new DirectoryChooser();
+                File selectedDirectory = fileChooser.showDialog(primaryStage);
+                this.selectedFile = selectedDirectory;
+                
+                this.filePath.setText("Directory yang dipilih adalah : " + selectedFile.getAbsolutePath());
+                this.barangController.loadData(selectedDirectory.getAbsolutePath(), categoryChoices.getSelectionModel().getSelectedItem());
             }
         );
         settingContainer.add(labelSetting1, 0, 0);
@@ -78,10 +97,10 @@ public class SettingsPage extends Page {
 
         Label labelSetting2 = new Label("\nTipe penyimpanan file ");
         Label labelPenjelasanSetting2 = new Label("Tipe dari file yang menyimpan data program.");
-        ChoiceBox categoryChoices = new ChoiceBox();
-        categoryChoices.getItems().add("JSON");
-        categoryChoices.getItems().add("XML");
-        categoryChoices.getItems().add("OBJ");
+        categoryChoices = new ChoiceBox<TYPE>();
+        categoryChoices.getItems().add(TYPE.JSON);
+        categoryChoices.getItems().add(TYPE.XML);
+        categoryChoices.getItems().add(TYPE.OBJ);
 
         Button addPlugin = new Button();
         addPlugin.setOnAction(
