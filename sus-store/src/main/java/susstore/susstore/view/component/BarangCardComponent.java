@@ -104,11 +104,16 @@ public class BarangCardComponent {
                 int i = 0;
                 for (TemporaryBillEntry temporaryBillEntry : this.temporaryBill.getDaftarEntry()) {
                     if (temporaryBillEntry.getProduct().getID() == this.barang.getID()) {
-                        selectedAmount.set(temporaryBillEntry.getJumlah());
-                        this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
-                        this.bills.add(this.billCard);
                         this.temporaryBillEntry = temporaryBillEntry;
                         this.temporaryBillEntryIndex = i;
+
+                        selectedAmount.set(Math.min(temporaryBillEntry.getJumlah(), barang.getStok()));
+                        System.out.println("SELECTEDAMOUNT::" + selectedAmount.get());
+                        this.temporaryBillEntry.setJumlah(selectedAmount.get());
+                        if (selectedAmount.get() > 0) {
+                            this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
+                            this.bills.add(this.billCard);
+                        }
                     }
                     i++;
                 }
@@ -129,7 +134,7 @@ public class BarangCardComponent {
             plusButton.setOnAction(event -> {
                 if (selectedAmount.get() < this.barang.getStok()) {
                     if (this.temporaryBill == null) {
-                        this.temporaryBillController.addTemporaryBill(new TemporaryBill(UUID.randomUUID()));
+                        this.temporaryBillController.addTemporaryBill(new TemporaryBill(userId));
                         this.temporaryBill = this.temporaryBillController.getTemporaryBills().get(this.temporaryBillController.getTemporaryBills().size() - 1);
                     }
                     if (selectedAmount.get() == 0) {

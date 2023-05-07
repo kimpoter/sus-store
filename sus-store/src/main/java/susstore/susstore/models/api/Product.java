@@ -4,14 +4,14 @@ import susstore.susstore.datastore.Storable;
 
 public interface Product extends Gambar, ID, Kategori, Nama, Storable, UseCurrency
 {
-    public Integer getStok();
-    public Double getHargaBeli();
+    int getStok();
+    double getHargaBeli();
 
-    public Double getHargaJual();
+    double getHargaJual();
 
-    public void setStok(Integer stok);
+    void setStok(int stok);
 
-    public void setHargaBeli(Double hargaBeli);
+    void setHargaBeli(double hargaBeli);
 
-    public void setHargaJual(Double hargaJual);
+    void setHargaJual(double hargaJual);
 }

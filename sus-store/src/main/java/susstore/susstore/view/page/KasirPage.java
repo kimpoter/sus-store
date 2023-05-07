@@ -1,7 +1,9 @@
 package susstore.susstore.view.page;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableBooleanValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,9 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import susstore.susstore.Subscriber;
 import susstore.susstore.controller.BarangController;
+import susstore.susstore.controller.FixedBillController;
 import susstore.susstore.controller.TemporaryBillController;
-import susstore.susstore.models.Barang;
-import susstore.susstore.models.TemporaryBill;
+import susstore.susstore.controller.UserController;
+import susstore.susstore.models.*;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 import susstore.susstore.view.component.BillCardComponent;
@@ -37,8 +40,10 @@ public class KasirPage extends Page implements Subscriber {
     private ComboBox<String> customerInput;
     private Label totalPriceLabel;
     private SimpleBooleanProperty booleanProperty;
+    private UserController userController;
+    private FixedBillController fixedBillController;
 
-    public KasirPage(BarangController barangController, TemporaryBillController temporaryBillController) {
+    public KasirPage(BarangController barangController, TemporaryBillController temporaryBillController, UserController userController, FixedBillController fixedBillController) {
         super(PageType.Kasir);
         this.pageRootLayout = new SplitPane();
         this.barangController = barangController;
@@ -48,6 +53,8 @@ public class KasirPage extends Page implements Subscriber {
         this.customerInput = new ComboBox<String>();
         this.totalPriceLabel = new Label();
         this.booleanProperty = new SimpleBooleanProperty();
+        this.userController = userController;
+        this.fixedBillController = fixedBillController;
         initializeBill();
         loadTemporaryBills();
         loadUI();
@@ -66,42 +73,47 @@ public class KasirPage extends Page implements Subscriber {
         this.temporaryBills = this.temporaryBillController.getTemporaryBills();
     }
 
-    private void loadTemporaryBill() {
+    private UUID loadTemporaryBill() {
         loadTemporaryBills();
         UUID userId;
         if (this.customerInput.getValue() == null || Objects.equals(this.customerInput.getValue(), "")) {
-            userId = UUID.randomUUID();
+            userId = UUID.fromString(this.userController.addCustomer(new Customer()));
+            this.customerInput.getItems().add(userId.toString());
+            this.customerInput.setValue(userId.toString());
         } else {
             userId = UUID.fromString(this.customerInput.getValue());
         }
+
+        this.temporaryBill = null;
         for (TemporaryBill temporaryBill : this.temporaryBills) {
-            if (temporaryBill.getUserID() == userId) {
+            if (temporaryBill.getUserID().equals(userId)) {
+                System.out.println("DALEM::" + userId);
                 this.temporaryBill = temporaryBill;
-                System.out.println("AFJLJFLJSDLJFLKJFSKJFISHFISHFOISHH");
             }
         }
+        return userId;
     }
 
 
     private void loadBarang() {
         int index = 0;
-        UUID userId;
-        loadTemporaryBills();
-        if (this.customerInput.getValue() == null || Objects.equals(this.customerInput.getValue(), "")) {
-            userId = null;
-        } else {
-            userId = UUID.fromString(this.customerInput.getValue());
-        }
-        if (userId != null) {
-            this.billElementsContainer.getChildren().clear();
-            System.out.println("USER ID:::::: " + userId);
-            this.temporaryBill = null;
-            for (TemporaryBill temporaryBill : this.temporaryBills) {
-                if (temporaryBill.getUserID() == userId) {
-                    this.temporaryBill = temporaryBill;
-                }
-            }
-        }
+        UUID userId = loadTemporaryBill();
+        System.out.println("FIXED BILL SIZE:" + this.fixedBillController.getFixedBills().size());
+        System.out.println("TEMP BILL SIZE:" + this.temporaryBillController.getTemporaryBills().size());
+//        this.billElementsContainer.getChildren().clear();
+//        this.temporaryBill = null;
+//        for (TemporaryBill temporaryBill : this.temporaryBills) {
+//            if (temporaryBill.getUserID() == userId) {
+//                this.temporaryBill = temporaryBill;
+//            }
+//        }
+
+        System.out.println("INSIDE LOAD BARANG");
+        this.bills.clear();
+        this.billElementsContainer.getChildren().clear();
+
+        System.out.println(userId);
+
         for (Barang barang : this.barangController.getBarangs()) {
             BarangCardComponent barangCard = new BarangCardComponent(userId, barang, this.bills, this.temporaryBillController, this.temporaryBill, this.booleanProperty);
             this.barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
@@ -146,16 +158,21 @@ public class KasirPage extends Page implements Subscriber {
         customerInput.setEditable(true);
         customerInput.setPromptText("Choose Customer");
         customerInput.getStyleClass().add("customer-input-kasir");
-        customerInput.getItems().addAll("guya", "akane", "kana", "jihu", "kazuha");
-        for (int i = 0; i < 50; i++) {
-            customerInput.getItems().add(Integer.toString(i));
+        customerInput.getItems().add("");
+        this.customerInput.setStyle("-fx-max-width: 200px;");
+        for (TemporaryBill temporaryBill1 : temporaryBills) {
+            for (Customer customer : userController.getCustomers()) {
+                if (customer.getUserID().equals(temporaryBill1.getUserID())) {
+                    customerInput.getItems().add(temporaryBill1.getUserID().toString());
+                }
+            }
         }
+
         Button okButton = new Button("OK");
         okButton.setOnAction(e -> {
             loadBarang();
-            if (this.temporaryBill == null) {
-                this.totalPriceLabel.setText("");
-            } else {
+            this.totalPriceLabel.setText("");
+            if (this.temporaryBill != null) {
                 this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
             }
         });
@@ -166,6 +183,15 @@ public class KasirPage extends Page implements Subscriber {
 
         TextField pointInput = new TextField();
         pointInput.setPromptText("Point");
+        pointInput.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*\\.?\\d+") || !newValue.matches("\\d*\\.?")) {
+                    pointInput.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
         BorderPane customerAndPointContainer = new BorderPane();
         Insets customerAndPointInsets = new Insets(10, 20, 20, 20);
@@ -194,7 +220,11 @@ public class KasirPage extends Page implements Subscriber {
                         this.billElementsContainer.getChildren().remove(bill);
                     }
                     loadTemporaryBill();
-                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                    if (this.temporaryBill != null) {
+                        this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                    } else {
+                        this.totalPriceLabel.setText("");
+                    }
                 }
             }
         });
@@ -222,6 +252,20 @@ public class KasirPage extends Page implements Subscriber {
 
         Button cancelButton = new Button("Cancel");
         Button checkoutButton = new Button("Checkout");
+        checkoutButton.setOnAction(e -> {
+            this.fixedBillController.addFixedBill(new FixedBill(this.temporaryBill));
+            int indexFound = 0;
+            for (TemporaryBill temporaryBill1 : this.temporaryBillController.getTemporaryBills()) {
+                if (temporaryBill1.getID() == this.temporaryBill.getID()) {
+                    indexFound = 0;
+                    for (TemporaryBillEntry temporaryBillEntry : temporaryBill1.getDaftarEntry()) {
+                        temporaryBillEntry.getProduct().setStok(temporaryBillEntry.getProduct().getStok() - temporaryBillEntry.getJumlah());
+                    }
+                }
+            }
+            this.temporaryBillController.getTemporaryBills().remove(indexFound);
+            loadBarang();
+        });
         HBox actionButtonsContainer = new HBox();
         cancelButton.getStyleClass().addAll("action-button-kasir", "cancel-button-kasir");
         checkoutButton.getStyleClass().addAll("action-button-kasir", "checkout-button-kasir");

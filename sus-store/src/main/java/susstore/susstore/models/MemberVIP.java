@@ -8,6 +8,8 @@ public class MemberVIP extends Member {
         setMembership();
     }
 
+    protected MemberVIP() {}
+
     @Override
     protected void setMembership() {
         this.membership = MEMBERSHIP.VIP;

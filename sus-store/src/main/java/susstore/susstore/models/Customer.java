@@ -1,11 +1,12 @@
 package susstore.susstore.models;
 
+import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.api.Currency;
 import susstore.susstore.models.api.User;
 
 import java.util.UUID;
 
-public class Customer implements User
+public class Customer implements User, Storable
 {
     protected static Currency currency = CurrencyIDR.getInstance();
 

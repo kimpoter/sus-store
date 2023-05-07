@@ -1,8 +1,9 @@
 package susstore.susstore.models;
 
+import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.api.Product;
 
-public class TemporaryBillEntry {
+public class TemporaryBillEntry implements Storable {
     private Product product;
 
     private Integer jumlah;
@@ -11,6 +12,8 @@ public class TemporaryBillEntry {
         this.product = product;
         this.jumlah = jumlah;
     }
+
+    private TemporaryBillEntry() {}
 
     public Product getProduct() {
         return this.product;

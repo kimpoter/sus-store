@@ -5,24 +5,24 @@ import susstore.susstore.models.api.*;
 
 import java.util.UUID;
 
-public class Barang implements Product {
+public class Barang implements Product, Storable {
     private static Currency currency = CurrencyIDR.getInstance();
     private final UUID id;
     private String namaBarang;
-    private Integer stok;
+    private int stok;
     private String kategori;
     private String pathGambar;
-    private Double hargaBeli;
+    private double hargaBeli;
 
-    private Double hargaJual;
+    private double hargaJual;
 
     public Barang(
             String namaBarang,
-            Integer stok,
+            int stok,
             String kategori,
             String pathGambar,
-            Double hargaBeli,
-            Double hargaJual
+            double hargaBeli,
+            double hargaJual
     ) {
         this.id = UUID.randomUUID();
         this.namaBarang = namaBarang;
@@ -31,6 +31,10 @@ public class Barang implements Product {
         this.pathGambar = pathGambar;
         this.hargaBeli = hargaBeli;
         this.hargaJual = hargaJual;
+    }
+
+    protected Barang() {
+        this.id = UUID.randomUUID();
     }
 
     @Override
@@ -74,31 +78,31 @@ public class Barang implements Product {
         currency = c;
     }
 
-    public Integer getStok() {
+    public int getStok() {
         return this.stok;
     }
 
-    public void setStok(Integer stok) {
+    public void setStok(int stok) {
         this.stok = stok;
     }
 
-    public Double getHargaBeli() {
+    public double getHargaBeli() {
         return currency.getValue(this.hargaBeli);
     }
 
-    public void setHargaBeli(Double hargaBeli) {
+    public void setHargaBeli(double hargaBeli) {
         this.hargaBeli = hargaBeli;
     }
 
-    public Double getHargaJual() {
+    public double getHargaJual() {
         return currency.getValue(this.hargaJual);
     }
 
-    public void setHargaJual(Double hargaJual) {
+    public void setHargaJual(double hargaJual) {
         this.hargaJual = hargaJual;
     }
 
-    public void ambilBarang(Integer jumlah) throws Exception {
+    public void ambilBarang(int jumlah) throws Exception {
         if (jumlah > this.stok)
             throw new Exception("Tidak cukup stok");
 
