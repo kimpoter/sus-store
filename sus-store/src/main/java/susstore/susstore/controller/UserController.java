@@ -35,7 +35,7 @@ public class UserController {
 
     public String addCustomer(Customer c) {
         this.customers.add(c);
-        return this.customers.get(this.customers.size() - 1).getUserID().;
+        return this.customers.get(this.customers.size() - 1).getUserID().toString();
         //this.subscribers.notifysubs();
     }
 

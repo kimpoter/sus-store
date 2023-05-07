@@ -3,6 +3,7 @@ package susstore.susstore.view.page;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import susstore.susstore.controller.FixedBillController;
 import susstore.susstore.controller.TemporaryBillController;
 import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
@@ -26,6 +27,7 @@ public class PageManager {
     private final TemporaryBillController temporaryBillController;
     private UserController customerController;
     private BarangController barangController;
+    private FixedBillController fixedBillController;
     private UUID userId;
 
     public PageManager(Stage primaryStage) {
@@ -37,6 +39,7 @@ public class PageManager {
         this.barangController = new BarangController();
         this.customerController = new UserController();
         this.temporaryBillController = new TemporaryBillController();
+        this.fixedBillController = new FixedBillController();
         this.userId = UUID.randomUUID();
         loadUI();
     }
@@ -51,7 +54,7 @@ public class PageManager {
         pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
         pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage, this.barangController));
         pages.put(PageType.NewBarang.getName(), (String) -> new NewBarangPage(primaryStage, this.barangController));
-        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController, this.customerController));
+        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController, this.customerController, this.fixedBillController));
         pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
         pages.put(PageType.AllMemberPage.getName(), (String) -> new AllMemberPage(this.customerController));
     }

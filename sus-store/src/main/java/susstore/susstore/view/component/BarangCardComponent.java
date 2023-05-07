@@ -104,11 +104,16 @@ public class BarangCardComponent {
                 int i = 0;
                 for (TemporaryBillEntry temporaryBillEntry : this.temporaryBill.getDaftarEntry()) {
                     if (temporaryBillEntry.getProduct().getID() == this.barang.getID()) {
-                        selectedAmount.set(temporaryBillEntry.getJumlah());
-                        this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
-                        this.bills.add(this.billCard);
                         this.temporaryBillEntry = temporaryBillEntry;
                         this.temporaryBillEntryIndex = i;
+
+                        selectedAmount.set(Math.min(temporaryBillEntry.getJumlah(), barang.getStok()));
+                        System.out.println("SELECTEDAMOUNT::" + selectedAmount.get());
+                        this.temporaryBillEntry.setJumlah(selectedAmount.get());
+                        if (selectedAmount.get() > 0) {
+                            this.billCard = new BillCardComponent(selectedAmountString, barang).getComponent();
+                            this.bills.add(this.billCard);
+                        }
                     }
                     i++;
                 }
