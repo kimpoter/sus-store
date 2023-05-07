@@ -33,7 +33,9 @@ public class Barang implements Product, Storable {
         this.hargaJual = hargaJual;
     }
 
-    protected Barang() {}
+    protected Barang() {
+        this.id = UUID.randomUUID();
+    }
 
     @Override
     public UUID getID() {
