@@ -10,6 +10,7 @@ import susstore.susstore.view.component.JoinDataTest;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 
 import susstore.susstore.controller.BarangController;
@@ -25,6 +26,7 @@ public class PageManager {
     private final TemporaryBillController temporaryBillController;
     private UserController customerController;
     private BarangController barangController;
+    private UUID userId;
 
     public PageManager(Stage primaryStage) {
         this.pages = new HashMap<>();
@@ -35,6 +37,7 @@ public class PageManager {
         this.barangController = new BarangController();
         this.customerController = new UserController();
         this.temporaryBillController = new TemporaryBillController();
+        this.userId = UUID.randomUUID();
         loadUI();
     }
 
@@ -50,7 +53,7 @@ public class PageManager {
         pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
         pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage, this.barangController));
         pages.put(PageType.NewBarang.getName(), (String) -> new NewBarangPage(primaryStage, this.barangController));
-        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController));
+        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController, this.customerController));
         pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
         pages.put(PageType.AllMemberPage.getName(), (String) -> new AllMemberPage(this.customerController));
     }

@@ -14,7 +14,9 @@ import javafx.scene.layout.VBox;
 import susstore.susstore.Subscriber;
 import susstore.susstore.controller.BarangController;
 import susstore.susstore.controller.TemporaryBillController;
+import susstore.susstore.controller.UserController;
 import susstore.susstore.models.Barang;
+import susstore.susstore.models.Customer;
 import susstore.susstore.models.TemporaryBill;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
@@ -37,8 +39,9 @@ public class KasirPage extends Page implements Subscriber {
     private ComboBox<String> customerInput;
     private Label totalPriceLabel;
     private SimpleBooleanProperty booleanProperty;
+    private UserController userController;
 
-    public KasirPage(BarangController barangController, TemporaryBillController temporaryBillController) {
+    public KasirPage(BarangController barangController, TemporaryBillController temporaryBillController, UserController userController) {
         super(PageType.Kasir);
         this.pageRootLayout = new SplitPane();
         this.barangController = barangController;
@@ -48,6 +51,7 @@ public class KasirPage extends Page implements Subscriber {
         this.customerInput = new ComboBox<String>();
         this.totalPriceLabel = new Label();
         this.booleanProperty = new SimpleBooleanProperty();
+        this.userController = userController;
         initializeBill();
         loadTemporaryBills();
         loadUI();
@@ -66,44 +70,41 @@ public class KasirPage extends Page implements Subscriber {
         this.temporaryBills = this.temporaryBillController.getTemporaryBills();
     }
 
-    private void loadTemporaryBill() {
+    private UUID loadTemporaryBill() {
         loadTemporaryBills();
         UUID userId;
         if (this.customerInput.getValue() == null || Objects.equals(this.customerInput.getValue(), "")) {
-            userId = UUID.randomUUID();
+            this.userController.addCustomer(new Customer());
         } else {
             userId = UUID.fromString(this.customerInput.getValue());
         }
+
         for (TemporaryBill temporaryBill : this.temporaryBills) {
-            if (temporaryBill.getUserID() == userId) {
+            if (temporaryBill.getUserID().equals(userId)) {
                 this.temporaryBill = temporaryBill;
-                System.out.println("AFJLJFLJSDLJFLKJFSKJFISHFISHFOISHH");
             }
         }
+        return userId;
     }
 
 
     private void loadBarang() {
         int index = 0;
-        UUID userId;
-        loadTemporaryBills();
-        if (this.customerInput.getValue() == null || Objects.equals(this.customerInput.getValue(), "")) {
-            userId = null;
-        } else {
-            userId = UUID.fromString(this.customerInput.getValue());
-        }
-        if (userId != null) {
-            this.billElementsContainer.getChildren().clear();
-            System.out.println("USER ID:::::: " + userId);
-            this.temporaryBill = null;
-            for (TemporaryBill temporaryBill : this.temporaryBills) {
-                if (temporaryBill.getUserID() == userId) {
-                    this.temporaryBill = temporaryBill;
-                }
-            }
-        }
+        UUID userId = loadTemporaryBill();
+
+
+//        this.billElementsContainer.getChildren().clear();
+//        this.temporaryBill = null;
+//        for (TemporaryBill temporaryBill : this.temporaryBills) {
+//            if (temporaryBill.getUserID() == userId) {
+//                this.temporaryBill = temporaryBill;
+//            }
+//        }
+
+        System.out.println("INSIDE LOAD BARANG");
+
         for (Barang barang : this.barangController.getBarangs()) {
-            BarangCardComponent barangCard = new BarangCardComponent(userId, barang, this.bills, this.temporaryBillController, this.temporaryBill, this.booleanProperty);
+            BarangCardComponent barangCard = new BarangCardComponent(this.tempUserId, barang, this.bills, this.temporaryBillController, this.temporaryBill, this.booleanProperty);
             this.barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
             index++;
         }

@@ -129,7 +129,7 @@ public class BarangCardComponent {
             plusButton.setOnAction(event -> {
                 if (selectedAmount.get() < this.barang.getStok()) {
                     if (this.temporaryBill == null) {
-                        this.temporaryBillController.addTemporaryBill(new TemporaryBill(UUID.randomUUID()));
+                        this.temporaryBillController.addTemporaryBill(new TemporaryBill(userId));
                         this.temporaryBill = this.temporaryBillController.getTemporaryBills().get(this.temporaryBillController.getTemporaryBills().size() - 1);
                     }
                     if (selectedAmount.get() == 0) {
