@@ -7,7 +7,7 @@ public class KasirController implements Subscriber {
         
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

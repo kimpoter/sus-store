@@ -37,7 +37,7 @@ public class NewBarangPage extends Page{
     private Rectangle imageContainer;
 
     public NewBarangPage(Stage primaryStage,BarangController barangController) {
-        super(PageType.AllBarang);
+        super(PageType.NewBarang);
         this.pageRootLayout = new VBox();
         this.primaryStage = primaryStage;
         this.barangController = barangController;

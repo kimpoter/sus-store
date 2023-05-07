@@ -7,6 +7,12 @@ public class MemberVIP extends Member
     public MemberVIP(Member other)
     {
         super(other);
+        setMembership();
+    }
+
+    @Override
+    protected void setMembership() {
+        this.membership = MEMBERSHIP.VIP;
     }
 
     @Override

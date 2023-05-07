@@ -7,7 +7,7 @@ public class LaporanPenjualanController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

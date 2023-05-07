@@ -7,7 +7,7 @@ public class ShowAllUserController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

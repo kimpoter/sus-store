@@ -16,9 +16,10 @@ public class SubscriberManager {
         subs.remove(subscriber);
     }
 
-    public void notifysubs() {
+    public void notifysubs(String s) {
         for (Subscriber subscriber : subs) {
-            subscriber.update();
+            if(subscriber!=null)
+            subscriber.update(s);
         }
     }
 }

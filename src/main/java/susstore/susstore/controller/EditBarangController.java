@@ -7,7 +7,7 @@ public class EditBarangController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

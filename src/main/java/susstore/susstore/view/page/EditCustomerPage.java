@@ -24,4 +24,5 @@ public class EditCustomerPage extends Page {
         nameLabel.textProperty().bind(this.joinDataTest.nameProperty());
         this.pageRootLayout.setCenter(nameLabel);
     }
+    
 }
