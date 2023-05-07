@@ -9,7 +9,7 @@ public class PluginController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

@@ -7,7 +7,7 @@ public class TambahUserController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

@@ -7,7 +7,7 @@ public class ModifBarangController implements Subscriber {
         
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

@@ -7,7 +7,7 @@ public class GudangController implements Subscriber {
 
     }
 
-    public void update() {
+    public void update(String s) {
         
     }
 }

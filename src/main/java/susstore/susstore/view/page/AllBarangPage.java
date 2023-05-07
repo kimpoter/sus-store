@@ -38,7 +38,7 @@ public class AllBarangPage extends Page implements Subscriber{
         this.tab.setContent(this.pageRootLayout);
     }
 
-    public void update(){
+    public void update(String s){
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
         int index=0;
@@ -50,10 +50,7 @@ public class AllBarangPage extends Page implements Subscriber{
         barangContainerScroll.setContent(barangContainer);
     }
 
-    private void loadUI() {
-        // barang
-        
-
+    private void loadUI() {        
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
         int index=0;

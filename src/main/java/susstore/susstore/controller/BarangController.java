@@ -32,7 +32,7 @@ public class BarangController {
 
     public void addBarang(Barang b){
         this.barangs.add(b);
-        this.subscribers.notifysubs();
+        this.subscribers.notifysubs("add-barang");
     }
 
     public List<Barang> getBarangs(){

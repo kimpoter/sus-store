@@ -69,7 +69,7 @@ public class AllCustomerController implements Subscriber {
     }
 
     @Override
-    public void update() {
+    public void update(String s) {
 
     }
 }

@@ -4,6 +4,8 @@ public enum PageType {
     SettingsPage("Settings Page"),
     DashBoardPage("Dashboard Page"),
     AllCustomerPage("All Customer Page"),
+    AllMemberPage("All Member Page"),
+    NewCustomer("New Customer Page"),
     RegisterNewMember("Register New Member"),
     EditCustomerPage("Edit Customer Page"),
     AllBarang("All Barang"),

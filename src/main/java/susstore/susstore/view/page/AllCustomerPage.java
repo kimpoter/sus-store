@@ -8,27 +8,41 @@ import javafx.scene.layout.VBox;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.CustomerCardComponent;
 import susstore.susstore.view.component.JoinDataTest;
+import susstore.susstore.controller.UserController;
+import susstore.susstore.models.Customer;
+import susstore.susstore.Subscriber;
 
-
-public class AllCustomerPage extends Page {
+public class AllCustomerPage extends Page implements Subscriber{
     private final SplitPane pageRootLayout;
-    private final JoinDataTest joinDataTest;
+    private UserController customerController;
 
-    public AllCustomerPage(JoinDataTest joinDataTest) {
+    public AllCustomerPage(UserController customerController) {
         super(PageType.AllCustomerPage);
         this.pageRootLayout = new SplitPane();
-        this.joinDataTest = joinDataTest;
+        this.customerController = customerController;
         loadUI();
         setStylesheet();
         this.tab.setContent(this.pageRootLayout);
+        this.customerController.addSubscriber(null);
+    }
+
+    public void update(String s){
+        VBox customersContainer = new VBox();
+        customerController.addCustomer(new Customer());
+        for(Customer c : customerController.getCustomers()){
+            CustomerCardComponent card = new CustomerCardComponent();
+            customersContainer.getChildren().add(card.getComponent());
+        }
     }
 
     private void loadUI() {
         VBox customersContainer = new VBox();
-        for (int i = 0; i < 20; i++) {
+        customerController.addCustomer(new Customer());
+        for(Customer c : customerController.getCustomers()){
             CustomerCardComponent card = new CustomerCardComponent();
             customersContainer.getChildren().add(card.getComponent());
         }
+        
         customersContainer.getStyleClass().add("customers-container-all-customer");
 
         ScrollPane customersContainerScroll = new ScrollPane();
@@ -86,8 +100,7 @@ public class AllCustomerPage extends Page {
         actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);
 
         saveButton.setOnAction(event -> {
-            System.out.println(nameInput.getText());
-            this.joinDataTest.setName(nameInput.getText());
+            
         });
 
         BorderPane formAndActionsContainer = new BorderPane();

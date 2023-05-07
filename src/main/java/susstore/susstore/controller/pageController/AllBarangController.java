@@ -79,7 +79,7 @@ public class AllBarangController implements Subscriber {
     }
 
     @Override
-    public void update() {
+    public void update(String s) {
 
     }
 }
