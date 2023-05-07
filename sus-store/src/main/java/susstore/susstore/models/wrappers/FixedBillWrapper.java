@@ -8,15 +8,13 @@ import java.util.List;
 public class FixedBillWrapper implements Storable {
     private List<FixedBill> fixedBillList;
 
-    public List<FixedBill> getFixedBillList() {
-        return fixedBillList;
-    }
-
-    public void setFixedBillList(List<FixedBill> fixedBillList) {
-        this.fixedBillList = fixedBillList;
-    }
+    private FixedBillWrapper() {}
 
     public FixedBillWrapper(List<FixedBill> fixedBillList) {
         this.fixedBillList = fixedBillList;
+    }
+
+    public List<FixedBill> getFixedBillList() {
+        return fixedBillList;
     }
 }

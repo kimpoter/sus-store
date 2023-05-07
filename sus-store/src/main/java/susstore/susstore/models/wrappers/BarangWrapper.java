@@ -8,6 +8,8 @@ import java.util.List;
 public class BarangWrapper implements Storable {
     private List<Barang> barangList;
 
+    private BarangWrapper() {}
+
     public BarangWrapper(List<Barang> barangList) {
         this.barangList = barangList;
     }
@@ -16,7 +18,4 @@ public class BarangWrapper implements Storable {
         return barangList;
     }
 
-    public void setBarangList(List<Barang> barangList) {
-        this.barangList = barangList;
-    }
 }
