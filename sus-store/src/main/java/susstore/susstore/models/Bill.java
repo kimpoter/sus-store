@@ -2,10 +2,11 @@ package susstore.susstore.models;
 
 import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.api.*;
+import susstore.susstore.report.Printable;
 
 import java.util.UUID;
 
-public abstract class Bill implements Transaction
+public abstract class Bill implements Transaction, Printable
 {
     protected Integer biilID;
 
@@ -33,5 +34,10 @@ public abstract class Bill implements Transaction
     public String getStorableId()
     {
         return this.biilID.toString();
+    }
+
+    @Override
+    public String toText() {
+        return "test";
     }
 }
