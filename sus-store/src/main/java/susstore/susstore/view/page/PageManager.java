@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
+import susstore.susstore.Setting;
 import susstore.susstore.controller.BarangController;
 import susstore.susstore.controller.UserController;
 
@@ -24,6 +25,7 @@ public class PageManager {
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
+    private static Setting setting = Setting.getInstance();
     private final TemporaryBillController temporaryBillController;
     private UserController customerController;
     private BarangController barangController;
@@ -31,6 +33,7 @@ public class PageManager {
     private UUID userId;
 
     public PageManager(Stage primaryStage) {
+        setting.setPath("sus-store/sus-store/src/main/resources/setting.json");
         this.pages = new HashMap<>();
         this.tabs = new HashMap<>();
         this.tabPane = new TabPane();

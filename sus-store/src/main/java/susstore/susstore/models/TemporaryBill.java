@@ -8,16 +8,15 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class TemporaryBill extends Bill implements UseCurrency {
-    private static Integer temporaryBillCount = 0;
 
     private ArrayList<TemporaryBillEntry> daftarEntry;
 
     public TemporaryBill(UUID userID) {
-        super(temporaryBillCount, userID);
-
-        temporaryBillCount++;
-        this.daftarEntry = new ArrayList<TemporaryBillEntry>();
+        super(userID);
+        this.daftarEntry = new ArrayList<>();
     }
+
+    protected TemporaryBill() {}
 
     public ArrayList<TemporaryBillEntry> getDaftarEntry() {
         return this.daftarEntry;
@@ -43,8 +42,8 @@ public class TemporaryBill extends Bill implements UseCurrency {
     }
 
     @Override
-    public Double getBillTotal() {
-        Double totalPrice = 0.0;
+    public double getBillTotal() {
+        double totalPrice = 0.0;
 
         for (TemporaryBillEntry belanjaan : this.daftarEntry) {
             totalPrice += belanjaan.getProduct().getHargaJual() * belanjaan.getJumlah();

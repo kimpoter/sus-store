@@ -5,20 +5,22 @@ import susstore.susstore.models.api.*;
 
 import java.util.UUID;
 
-public abstract class Bill implements Transaction
+public abstract class Bill implements Transaction, Storable
 {
-    protected Integer biilID;
+    protected UUID biilID;
 
     protected UUID userID;
 
-    public Bill(Integer billID, UUID userID)
+    public Bill(UUID userID)
     {
-        this.biilID = billID;
+        this.biilID = UUID.randomUUID();
         this.userID = userID;
     }
 
+    protected Bill() {}
+
     @Override
-    public Integer getID()
+    public UUID getID()
     {
         return this.biilID;
     }
@@ -28,10 +30,5 @@ public abstract class Bill implements Transaction
         return this.userID;
     }
 
-    public abstract Double getBillTotal();
-
-    public String getStorableId()
-    {
-        return this.biilID.toString();
-    }
+    public abstract double getBillTotal();
 }

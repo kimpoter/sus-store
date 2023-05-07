@@ -18,10 +18,7 @@ import susstore.susstore.controller.BarangController;
 import susstore.susstore.controller.FixedBillController;
 import susstore.susstore.controller.TemporaryBillController;
 import susstore.susstore.controller.UserController;
-import susstore.susstore.models.Barang;
-import susstore.susstore.models.Customer;
-import susstore.susstore.models.FixedBill;
-import susstore.susstore.models.TemporaryBill;
+import susstore.susstore.models.*;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
 import susstore.susstore.view.component.BillCardComponent;
@@ -102,7 +99,7 @@ public class KasirPage extends Page implements Subscriber {
         int index = 0;
         UUID userId = loadTemporaryBill();
         System.out.println("FIXED BILL SIZE:" + this.fixedBillController.getFixedBills().size());
-
+        System.out.println("TEMP BILL SIZE:" + this.temporaryBillController.getTemporaryBills().size());
 //        this.billElementsContainer.getChildren().clear();
 //        this.temporaryBill = null;
 //        for (TemporaryBill temporaryBill : this.temporaryBills) {
@@ -223,7 +220,11 @@ public class KasirPage extends Page implements Subscriber {
                         this.billElementsContainer.getChildren().remove(bill);
                     }
                     loadTemporaryBill();
-                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                    if (this.temporaryBill != null) {
+                        this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                    } else {
+                        this.totalPriceLabel.setText("");
+                    }
                 }
             }
         });
@@ -253,7 +254,17 @@ public class KasirPage extends Page implements Subscriber {
         Button checkoutButton = new Button("Checkout");
         checkoutButton.setOnAction(e -> {
             this.fixedBillController.addFixedBill(new FixedBill(this.temporaryBill));
-
+            int indexFound = 0;
+            for (TemporaryBill temporaryBill1 : this.temporaryBillController.getTemporaryBills()) {
+                if (temporaryBill1.getID() == this.temporaryBill.getID()) {
+                    indexFound = 0;
+                    for (TemporaryBillEntry temporaryBillEntry : temporaryBill1.getDaftarEntry()) {
+                        temporaryBillEntry.getProduct().setStok(temporaryBillEntry.getProduct().getStok() - temporaryBillEntry.getJumlah());
+                    }
+                }
+            }
+            this.temporaryBillController.getTemporaryBills().remove(indexFound);
+            loadBarang();
         });
         HBox actionButtonsContainer = new HBox();
         cancelButton.getStyleClass().addAll("action-button-kasir", "cancel-button-kasir");
