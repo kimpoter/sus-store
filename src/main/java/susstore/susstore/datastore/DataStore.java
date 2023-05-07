@@ -14,6 +14,7 @@ public class DataStore<T> {
     private ObjectStore<T[]> store;
     private List<T> data;
 
+    @SuppressWarnings("unchecked")
     public DataStore(String targetFile, Class<T> objClass, TYPE type) {
         T[] dummyObj = (T[]) Array.newInstance(objClass, 0);
         Class<T[]> objArrayClass = (Class<T[]>) dummyObj.getClass();
@@ -35,6 +36,8 @@ public class DataStore<T> {
             this.data = new ArrayList<T>();
         }
     }
+
+    @SuppressWarnings("unchecked")
     public void storeData() throws Exception {
         this.store.storeObject((T[]) this.data.toArray());
     }
