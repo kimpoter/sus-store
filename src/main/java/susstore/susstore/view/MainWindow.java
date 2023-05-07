@@ -16,7 +16,7 @@ public class MainWindow {
     private final BorderPane rootLayout;
     private final StackPane contentLayout;
     private static Navbar navbar;
-    private final PageManager pageManager;
+    private static PageManager pageManager;
 
     private MainWindow(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -35,17 +35,14 @@ public class MainWindow {
         return window;
     }
 
-    public static MainWindow getInstance() throws Exception
+    public static MainWindow getInstance()
     {
-        if (window == null)
-            throw new Exception();
-
         return window;
     }
 
-    public PageManager getPageManager()
+    public static PageManager getPageManager()
     {
-        return this.pageManager;
+        return pageManager;
     }
 
     public static Navbar getNavbar()
