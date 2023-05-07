@@ -3,6 +3,9 @@ package susstore.susstore.view.page;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import susstore.susstore.controller.FixedBillController;
+import susstore.susstore.controller.TemporaryBillController;
+import susstore.susstore.controller.UserController;
 import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.JoinDataTest;
@@ -18,7 +21,13 @@ public class PageManager {
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
-    private BarangController barangController;
+    private final BarangController barangController;
+
+    private UserController userController;
+
+    private TemporaryBillController temporaryBillController;
+
+    private FixedBillController fixedBillController;
 
     public PageManager(Stage primaryStage) {
         this.pages = new HashMap<>();
@@ -71,5 +80,25 @@ public class PageManager {
 
     public Stage getStage() {
         return this.primaryStage;
+    }
+
+    public BarangController getBarangController()
+    {
+        return this.barangController;
+    }
+
+    public UserController getUserController()
+    {
+        return this.userController;
+    }
+
+    public TemporaryBillController getTemporaryBillController()
+    {
+        return this.temporaryBillController;
+    }
+
+    public FixedBillController getFixedBillController()
+    {
+        return this.fixedBillController;
     }
 }
