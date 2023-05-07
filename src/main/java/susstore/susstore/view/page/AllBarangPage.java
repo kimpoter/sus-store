@@ -24,6 +24,8 @@ public class AllBarangPage extends Page implements Subscriber{
     private final Stage primaryStage;
     private BarangController barangController;
     private ScrollPane barangContainerScroll;
+    private BorderPane formAndActionsContainer;
+    private TextField namaBarangInput;
 
     public AllBarangPage(Stage primaryStage,BarangController barangController) {
         super(PageType.AllBarang);
@@ -82,7 +84,7 @@ public class AllBarangPage extends Page implements Subscriber{
         imageAndChooseButtonContainer.getChildren().addAll(imageContainer, chooseImageButton);
 
         Label namaBarangLabel = new Label("Nama Barang:");
-        TextField namaBarangInput = new TextField();
+        namaBarangInput = new TextField();
         VBox namaBarangContainer = new VBox();
         namaBarangLabel.getStyleClass().add("input-label-all-barang");
         namaBarangInput.getStyleClass().add("input-all-barang");
@@ -141,7 +143,7 @@ public class AllBarangPage extends Page implements Subscriber{
         actionButtonsContainer.getStyleClass().add("action-buttons-container-all-barang");
         actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);
 
-        BorderPane formAndActionsContainer = new BorderPane();
+        formAndActionsContainer = new BorderPane();
         formAndActionsContainer.getStyleClass().add("form-actions-container");
         formAndActionsContainer.setCenter(imageAndInputContainer);
         formAndActionsContainer.setBottom(actionButtonsContainer);

@@ -74,11 +74,13 @@ public class NewBarangPage extends Page{
         chooseImageButton.setOnAction(
             e -> {
                 FileChooser fileChooser = new FileChooser();
-                File fileSaved = fileChooser.showOpenDialog(primaryStage);  
-                this.imagePath = fileSaved.getAbsolutePath();
-                Image imagenew = new Image(imagePath, false);
-                imageContainer.setFill(new ImagePattern(imagenew));
-            }
+                File fileSaved = fileChooser.showOpenDialog(primaryStage); 
+                if(fileSaved!=null){
+                    this.imagePath = fileSaved.getAbsolutePath();
+                    Image imagenew = new Image(imagePath, false);
+                    imageContainer.setFill(new ImagePattern(imagenew));
+                }
+            } 
         );
 
         VBox imageAndChooseButtonContainer = new VBox();
