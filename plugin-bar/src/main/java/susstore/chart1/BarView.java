@@ -1,9 +1,7 @@
 package susstore.chart1;
 
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.plot.PlotOrientation;
