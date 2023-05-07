@@ -30,12 +30,27 @@ public class Setting {
         this.path = path;
     }
 
+    public String getPath()
+    {
+        return this.path;
+    }
+
     public void setExtension(String extension) {
         this.configuration.extension = extension;
     }
 
+    public String getExtension()
+    {
+        return this.configuration.extension;
+    }
+
     public void addPlugins(String plugin) {
         this.configuration.plugins.add(plugin);
+    }
+
+    public String getPlugin(int index)
+    {
+        return this.configuration.plugins.get(index);
     }
 
     public void load() {
@@ -64,11 +79,34 @@ public class Setting {
 
             gson.toJson(configuration, writer);
 
+            writer.flush();
+
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+//    public static void main(String[] args)
+//    {
+//        Setting setting = new Setting();
+//        setting.setPath("sus-store/src/main/resources/settings.json");
+//        setting.setExtension("json");
+//        setting.addPlugins("test.jar");
+//        setting.addPlugins("tes2.jar");
+//
+//        setting.save();
+//
+//        Setting haha = new Setting();
+//
+//        haha.setPath("sus-store/src/main/resources/settings.json");
+//        haha.load();
+//
+//        System.out.println(haha.getPath());
+//        System.out.println(haha.getExtension());
+//        System.out.println(haha.getPlugin(0));
+//        System.out.println(haha.getPlugin(1));
+//    }
 
     class Configuration {
         private String extension;
