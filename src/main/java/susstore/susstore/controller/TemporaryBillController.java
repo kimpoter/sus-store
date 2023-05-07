@@ -1,5 +1,6 @@
 package susstore.susstore.controller;
 
+import susstore.susstore.Subscriber;
 import susstore.susstore.SubscriberManager;
 import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.TemporaryBill;
@@ -14,27 +15,36 @@ public class TemporaryBillController {
     // TEMPORARY LIST TO STORE
     private List<TemporaryBill> temporaryBills;
 
-    public TemporaryBillController() {
+    public TemporaryBillController()
+    {
         this.temporaryBills = new ArrayList<TemporaryBill>();
+        this.subscribers = new SubscriberManager();
     }
 
-    public void addTemporaryBill(TemporaryBill temporaryBill) {
+    public TemporaryBillController(List<TemporaryBill> temporaryBills)
+    {
+        this.temporaryBills = temporaryBills;
+        this.subscribers = new SubscriberManager();
+    }
+
+    public void setTemporaryBills(List<TemporaryBill> temporaryBills)
+    {
+        this.temporaryBills = temporaryBills;
+    }
+
+    public void addTemporaryBill(TemporaryBill temporaryBill)
+    {
         this.temporaryBills.add(temporaryBill);
+        this.subscribers.notifysubs();
     }
 
-    public void removeTemporaryBill(TemporaryBill temporaryBill) {
-        this.temporaryBills.remove(temporaryBill);
-    }
-
-    public List<TemporaryBill> getTemporaryBills() {
+    public List<TemporaryBill> getTemporaryBills()
+    {
         return this.temporaryBills;
     }
 
-    public int getTemporaryBillsLength() {
-        return this.temporaryBills.size();
-    }
-
-    public boolean isTemporaryBillsEmpty() {
-        return this.temporaryBills.isEmpty();
+    public void addSubscriber(Subscriber s)
+    {
+        this.subscribers.subscribe(s);
     }
 }

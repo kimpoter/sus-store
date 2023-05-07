@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -20,13 +19,7 @@ import javafx.scene.shape.Rectangle;
 import susstore.susstore.controller.TemporaryBillController;
 import susstore.susstore.models.Barang;
 import susstore.susstore.models.TemporaryBill;
-import susstore.susstore.models.TemporaryBillEntry;
-import susstore.susstore.view.BarangCardType;
 import susstore.susstore.view.PageType;
-import susstore.susstore.view.page.PageManager;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class BarangCardComponent {
     private final BorderPane componentRootLayout;

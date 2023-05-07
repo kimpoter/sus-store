@@ -1,69 +1,89 @@
 package susstore.susstore.models;
 
-import java.util.List;
+import susstore.susstore.models.api.Currency;
+import susstore.susstore.models.api.Product;
+import susstore.susstore.models.api.UseCurrency;
+
 import java.util.ArrayList;
 
-public class FixedBill extends Bill {
-    private static int fixedBillCount;
-    protected List<BarangSnapshot> daftar;
-    protected Nominal total;
+public class FixedBill extends Bill implements UseCurrency {
+    private static Integer fixedBillCount;
+    private static Currency currency = CurrencyIDR.getInstance();
+    private ArrayList<BarangSnapshot> daftarBarang;
+    private Double totalHarga;
 
     public FixedBill(TemporaryBill bill) {
-        super(fixedBillCount, bill.idUser);
+        super(fixedBillCount, bill.getUserID());
         fixedBillCount++;
 
-        // initialize list
-        this.daftar = new ArrayList<BarangSnapshot>();
-        List<TemporaryBillEntry> billEntries = bill.getDaftar();
-        for (TemporaryBillEntry belanjaan : billEntries
-             ) {
+        this.totalHarga = 0.0;
+        this.daftarBarang = new ArrayList<BarangSnapshot>();
+
+        ArrayList<TemporaryBillEntry> billEntries = bill.getDaftarEntry();
+        for (TemporaryBillEntry belanjaan : billEntries) {
             addEntry(belanjaan);
         }
-
-        // initialize total
-        this.total = new Nominal();
-
-    }
-
-    @Override
-    public Nominal getBillTotal() {
-        return new Nominal(this.total);
     }
 
     private void addEntry(TemporaryBillEntry entry) {
-        // add entry to list
-        Barang barang = entry.getBarang();
+        Product product = entry.getProduct();
         int jumlah = entry.getJumlah();
 
-        Nominal entryNominal = new Nominal(barang.getHargaBarang());
-        BarangSnapshot newEntry = new BarangSnapshot(barang.getNamaBarang(), entryNominal, jumlah);
-        this.daftar.add(newEntry);
+        Double entryHarga = product.getHargaJual();
+        BarangSnapshot newEntry = new BarangSnapshot(
+                product.getNama(),
+                entryHarga,
+                jumlah
+        );
+        this.daftarBarang.add(newEntry);
 
-        // add price to total
-        this.total.addNominal(entryNominal, jumlah);
+        this.totalHarga += entryHarga * jumlah;
+    }
+
+    @Override
+    public Double getBillTotal() {
+        return currency.getValue(this.totalHarga);
+    }
+
+    @Override
+    public void setCurrency(Currency c) {
+        currency = c;
     }
 }
 
 class BarangSnapshot {
     private String namaBarang;
-    private Nominal hargaBarang;
-    private int jumlah;
 
-    public BarangSnapshot(String namaBarang, Nominal hargaBarang, int jumlah) {
+    private Currency currency = CurrencyIDR.getInstance();
+
+    private Double hargaBarang;
+
+    private Integer jumlahBarang;
+
+    public BarangSnapshot(
+            String namaBarang,
+            Double hargaBarang,
+            Integer jumlahBarang
+    ) {
         this.namaBarang = namaBarang;
         this.hargaBarang = hargaBarang;
-        this.jumlah = jumlah;
+        this.jumlahBarang = jumlahBarang;
     }
 
     public String getNamaBarang() {
         return namaBarang;
     }
 
-    public Nominal getHargaBarang() {
-        return hargaBarang;
+    public Double getHargaBarang() {
+        return this.hargaBarang;
     }
 
-    public int getJumlah() {
-        return jumlah;
+    public Integer getJumlahBarang() {
+        return this.jumlahBarang;
     }
+
+    public void setCurrency(Currency c) {
+        this.currency = c;
+    }
+
 }

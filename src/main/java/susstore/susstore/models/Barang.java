@@ -1,92 +1,134 @@
 package susstore.susstore.models;
 
 import susstore.susstore.datastore.Storable;
+import susstore.susstore.models.api.*;
 
-import java.awt.image.BufferedImage;
 import java.util.UUID;
 
-public class Barang implements Storable {
-    protected UUID id;
-    protected String namaBarang;
-    protected int stok;
-    protected String kategori;
-    protected String gambar;
-    protected Nominal hargaBarang;
-    protected Nominal hargaBeliBarang;
+public class Barang implements Product
+{
+    private final UUID id;
 
-    public Barang(String namaBarang, int stok, String kategori, String gambar, Nominal hargaBarang, Nominal hargaBeliBarang) {
-        this.id                 = UUID.randomUUID();
-        this.namaBarang         = namaBarang;
-        this.stok               = stok;
-        this.kategori           = kategori;
-        this.gambar             = gambar;
-        this.hargaBarang        = hargaBarang;
-        this.hargaBeliBarang    = hargaBeliBarang;
+    private String namaBarang;
+
+    private Integer stok;
+
+    private String kategori;
+
+    private String pathGambar;
+
+    private static Currency currency = CurrencyIDR.getInstance();
+
+    private Double hargaBeli;
+
+    private Double hargaJual;
+
+    public Barang(
+            String      namaBarang,
+            Integer     stok,
+            String      kategori,
+            String      pathGambar,
+            Double      hargaBeli,
+            Double      hargaJual
+    )
+    {
+        this.id             = UUID.randomUUID();
+        this.namaBarang     = namaBarang;
+        this.stok           = stok;
+        this.kategori       = kategori;
+        this.pathGambar     = pathGambar;
+        this.hargaBeli      = hargaBeli;
+        this.hargaJual      = hargaJual;
     }
 
-    /* Getter & Setter */
-    public UUID getId() {
-        return id;
+    @Override
+    public UUID getID()
+    {
+        return this.id;
     }
 
-    public String getNamaBarang() {
-        return namaBarang;
+    @Override
+    public String getNama()
+    {
+        return this.namaBarang;
     }
 
-    public int getStok() {
-        return stok;
+    @Override
+    public String getKategori()
+    {
+        return this.kategori;
     }
 
-    public String getKategori() {
-        return kategori;
+    @Override
+    public String getPathGambar()
+    {
+        return this.pathGambar;
     }
 
-    public String getGambar() {
-        return gambar;
+    @Override
+    public void setNama(String nama)
+    {
+        this.namaBarang = nama;
     }
 
-    public Nominal getHargaBarang() {
-        return hargaBarang;
-    }
-
-    public Nominal getHargaBeliBarang() {
-        return hargaBeliBarang;
-    }
-
-    public void setNamaBarang(String namaBarang) {
-        this.namaBarang = namaBarang;
-    }
-
-    public void setStok(int stok) {
-        this.stok = stok;
-    }
-
-    public void setKategori(String kategori) {
+    @Override
+    public void setKategori(String kategori)
+    {
         this.kategori = kategori;
     }
 
-    public void setGambar(String gambar) {
-        this.gambar = gambar;
-    }
-
-    public void setHargaBarang(Nominal hargaBarang) {
-        this.hargaBarang = hargaBarang;
-    }
-
-    public void setHargaBeliBarang(Nominal hargaBeliBarang) {
-        this.hargaBeliBarang = hargaBeliBarang;
-    }
-
-    /* Modifier */
-    public void ambilBarang(int jumlah) throws Exception {
-        if(jumlah > this.stok) {
-            throw new Exception("Tidak cukup stok");
-        }
-        this.stok -= jumlah;
+    @Override
+    public void setPathGambar(String pathGambar)
+    {
+        this.pathGambar = pathGambar;
     }
 
     @Override
     public String getStorableId() {
         return this.id.toString();
+    }
+
+    @Override
+    public void setCurrency(Currency c)
+    {
+        currency = c;
+    }
+
+    public Integer getStok()
+    {
+        return this.stok;
+    }
+
+    public Double getHargaBeli()
+    {
+        return currency.getValue(this.hargaBeli);
+    }
+
+    public Double getHargaJual()
+    {
+        return currency.getValue(this.hargaJual);
+    }
+
+    public void setStok(Integer stok)
+    {
+        this.stok = stok;
+    }
+
+    public void setHargaBeli(Double hargaBeli)
+    {
+        this.hargaBeli = hargaBeli;
+    }
+
+    public void setHargaJual(Double hargaJual)
+    {
+        this.hargaJual = hargaJual;
+    }
+
+    public void ambilBarang(Integer jumlah) throws Exception
+    {
+        if (jumlah > this.stok)
+            throw new Exception("Tidak cukup stok");
+
+        this.stok -= jumlah;
     }
 }
