@@ -20,8 +20,8 @@ public class PageManager {
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
+    private final TemporaryBillController temporaryBillController;
     private BarangController barangController;
-    private UserController customerController;
 
     public PageManager(Stage primaryStage) {
         this.pages = new HashMap<>();
@@ -31,6 +31,7 @@ public class PageManager {
         this.primaryStage = primaryStage;
         this.barangController = new BarangController();
         this.customerController = new UserController();
+        this.temporaryBillController = new TemporaryBillController();
         loadUI();
     }
 
@@ -41,7 +42,7 @@ public class PageManager {
     }
 
     private void initializePages() {
-        pages.put(PageType.AllCustomerPage.getName(), (String) -> new AllCustomerPage(this.customerController));
+        pages.put(PageType.AllCustomerPage.getName(), (String) -> new AllCustomerPage(this.joinDataTest));
         pages.put(PageType.RegisterNewMember.getName(), (String) -> new RegisterNewMember());
         pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
         pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage,this.barangController));

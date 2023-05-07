@@ -8,6 +8,7 @@ public enum PageType {
     NewCustomer("New Customer Page"),
     RegisterNewMember("Register New Member"),
     EditCustomerPage("Edit Customer Page"),
+    TransactionHistory("Transaction History"),
     AllBarang("All Barang"),
     NewBarang("New Barang"),
     Kasir("Kasir");

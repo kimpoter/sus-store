@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import susstore.susstore.models.Nominal;
 
-public class AllBarangPage extends Page implements Subscriber{
+public class AllBarangPage extends Page implements Subscriber {
     private final SplitPane pageRootLayout;
     private final Stage primaryStage;
     private BarangController barangController;
@@ -27,7 +27,7 @@ public class AllBarangPage extends Page implements Subscriber{
     private BorderPane formAndActionsContainer;
     private TextField namaBarangInput;
 
-    public AllBarangPage(Stage primaryStage,BarangController barangController) {
+    public AllBarangPage(Stage primaryStage, BarangController barangController) {
         super(PageType.AllBarang);
         this.pageRootLayout = new SplitPane();
         this.primaryStage = primaryStage;
@@ -50,7 +50,7 @@ public class AllBarangPage extends Page implements Subscriber{
         barangContainerScroll.setContent(barangContainer);
     }
 
-    private void loadUI() {        
+    private void loadUI() {
         GridPane barangContainer = new GridPane();
         barangContainer.getStyleClass().add("barang-container");
         int index=0;

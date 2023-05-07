@@ -1,24 +1,18 @@
 package susstore.susstore.models;
 
-import susstore.susstore.models.TemporaryBillEntry;
 import susstore.susstore.models.api.Currency;
 import susstore.susstore.models.api.Product;
 import susstore.susstore.models.api.UseCurrency;
 
 import java.util.ArrayList;
 
-public class FixedBill extends Bill implements UseCurrency
-{
+public class FixedBill extends Bill implements UseCurrency {
     private static Integer fixedBillCount;
-
-    private ArrayList<BarangSnapshot> daftarBarang;
-
     private static Currency currency = CurrencyIDR.getInstance();
-
+    private ArrayList<BarangSnapshot> daftarBarang;
     private Double totalHarga;
 
-    public FixedBill(TemporaryBill bill)
-    {
+    public FixedBill(TemporaryBill bill) {
         super(fixedBillCount, bill.getUserID());
         fixedBillCount++;
 
@@ -26,14 +20,12 @@ public class FixedBill extends Bill implements UseCurrency
         this.daftarBarang = new ArrayList<BarangSnapshot>();
 
         ArrayList<TemporaryBillEntry> billEntries = bill.getDaftarEntry();
-        for (TemporaryBillEntry belanjaan : billEntries)
-        {
+        for (TemporaryBillEntry belanjaan : billEntries) {
             addEntry(belanjaan);
         }
     }
 
-    private void addEntry(TemporaryBillEntry entry)
-    {
+    private void addEntry(TemporaryBillEntry entry) {
         Product product = entry.getProduct();
         int jumlah = entry.getJumlah();
 
@@ -54,14 +46,12 @@ public class FixedBill extends Bill implements UseCurrency
     }
 
     @Override
-    public void setCurrency(Currency c)
-    {
+    public void setCurrency(Currency c) {
         currency = c;
     }
 }
 
-class BarangSnapshot
-{
+class BarangSnapshot {
     private String namaBarang;
 
     private Currency currency = CurrencyIDR.getInstance();
@@ -71,33 +61,28 @@ class BarangSnapshot
     private Integer jumlahBarang;
 
     public BarangSnapshot(
-            String      namaBarang,
-            Double      hargaBarang,
-            Integer     jumlahBarang
-    )
-    {
-        this.namaBarang     = namaBarang;
-        this.hargaBarang    = hargaBarang;
-        this.jumlahBarang   = jumlahBarang;
+            String namaBarang,
+            Double hargaBarang,
+            Integer jumlahBarang
+    ) {
+        this.namaBarang = namaBarang;
+        this.hargaBarang = hargaBarang;
+        this.jumlahBarang = jumlahBarang;
     }
 
-    public String getNamaBarang()
-    {
+    public String getNamaBarang() {
         return namaBarang;
     }
 
-    public Double getHargaBarang()
-    {
+    public Double getHargaBarang() {
         return this.hargaBarang;
     }
 
-    public Integer getJumlahBarang()
-    {
+    public Integer getJumlahBarang() {
         return this.jumlahBarang;
     }
 
-    public void setCurrency(Currency c)
-    {
+    public void setCurrency(Currency c) {
         this.currency = c;
     }
 
