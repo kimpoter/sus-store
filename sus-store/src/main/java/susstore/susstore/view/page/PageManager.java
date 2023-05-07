@@ -30,11 +30,8 @@ public class PageManager {
     private final TabPane tabPane;
     private final Stage primaryStage;
     private static Setting setting = Setting.getInstance();
-    private final DataStoreController<TemporaryBillWrapper> temporaryBillStore;
     private final TemporaryBillController temporaryBillController;
-    private final DataStoreController<CustomerWrapper> customerStore;
     private UserController customerController;
-    private final DataStoreController<BarangWrapper> barangStore;
     private BarangController barangController;
     private FixedBillController fixedBillController;
     private UUID userId;
@@ -47,22 +44,10 @@ public class PageManager {
         this.joinDataTest = new JoinDataTest();
         this.primaryStage = primaryStage;
 
-        this.barangStore =
-                new DataStoreController<>(BarangWrapper.class,
-                        "Barang.json",
-                        DataStoreController.TYPE.JSON);
         this.barangController = new BarangController();
 
         this.customerController = new UserController();
-        this.customerStore =
-                new DataStoreController<>(CustomerWrapper.class,
-                        "Customer.json",
-                        DataStoreController.TYPE.JSON);
-
-        this.temporaryBillStore =
-                new DataStoreController<>(TemporaryBillWrapper.class,
-                        "TemporaryBill.json",
-                        DataStoreController.TYPE.JSON);
+        
         this.temporaryBillController = new TemporaryBillController();
         this.fixedBillController = new FixedBillController();
         this.userId = UUID.randomUUID();

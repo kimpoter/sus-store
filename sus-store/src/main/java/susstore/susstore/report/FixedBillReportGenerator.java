@@ -17,7 +17,8 @@ public class FixedBillReportGenerator implements ReportGenerator {
 
     @Override
     public void GenerateReport(String filePath) throws Exception {
-        String report = fixedBill.toText();
+        //String report = fixedBill.toText();
+        String report="";
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(filePath));

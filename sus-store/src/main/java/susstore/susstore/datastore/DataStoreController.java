@@ -1,5 +1,8 @@
 package susstore.susstore.datastore;
 
+import susstore.susstore.SubscriberManager;
+import susstore.susstore.Subscriber;
+
 public class DataStoreController<T extends Storable> {
     public enum TYPE {
         JSON,
@@ -9,12 +12,15 @@ public class DataStoreController<T extends Storable> {
 
     private final Class<T> objClass;
     private DataStore<T> dataStore;
-    private T data;
+    private SubscriberManager subscriberManager;
 
     public DataStoreController(Class<T> objClass, String targetPath, TYPE type) {
         this.objClass = objClass;
         changeTarget(targetPath, type);
-        this.data = null;
+    }
+
+    public void subscribe(Subscriber s){
+        this.subscriberManager.subscribe(s);
     }
 
     public void changeTarget(String targetFile, TYPE type) {
@@ -29,23 +35,11 @@ public class DataStoreController<T extends Storable> {
         this.dataStore.setTargetPath(targetPath);
     }
 
-    public String getTargetPath() {
-        return this.dataStore.getTargetPath();
+    public void storeData(T data) throws Exception {
+        this.dataStore.storeObject(data);
     }
 
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void storeData() throws Exception {
-        this.dataStore.storeObject(this.data);
-    }
-
-    public void loadData() throws Exception {
-        this.data = this.dataStore.loadObject();
+    public T loadData() throws Exception {
+        return this.dataStore.loadObject();
     }
 }

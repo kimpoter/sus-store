@@ -4,6 +4,8 @@ import susstore.susstore.Subscriber;
 import susstore.susstore.SubscriberManager;
 import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.TemporaryBill;
+import susstore.susstore.datastore.DataStoreController;
+import susstore.susstore.models.wrappers.TemporaryBillWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 public class TemporaryBillController {
     private int dataStore;
     private SubscriberManager subscribers;
+    private DataStoreController<TemporaryBillWrapper> datastore;
 
     // TEMPORARY LIST TO STORE
     private List<TemporaryBill> temporaryBills;

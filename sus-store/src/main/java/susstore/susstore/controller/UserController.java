@@ -6,6 +6,9 @@ import susstore.susstore.models.Customer;
 import susstore.susstore.models.Member;
 import susstore.susstore.models.MemberVIP;
 import susstore.susstore.Subscriber;
+import susstore.susstore.datastore.DataStoreController;
+import susstore.susstore.models.wrappers.CustomerWrapper;
+
 
 import java.io.Console;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class UserController {
     private int dataStore;
     private SubscriberManager subscribers;
+    private DataStoreController<CustomerWrapper> customerStore;
 
     // TEMPORARY LIST TO STORE
     private List<Customer> customers;
@@ -26,6 +30,10 @@ public class UserController {
         this.subscribers = new SubscriberManager();
         this.members = new ArrayList<Member>();
         this.vips = new ArrayList<Integer>();
+        this.customerStore = 
+        new DataStoreController<>(CustomerWrapper.class,
+                "Customer.json",
+                DataStoreController.TYPE.JSON);
     }
 
     public UserController(List<Customer> barang) {
@@ -35,6 +43,10 @@ public class UserController {
 
     public String addCustomer(Customer c) {
         this.customers.add(c);
+        try {
+            this.customerStore.storeData(new CustomerWrapper(customers, members));
+        } catch (Exception e) {
+        }
         return this.customers.get(this.customers.size() - 1).getUserID().toString();
         //this.subscribers.notifysubs();
     }
@@ -43,6 +55,10 @@ public class UserController {
         this.members.add(c);
         this.addCustomer(c);
         this.subscribers.notifysubs("add-member");
+        try {
+            this.customerStore.storeData(new CustomerWrapper(customers, members));
+        } catch (Exception e) {
+        }
     }
 
     public void editMember(UUID id, String name, String phone, String type, boolean isActive) {
@@ -59,6 +75,10 @@ public class UserController {
             }
         }
         this.subscribers.notifysubs("edit-member");
+        try {
+            this.customerStore.storeData(new CustomerWrapper(customers, members));
+        } catch (Exception e) {
+        }
     }
 
     public void addToVIP(Member m, Integer id) {
