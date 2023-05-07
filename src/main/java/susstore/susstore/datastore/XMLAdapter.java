@@ -2,7 +2,13 @@ package susstore.susstore.datastore;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import susstore.susstore.models.Customer;
+import susstore.susstore.models.Member;
+import susstore.susstore.models.wrappers.MemberWrapper;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 // Added dependency: (taruh di pom.xml)
 //<dependency>
@@ -10,18 +16,6 @@ import java.io.File;
 //<artifactId>simple-xml</artifactId>
 //<version>2.7.1</version>
 //</dependency>
-
-//class Test {
-//    public Test() {
-//        // required no-argument constructor
-//    }
-//
-//    @Element
-//    public String a;
-//    public Test(String a) {
-//        this.a = a;
-//    }
-//}
 
 public class XMLAdapter<T extends Storable> extends FileAdapter<T>{
 
@@ -48,16 +42,4 @@ public class XMLAdapter<T extends Storable> extends FileAdapter<T>{
 
         return data;
     }
-
-//    public static void main(String[] args) {
-//        String filename = "D:\\University\\sus-store\\src\\main\\java\\susstore\\susstore\\datastore\\test.xml";
-//        XMLAdapter<Test> adapter = new XMLAdapter<>(filename, Test.class);
-//        try {
-//            adapter.storeObject(new Test("abcd"));
-//        } catch (Exception e) {
-//            System.out.println("exception");
-//        }
-//
-//    }
-    
 }
