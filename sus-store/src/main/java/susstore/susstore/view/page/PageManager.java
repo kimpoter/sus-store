@@ -4,6 +4,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import susstore.susstore.controller.TemporaryBillController;
+import susstore.susstore.datastore.DataStoreController;
+import susstore.susstore.models.wrappers.BarangWrapper;
+import susstore.susstore.models.wrappers.CustomerWrapper;
+import susstore.susstore.models.wrappers.TemporaryBillWrapper;
 import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.JoinDataTest;
@@ -24,8 +28,11 @@ public class PageManager {
     private final TabPane tabPane;
     private final Stage primaryStage;
     private static Setting setting = Setting.getInstance();
+    private final DataStoreController<TemporaryBillWrapper> temporaryBillStore;
     private final TemporaryBillController temporaryBillController;
+    private final DataStoreController<CustomerWrapper> customerStore;
     private UserController customerController;
+    private final DataStoreController<BarangWrapper> barangStore;
     private BarangController barangController;
 
     public PageManager(Stage primaryStage) {
@@ -35,8 +42,23 @@ public class PageManager {
         this.tabPane = new TabPane();
         this.joinDataTest = new JoinDataTest();
         this.primaryStage = primaryStage;
+
+        this.barangStore =
+                new DataStoreController<>(BarangWrapper.class,
+                        "Barang.json",
+                        DataStoreController.TYPE.JSON);
         this.barangController = new BarangController();
+
         this.customerController = new UserController();
+        this.customerStore =
+                new DataStoreController<>(CustomerWrapper.class,
+                        "Customer.json",
+                        DataStoreController.TYPE.JSON);
+
+        this.temporaryBillStore =
+                new DataStoreController<>(TemporaryBillWrapper.class,
+                        "TemporaryBill.json",
+                        DataStoreController.TYPE.JSON);
         this.temporaryBillController = new TemporaryBillController();
         
         loadUI();
