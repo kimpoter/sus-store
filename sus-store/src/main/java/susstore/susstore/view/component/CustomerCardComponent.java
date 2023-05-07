@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import susstore.susstore.models.Customer;
-
+import susstore.susstore.models.Member;
 
 public class CustomerCardComponent {
     private final BorderPane componentRootLayout;
@@ -15,24 +15,28 @@ public class CustomerCardComponent {
     private final HBox statusAndActionsContainer;
     private final VBox nameAndPhoneContainer;
     private Customer containedCustomer;
+    private Member memberInfo;
 
-    public CustomerCardComponent(Customer c) {
+    public CustomerCardComponent(Customer c, Member m) {
         this.componentRootLayout = new BorderPane();
         this.idAndMembershipContainer = new VBox();
         this.statusAndActionsContainer = new HBox();
         this.nameAndPhoneContainer = new VBox();
         this.containedCustomer = c;
+        this.memberInfo = m;
         loadUI();
     }
 
     private void loadUI() {
         // left
-        Label membershipLabel = new Label("VIP");
-        membershipLabel.getStyleClass().add("membership-label");
+        //Label membershipLabel = new Label(memberInfo==null?"Tidak terdaftar": memberInfo.getMembership());
+        //membershipLabel.getStyleClass().add("membership-label");
+
         Label idLabel = new Label(containedCustomer.getUserID() + "");
         idLabel.getStyleClass().add("id-label");
 
-        this.idAndMembershipContainer.getChildren().addAll(membershipLabel, idLabel);
+        this.idAndMembershipContainer.getChildren().addAll(idLabel);
+
 
         // center
         Label nameLabel = new Label("Kurokawa Akane");

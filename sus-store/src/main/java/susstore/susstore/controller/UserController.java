@@ -100,6 +100,13 @@ public class UserController {
         //this.subscribers.notify();
     }
 
+    public Member getMemberbyUUID(UUID id){
+        for(Member m: members){
+            if (m.getUserID()==id)return m;
+        }
+        return null;
+    }
+
     public List<Integer> getVIPs() {
         return this.vips;
     }
