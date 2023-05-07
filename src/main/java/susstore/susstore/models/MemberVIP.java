@@ -4,6 +4,12 @@ public class MemberVIP extends Member {
     private static final double VIP_DISCOUNT = 0.10;
     public MemberVIP(Member other) {
         super(other);
+        setMembership();
+    }
+
+    @Override
+    protected void setMembership() {
+        this.membership = MEMBERSHIP.VIP;
     }
 
     @Override

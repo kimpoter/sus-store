@@ -5,10 +5,15 @@ import java.lang.Math;
 public class Member extends Customer implements PointHolder {
     private static final boolean ACTIVE = true;
     private static int INITIAL_POINT = 0;
+    public enum MEMBERSHIP {
+        MEMBER,
+        VIP
+    }
     protected String nama;
     protected String noTelp;
     protected Boolean status;
     protected int point;
+    protected MEMBERSHIP membership;
 
     public Member(Customer other, String nama, String noTelp) {
         super(other);
@@ -16,6 +21,7 @@ public class Member extends Customer implements PointHolder {
         this.noTelp = noTelp;
         this.status = ACTIVE;
         this.point = INITIAL_POINT;
+        setMembership();
     }
 
     public Member(Member other) {
@@ -24,6 +30,7 @@ public class Member extends Customer implements PointHolder {
         this.noTelp = other.noTelp;
         this.status = other.status;
         this.point = other.point;
+        setMembership();
     }
 
     public String getNama() {
@@ -48,6 +55,14 @@ public class Member extends Customer implements PointHolder {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public MEMBERSHIP getMembership() {
+        return membership;
+    }
+
+    protected void setMembership() {
+        this.membership = MEMBERSHIP.MEMBER;
     }
 
     @Override
