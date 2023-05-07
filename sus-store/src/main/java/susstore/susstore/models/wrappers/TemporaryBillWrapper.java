@@ -1,10 +1,11 @@
 package susstore.susstore.models.wrappers;
 
+import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.TemporaryBill;
 
 import java.util.List;
 
-public class TemporaryBillWrapper {
+public class TemporaryBillWrapper implements Storable {
     private List<TemporaryBill> temporaryBillList;
 
     public TemporaryBillWrapper(List<TemporaryBill> temporaryBillList) {
