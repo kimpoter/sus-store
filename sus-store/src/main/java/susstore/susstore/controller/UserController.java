@@ -10,6 +10,7 @@ import susstore.susstore.Subscriber;
 import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class UserController {
     private int dataStore;
@@ -43,7 +44,7 @@ public class UserController {
         this.subscribers.notifysubs("add-member");
     }
 
-    public void editMember(int id, String name, String phone, String type, boolean isActive) {
+    public void editMember(UUID id, String name, String phone, String type, boolean isActive) {
         Integer mid = getMemberIdxByID(id);
         Member m = members.get(mid);
         m.setNama(name);
@@ -67,10 +68,10 @@ public class UserController {
         this.members.set(id, new Member(m));
     }
 
-    public Integer getMemberIdxByID(int id) {
+    public Integer getMemberIdxByID(UUID id) {
         int counter = 0;
         for (Member m : members) {
-            if (m.getUserID() == id) return counter;
+            if (m.getUserID().equals(id)) return counter;
             counter++;
         }
         return null;
