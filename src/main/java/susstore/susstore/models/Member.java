@@ -31,6 +31,7 @@ public class Member extends Customer implements PointHolder {
         this.status = other.status;
         this.point = other.point;
         setMembership();
+        this.membership = MEMBERSHIP.MEMBER;
     }
 
     public String getNama() {

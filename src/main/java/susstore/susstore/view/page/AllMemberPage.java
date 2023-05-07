@@ -21,6 +21,8 @@ public class AllMemberPage extends Page implements Subscriber{
     private TextField nameInput;
     private TextField phoneNumberInput;
     private ChoiceBox membershipChoices;
+    private ChoiceBox statusChoices;
+    private ScrollPane customersContainerScroll;
 
     public AllMemberPage(UserController customerController) {
         super(PageType.AllMemberPage);
@@ -28,17 +30,28 @@ public class AllMemberPage extends Page implements Subscriber{
         this.customerController = customerController;
         
         this.tab.setContent(this.pageRootLayout);
-        this.customerController.addSubscriber(null);
+        this.customerController.addSubscriber(this);
         this.updateMemberController = new UpdateMemberController();
         this.updateMemberController.addSubscriber(this);
+        this.customersContainerScroll = new ScrollPane();
         loadUI();
         setStylesheet();
     }
 
     public void update(String s){
         if(s=="set-choosen-member"){
-            this.nameInput.setText(updateMemberController.getChoosenMember().getNama());
-            this.phoneNumberInput.setText(updateMemberController.getChoosenMember().getNoTelp());
+            if(updateMemberController.getChoosenMember()==null){
+                this.nameInput.setText("");
+                this.phoneNumberInput.setText("");
+                this.membershipChoices.getSelectionModel().select(0);
+                this.statusChoices.getSelectionModel().select(0);
+            }
+            else{
+                this.nameInput.setText(updateMemberController.getChoosenMember().getNama());
+                this.phoneNumberInput.setText(updateMemberController.getChoosenMember().getNoTelp());
+                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getMembership().name());
+                this.statusChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getStatus()?0:1);
+            }
         }
         else{
         VBox customersContainer = new VBox();
@@ -47,6 +60,8 @@ public class AllMemberPage extends Page implements Subscriber{
             MemberCardComponent card = new MemberCardComponent(m,updateMemberController);
             customersContainer.getChildren().add(card.getComponent());
         }
+        customersContainerScroll.setContent(customersContainer);
+        customersContainer.getStyleClass().add("customers-container-all-customer");
         }
     }
 
@@ -60,7 +75,6 @@ public class AllMemberPage extends Page implements Subscriber{
         
         customersContainer.getStyleClass().add("customers-container-all-customer");
 
-        ScrollPane customersContainerScroll = new ScrollPane();
         customersContainerScroll.setContent(customersContainer);
         customersContainerScroll.setFitToWidth(true);
 
@@ -88,7 +102,7 @@ public class AllMemberPage extends Page implements Subscriber{
         membershipInputContainer.getChildren().addAll(membershipLabel, membershipChoices);
 
         Label statusLabel = new Label("Status:");
-        ChoiceBox statusChoices = new ChoiceBox();
+        statusChoices = new ChoiceBox();
         statusChoices.getItems().add("ACTIVE");
         statusChoices.getItems().add("DISABLED");
         VBox statusInputContainer = new VBox();
@@ -114,8 +128,23 @@ public class AllMemberPage extends Page implements Subscriber{
         actionButtonsContainer.getStyleClass().add("action-buttons-container-all-customer");
         actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);
 
+        cancelButton.setOnAction(event ->{
+            updateMemberController.setChoosenMember(null);
+        });
         saveButton.setOnAction(event -> {
-            
+            if(updateMemberController.getChoosenMember()!=null){
+                if(this.nameInput.getText()!="" && this.phoneNumberInput.getText()!=""){
+                    this.customerController.editMember(
+                        updateMemberController.getChoosenMember().getId(),
+                        this.nameInput.getText(),
+                        this.phoneNumberInput.getText(),
+                        this.membershipChoices.getSelectionModel().getSelectedItem().toString(),
+                        this.statusChoices.getSelectionModel().isSelected(0)?true:false
+                    );
+                }
+                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getMembership().name());
+                updateMemberController.setChoosenMember(null);
+            }
         });
 
         BorderPane formAndActionsContainer = new BorderPane();

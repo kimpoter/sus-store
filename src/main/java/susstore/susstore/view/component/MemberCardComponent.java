@@ -30,7 +30,7 @@ public class MemberCardComponent {
 
     private void loadUI() {
         // left
-        Label membershipLabel = new Label("VIP");
+        Label membershipLabel = new Label(containMember.getMembership().name());
         membershipLabel.getStyleClass().add("membership-label");
         Label idLabel = new Label(containMember.getId()+"");
         idLabel.getStyleClass().add("id-label");
@@ -46,9 +46,7 @@ public class MemberCardComponent {
         this.nameAndPhoneContainer.getChildren().addAll(nameLabel, phonNumberLabel);
 
         // right
-        Button deleteButton = new Button("\uf2ed;");
         Button editButton = new Button("\uf4ff;");
-        deleteButton.getStyleClass().add("delete-action-button");
         editButton.getStyleClass().add("edit-action-button");
         editButton.setOnAction(
             e->{
@@ -57,15 +55,13 @@ public class MemberCardComponent {
         );
 
         Label statusLabel = new Label(containMember.getStatus()? "ACTIVE" : "INACTIVE");
-        Label transactionLabel = new Label("99999 transactions");
         statusLabel.getStyleClass().addAll("status-label", "status-label-active");
-        transactionLabel.getStyleClass().add("transaction-label");
 
         VBox statusAndTransactionContainer = new VBox();
-        statusAndTransactionContainer.getChildren().addAll(statusLabel, transactionLabel);
+        statusAndTransactionContainer.getChildren().addAll(statusLabel);
         statusAndTransactionContainer.getStyleClass().add("status-transaction-container");
 
-        this.statusAndActionsContainer.getChildren().addAll(statusAndTransactionContainer, editButton, deleteButton);
+        this.statusAndActionsContainer.getChildren().addAll(statusAndTransactionContainer, editButton);
 
 
         // root layout

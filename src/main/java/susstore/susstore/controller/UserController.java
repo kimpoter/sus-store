@@ -6,7 +6,7 @@ import susstore.susstore.models.Customer;
 import susstore.susstore.models.Member;
 import susstore.susstore.models.MemberVIP;
 import susstore.susstore.Subscriber;
-
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +53,39 @@ public class UserController {
 
     public void addMember(Member c){
         this.members.add(c);
-        //this.subscribers.notifysubs();
+        this.subscribers.notifysubs("add-member");
+    }
+
+    public void editMember(int id, String name, String phone, String type, boolean isActive){
+        Integer mid = getMemberIdxByID(id);
+        Member m = members.get(mid);
+        m.setNama(name);
+        m.setNoTelp(phone);
+        m.setStatus(isActive);
+        if(m.getMembership().name()!=type){
+            if(type=="MEMBER"){
+                deleteFromVIP(m,mid);
+            }else{
+                addToVIP(m,mid);
+            }
+        }
+        this.subscribers.notifysubs("edit-member");
+    }
+
+    public void addToVIP(Member m, Integer id){
+        this.members.set(id, new MemberVIP(m));
+    }
+
+    public void deleteFromVIP(Member m, Integer id){
+        this.members.set(id, new Member(m));
+    }
+    public Integer getMemberIdxByID(int id){
+        int counter=0;
+        for(Member m: members){
+            if(m.getId()==id)return counter;
+            counter++;
+        }
+        return null;
     }
 
 
