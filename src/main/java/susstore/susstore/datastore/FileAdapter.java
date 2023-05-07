@@ -1,6 +1,6 @@
 package susstore.susstore.datastore;
 
-public abstract class FileAdapter<T> implements ObjectStore<T> {
+public abstract class FileAdapter<T extends Storable> implements ObjectStore<T> {
     protected String targetFile;
     protected Class<?> objClass;
 

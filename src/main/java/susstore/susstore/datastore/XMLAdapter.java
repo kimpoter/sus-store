@@ -23,7 +23,7 @@ import java.io.File;
 //    }
 //}
 
-public class XMLAdapter<T> extends FileAdapter<T>{
+public class XMLAdapter<T extends Storable> extends FileAdapter<T>{
 
     public XMLAdapter(String targetFile, Class<T> objClass) {
         super(targetFile, objClass);

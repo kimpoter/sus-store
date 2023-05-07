@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class JSONAdapter<T> extends FileAdapter<T> {
+public class JSONAdapter<T extends Storable> extends FileAdapter<T> {
 
     public JSONAdapter(String targetFile, Class<T> objClass) {
         super(targetFile, objClass);

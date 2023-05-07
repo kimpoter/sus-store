@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 
-public class OBJAdapter<T> extends FileAdapter<T> {
+public class OBJAdapter<T extends Storable> extends FileAdapter<T> {
     public OBJAdapter(String targetFile, Class<T> objClass) {
         super(targetFile, objClass);
     }
