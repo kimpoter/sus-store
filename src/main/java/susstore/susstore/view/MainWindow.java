@@ -1,5 +1,6 @@
 package susstore.susstore.view;
 
+import com.sun.tools.javac.Main;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -9,13 +10,15 @@ import susstore.susstore.view.page.DashboardPage;
 import susstore.susstore.view.page.PageManager;
 
 public class MainWindow {
+    private static MainWindow window;
+
     private final Stage primaryStage;
     private final BorderPane rootLayout;
     private final StackPane contentLayout;
-    private final Navbar navbar;
+    private static Navbar navbar;
     private final PageManager pageManager;
 
-    public MainWindow(Stage primaryStage) {
+    private MainWindow(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.rootLayout = new BorderPane();
         this.contentLayout = new StackPane();
@@ -23,6 +26,33 @@ public class MainWindow {
         this.navbar = new Navbar(pageManager);
         loadUI();
     }
+
+    public static MainWindow getInstance(Stage stage)
+    {
+        if (window == null)
+            window = new MainWindow(stage);
+
+        return window;
+    }
+
+    public static MainWindow getInstance() throws Exception
+    {
+        if (window == null)
+            throw new Exception();
+
+        return window;
+    }
+
+    public PageManager getPageManager()
+    {
+        return this.pageManager;
+    }
+
+    public static Navbar getNavbar()
+    {
+        return navbar;
+    }
+
 
     private void loadUI() {
 
