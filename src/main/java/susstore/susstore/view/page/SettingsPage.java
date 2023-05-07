@@ -33,11 +33,13 @@ public class SettingsPage extends Page {
         this.tab.setContent(this.pageRootLayout);
     }
 
+
     public void addNewSettings(String s1, String s2){
         Label labelSetting1 = new Label(s1);
         Label labelPenjelasanSetting1 = new Label(s2);
         this.settingContainer.add(labelSetting1, 0, 7);
         this.settingContainer.add(labelPenjelasanSetting1, 0, 8);
+
     }
 
     private void loadUI() {
@@ -61,7 +63,7 @@ public class SettingsPage extends Page {
         pilihFile.setOnAction(
             e -> {
                 FileChooser fileChooser = new FileChooser();
-                File fileSaved = fileChooser.showOpenDialog(primaryStage);  
+                File fileSaved = fileChooser.showOpenDialog(primaryStage);
                 this.selectedFile = fileSaved;
                 this.filePath.setText("File yang dipilih adalah : " + selectedFile.getAbsolutePath());
             }
