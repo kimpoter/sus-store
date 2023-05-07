@@ -1,10 +1,11 @@
 package susstore.susstore.models.wrappers;
 
+import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.Barang;
 
 import java.util.List;
 
-public class BarangWrapper {
+public class BarangWrapper implements Storable {
     private List<Barang> barangList;
 
     public BarangWrapper(List<Barang> barangList) {
