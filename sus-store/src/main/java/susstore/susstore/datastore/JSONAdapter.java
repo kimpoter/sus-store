@@ -19,7 +19,7 @@ public class JSONAdapter<T extends Storable> extends FileAdapter<T> {
     @Override
     public void storeObject(T obj) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonWriter writer = new JsonWriter(new FileWriter(this.targetFile));
+        JsonWriter writer = new JsonWriter(new FileWriter(this.targetPath));
         gson.toJson(obj, this.objClass, writer);
         writer.flush();
         writer.close();
@@ -28,7 +28,7 @@ public class JSONAdapter<T extends Storable> extends FileAdapter<T> {
     @Override
     public T loadObject() throws FileNotFoundException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonReader reader = new JsonReader(new FileReader(this.targetFile));
+        JsonReader reader = new JsonReader(new FileReader(this.targetPath));
         return gson.fromJson(reader, this.objClass);
     }
 }
