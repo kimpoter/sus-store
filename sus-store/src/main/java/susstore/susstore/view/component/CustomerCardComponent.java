@@ -17,26 +17,25 @@ public class CustomerCardComponent {
     private Customer containedCustomer;
     private Member memberInfo;
 
-    public CustomerCardComponent(Customer c, Member m) {
+    public CustomerCardComponent(Customer c) {
         this.componentRootLayout = new BorderPane();
         this.idAndMembershipContainer = new VBox();
         this.statusAndActionsContainer = new HBox();
         this.nameAndPhoneContainer = new VBox();
         this.containedCustomer = c;
-        this.memberInfo = m;
         loadUI();
     }
 
     private void loadUI() {
         // left
-        //Label membershipLabel = new Label(memberInfo==null?"Tidak terdaftar": memberInfo.getMembership());
-        //membershipLabel.getStyleClass().add("membership-label");
+        // Label membershipLabel = new Label(memberInfo==null?"Tidak terdaftar":
+        // memberInfo.getMembership());
+        // membershipLabel.getStyleClass().add("membership-label");
 
         Label idLabel = new Label(containedCustomer.getUserID() + "");
         idLabel.getStyleClass().add("id-label");
 
         this.idAndMembershipContainer.getChildren().addAll(idLabel);
-
 
         // center
         Label nameLabel = new Label("Kurokawa Akane");
@@ -62,7 +61,6 @@ public class CustomerCardComponent {
         statusAndTransactionContainer.getStyleClass().add("status-transaction-container");
 
         this.statusAndActionsContainer.getChildren().addAll(statusAndTransactionContainer, editButton, deleteButton);
-
 
         // root layout
         this.componentRootLayout.setLeft(this.idAndMembershipContainer);

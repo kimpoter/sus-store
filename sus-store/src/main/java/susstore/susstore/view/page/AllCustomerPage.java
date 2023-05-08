@@ -31,7 +31,7 @@ public class AllCustomerPage extends Page implements Subscriber{
     public void update(String s){
         VBox customersContainer = new VBox();
         for(Customer c : customerController.getCustomers()){
-            CustomerCardComponent card = new CustomerCardComponent(c, customerController.getMemberbyUUID(c.getUserID()));
+            CustomerCardComponent card = new CustomerCardComponent(c);
             customersContainer.getChildren().add(card.getComponent());
         }
         customersContainerScroll.setContent(customersContainer);
@@ -41,8 +41,9 @@ public class AllCustomerPage extends Page implements Subscriber{
     private void loadUI() {
         VBox customersContainer = new VBox();
         for(Customer c : customerController.getCustomers()){
-            CustomerCardComponent card = new CustomerCardComponent(c, customerController.getMemberbyUUID(c.getUserID()));
-            customersContainer.getChildren().add(card.getComponent());
+            if(customerController.getMemberbyUUID(c.getUserID())==null){
+            CustomerCardComponent card = new CustomerCardComponent(c);
+            customersContainer.getChildren().add(card.getComponent());}
         }
         
         customersContainer.getStyleClass().add("customers-container-all-customer");

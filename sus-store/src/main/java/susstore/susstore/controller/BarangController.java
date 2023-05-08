@@ -90,6 +90,15 @@ public class BarangController {
             e.printStackTrace();
         }
     }
+
+    public void deleteBarang(UUID idbarang){
+        int i=0;
+        for(Barang b:barangs){
+            if(idbarang==b.getID())barangs.remove(i);
+            i++;
+        }
+        this.subscribers.notifysubs("delete-barang");
+    }
     
     public Barang getBarangByID(UUID idbarang){
         for(Barang b: barangs){
