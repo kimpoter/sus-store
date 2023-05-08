@@ -5,6 +5,7 @@ import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.Customer;
 import susstore.susstore.models.Member;
 import susstore.susstore.models.MemberVIP;
+import susstore.susstore.models.Member.MEMBERSHIP;
 import susstore.susstore.Subscriber;
 import susstore.susstore.datastore.DataStoreController;
 import susstore.susstore.models.wrappers.CustomerWrapper;
@@ -61,14 +62,14 @@ public class UserController {
         }
     }
 
-    public void editMember(UUID id, String name, String phone, String type, boolean isActive) {
+    public void editMember(UUID id, String name, String phone, MEMBERSHIP type, boolean isActive) {
         Integer mid = getMemberIdxByID(id);
         Member m = members.get(mid);
         m.setNama(name);
         m.setNoTelp(phone);
         m.setStatus(isActive);
-        if (m.getNama() != type) {
-            if (type == "MEMBER") {
+        if (m.getMembership() != type) {
+            if (type == MEMBERSHIP.MEMBER) {
                 deleteFromVIP(m, mid);
             } else {
                 addToVIP(m, mid);

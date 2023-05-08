@@ -30,7 +30,7 @@ public class MemberCardComponent {
 
     private void loadUI() {
         // left
-        Label membershipLabel = new Label(containMember.getNama());
+        Label membershipLabel = new Label(containMember.getMembership().toString());
         membershipLabel.getStyleClass().add("membership-label");
         Label idLabel = new Label(containMember.getUserID() + "");
         idLabel.getStyleClass().add("id-label");
