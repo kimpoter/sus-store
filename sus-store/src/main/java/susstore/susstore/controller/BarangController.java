@@ -24,9 +24,9 @@ public class BarangController {
         this.subscribers = new SubscriberManager();
         this.dataStoreController =
                 new DataStoreController<>(BarangWrapper.class,
-                        "Barang.json",
+                        "sus-store/Barang.json",
                         DataStoreController.TYPE.JSON);
-        File f = new File("Barang.json");
+        File f = new File("sus-store/Barang.json");
         if(f.exists() && !f.isDirectory()) { 
             try {
                 this.barangs = this.dataStoreController.loadData().getBarangList();
