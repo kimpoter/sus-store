@@ -2,7 +2,6 @@ package susstore.susstore.view.page;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.geometry.Insets;
@@ -32,6 +31,7 @@ public class KasirPage extends Page implements Subscriber {
     private final SplitPane pageRootLayout;
     private final TemporaryBillController temporaryBillController;
     private final GridPane barangContainer;
+    private final PageManager pageManager;
     private BarangController barangController;
     private List<TemporaryBill> temporaryBills;
     private VBox billElementsContainer;
@@ -42,8 +42,10 @@ public class KasirPage extends Page implements Subscriber {
     private SimpleBooleanProperty booleanProperty;
     private UserController userController;
     private FixedBillController fixedBillController;
+    private String currentTransactionMembership;
+    private UUID userId;
 
-    public KasirPage(BarangController barangController, TemporaryBillController temporaryBillController, UserController userController, FixedBillController fixedBillController) {
+    public KasirPage(BarangController barangController, TemporaryBillController temporaryBillController, UserController userController, FixedBillController fixedBillController, PageManager pageManager) {
         super(PageType.Kasir);
         this.pageRootLayout = new SplitPane();
         this.barangController = barangController;
@@ -55,6 +57,7 @@ public class KasirPage extends Page implements Subscriber {
         this.booleanProperty = new SimpleBooleanProperty();
         this.userController = userController;
         this.fixedBillController = fixedBillController;
+        this.pageManager = pageManager;
         initializeBill();
         loadTemporaryBills();
         loadUI();
@@ -73,15 +76,17 @@ public class KasirPage extends Page implements Subscriber {
         this.temporaryBills = this.temporaryBillController.getTemporaryBills();
     }
 
-    private UUID loadTemporaryBill() {
+    private void loadTemporaryBill() {
         loadTemporaryBills();
-        UUID userId;
+
         if (this.customerInput.getValue() == null || Objects.equals(this.customerInput.getValue(), "")) {
-            userId = UUID.fromString(this.userController.addCustomer(new Customer()));
-            this.customerInput.getItems().add(userId.toString());
-            this.customerInput.setValue(userId.toString());
+//            userId = UUID.fromString(this.userController.addCustomer(new Customer()));
+            this.userId = UUID.randomUUID();
+            this.customerInput.setValue("Customer<>" + this.userId.toString());
+            this.currentTransactionMembership = "Customer";
         } else {
-            userId = UUID.fromString(this.customerInput.getValue());
+            this.userId = UUID.fromString(this.customerInput.getValue().split("<>")[1]);
+            this.currentTransactionMembership = this.customerInput.getValue().split("<>")[0];
         }
 
         this.temporaryBill = null;
@@ -91,13 +96,12 @@ public class KasirPage extends Page implements Subscriber {
                 this.temporaryBill = temporaryBill;
             }
         }
-        return userId;
     }
 
 
     private void loadBarang() {
         int index = 0;
-        UUID userId = loadTemporaryBill();
+        loadTemporaryBill();
         System.out.println("FIXED BILL SIZE:" + this.fixedBillController.getFixedBills().size());
         System.out.println("TEMP BILL SIZE:" + this.temporaryBillController.getTemporaryBills().size());
 //        this.billElementsContainer.getChildren().clear();
@@ -115,7 +119,7 @@ public class KasirPage extends Page implements Subscriber {
         System.out.println(userId);
 
         for (Barang barang : this.barangController.getBarangs()) {
-            BarangCardComponent barangCard = new BarangCardComponent(userId, barang, this.bills, this.temporaryBillController, this.temporaryBill, this.booleanProperty);
+            BarangCardComponent barangCard = new BarangCardComponent(this.userId, barang, this.bills, this.temporaryBillController, this.temporaryBill, this.booleanProperty);
             this.barangContainer.add(barangCard.getComponent(), index % 4, index / 4, 1, 1);
             index++;
         }
@@ -163,7 +167,7 @@ public class KasirPage extends Page implements Subscriber {
         for (TemporaryBill temporaryBill1 : temporaryBills) {
             for (Customer customer : userController.getCustomers()) {
                 if (customer.getUserID().equals(temporaryBill1.getUserID())) {
-                    customerInput.getItems().add(temporaryBill1.getUserID().toString());
+                    customerInput.getItems().add("Member<>" + temporaryBill1.getUserID().toString());
                 }
             }
         }
@@ -212,8 +216,15 @@ public class KasirPage extends Page implements Subscriber {
                         this.billElementsContainer.getChildren().add(bill);
                     }
                     loadTemporaryBill();
-                    System.out.println("TEMPORARYBILLDAFTAR:::" + this.temporaryBill.getDaftarEntry().size());
-                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                    if (this.temporaryBill != null) {
+                        if (this.currentTransactionMembership.equals("Member")) {
+                            this.totalPriceLabel.setText("Member<>" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).bayar(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                        } else {
+                            this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                        }
+                    } else {
+                        this.totalPriceLabel.setText("");
+                    }
                 }
                 if (c.wasRemoved()) {
                     for (Node bill : c.getRemoved()) {
@@ -221,7 +232,11 @@ public class KasirPage extends Page implements Subscriber {
                     }
                     loadTemporaryBill();
                     if (this.temporaryBill != null) {
-                        this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                        if (this.currentTransactionMembership.equals("Member")) {
+                            this.totalPriceLabel.setText("Member<>" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).bayar(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                        } else {
+                            this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                        }
                     } else {
                         this.totalPriceLabel.setText("");
                     }
@@ -232,7 +247,16 @@ public class KasirPage extends Page implements Subscriber {
 
         this.booleanProperty.addListener(((observable, oldValue, newValue) -> {
             loadTemporaryBill();
-            this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+            if (this.temporaryBill != null) {
+                if (this.currentTransactionMembership.equals("Member")) {
+                    this.totalPriceLabel.setText("Member<>" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).bayar(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                } else {
+                    this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
+                }
+            } else {
+                this.totalPriceLabel.setText("");
+            }
+
         }));
 
         ScrollPane billScroll = new ScrollPane();
@@ -251,8 +275,20 @@ public class KasirPage extends Page implements Subscriber {
 
 
         Button cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(e -> {
+            int indexFound = 0;
+            for (TemporaryBill temporaryBill1 : this.temporaryBillController.getTemporaryBills()) {
+                if (temporaryBill1.getID() == this.temporaryBill.getID()) {
+                    indexFound = 0;
+                }
+            }
+            this.temporaryBillController.getTemporaryBills().remove(indexFound);
+            loadBarang();
+            this.pageManager.removeTab(this.tab, PageType.Kasir.getName());
+        });
         Button checkoutButton = new Button("Checkout");
         checkoutButton.setOnAction(e -> {
+            this.userController.addCustomer(new Customer(this.userId));
             this.fixedBillController.addFixedBill(new FixedBill(this.temporaryBill));
             int indexFound = 0;
             for (TemporaryBill temporaryBill1 : this.temporaryBillController.getTemporaryBills()) {
@@ -265,6 +301,7 @@ public class KasirPage extends Page implements Subscriber {
             }
             this.temporaryBillController.getTemporaryBills().remove(indexFound);
             loadBarang();
+            this.pageManager.removeTab(this.tab, PageType.Kasir.getName());
         });
         HBox actionButtonsContainer = new HBox();
         cancelButton.getStyleClass().addAll("action-button-kasir", "cancel-button-kasir");

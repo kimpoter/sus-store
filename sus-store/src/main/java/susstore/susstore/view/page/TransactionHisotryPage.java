@@ -4,15 +4,21 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import susstore.susstore.Subscriber;
+import susstore.susstore.controller.FixedBillController;
+import susstore.susstore.controller.UserController;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.CustomerTransactionCardComponent;
 
 public class TransactionHisotryPage extends Page {
     private final SplitPane pageRootLayout;
+    private FixedBillController fixedBillContainer;
+    private UserController userController;
 
-    public TransactionHisotryPage() {
+    public TransactionHisotryPage(FixedBillController fixedBillController, UserController userController) {
         super(PageType.TransactionHistory);
         this.pageRootLayout = new SplitPane();
+        this.fixedBillContainer = fixedBillController;
         loadUI();
         setStyleSheet();
         this.tab.setContent(this.pageRootLayout);

@@ -6,28 +6,29 @@ import susstore.susstore.models.api.User;
 
 import java.util.UUID;
 
-public class Customer implements User, Storable
-{
+public class Customer implements User, Storable {
     protected static Currency currency = CurrencyIDR.getInstance();
 
     protected UUID userID;
 
     protected int jumlahTransaksi;
 
-    public Customer()
-    {
+    public Customer() {
         this.userID = UUID.randomUUID();
         this.jumlahTransaksi = 0;
     }
 
-    protected Customer(Customer other)
-    {
+    public Customer(UUID userID) {
+        this.userID = userID;
+        this.jumlahTransaksi = 0;
+    }
+
+    protected Customer(Customer other) {
         this.userID = other.userID;
         this.jumlahTransaksi = other.jumlahTransaksi;
     }
 
-    public UUID getUserID()
-    {
+    public UUID getUserID() {
         return this.userID;
     }
 

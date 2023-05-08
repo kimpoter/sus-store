@@ -36,6 +36,7 @@ public class BillCardComponent {
         initialAmount.addListener((observable, oldValue, newValue) -> {
             System.out.println("OLDVALUE:::" + oldValue);
             System.out.println("NEWVALUE:::" + newValue);
+            System.out.println("BARNG::HARGAJUAL::" + this.barang.getHargaJual());
             priceLabel.setText("IDR " + this.barang.getHargaJual() * Integer.parseInt(newValue));
         });
 

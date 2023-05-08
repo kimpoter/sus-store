@@ -20,12 +20,12 @@ import susstore.susstore.controller.UserController;
 
 
 public class PageManager {
+    private static Setting setting = Setting.getInstance();
     protected final JoinDataTest joinDataTest;
     private final HashMap<String, Function<String, Page>> pages;
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
-    private static Setting setting = Setting.getInstance();
     private final TemporaryBillController temporaryBillController;
     private UserController customerController;
     private BarangController barangController;
@@ -57,9 +57,10 @@ public class PageManager {
         pages.put(PageType.EditCustomerPage.getName(), (String) -> new EditCustomerPage(this.joinDataTest));
         pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage, this.barangController));
         pages.put(PageType.NewBarang.getName(), (String) -> new NewBarangPage(primaryStage, this.barangController));
-        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController, this.customerController, this.fixedBillController));
+        pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController, this.customerController, this.fixedBillController, this));
         pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
         pages.put(PageType.AllMemberPage.getName(), (String) -> new AllMemberPage(this.customerController));
+        pages.put(PageType.TransactionHistory.getName(), (String) -> new TransactionHisotryPage(this.fixedBillController, this.customerController));
     }
 
     public void addTab(String pageName) {
@@ -87,5 +88,10 @@ public class PageManager {
 
     public Stage getStage() {
         return this.primaryStage;
+    }
+
+    public void removeTab(Tab tab, String pageName) {
+        tabPane.getTabs().remove(tab);
+        this.tabs.remove(pageName);
     }
 }
