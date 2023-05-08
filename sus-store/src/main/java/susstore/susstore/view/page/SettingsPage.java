@@ -114,11 +114,13 @@ public class SettingsPage extends Page {
                 File fileSaved = fileChooser.showOpenDialog(primaryStage);
                 setting.addPlugins(fileSaved.getAbsolutePath());
                 PluginManager.register(fileSaved.getAbsolutePath());
+                setting.save();
             }
         );
         settingContainer.add(labelSetting2, 0, 4);
         settingContainer.add(labelPenjelasanSetting2, 0, 5);
         settingContainer.add(categoryChoices, 0, 6);
+        settingContainer.add(addPlugin, 0, 7);
 
 
         /*
