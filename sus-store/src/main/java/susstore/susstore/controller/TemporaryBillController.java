@@ -53,6 +53,17 @@ public class TemporaryBillController {
         this.temporaryBills = temporaryBills;
     }
 
+    public void loadData(String s, DataStoreController.TYPE t){
+        this.dataStoreController.changeTarget(s+"/Barang." + t.name().toLowerCase(), t);
+        try {
+            this.temporaryBills = this.dataStoreController.loadData().getTemporaryBillList();
+            this.subscribers.notifysubs("new-data");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+    }
+
     public void addSubscriber(Subscriber s) {
         this.subscribers.subscribe(s);
     }

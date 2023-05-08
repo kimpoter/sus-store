@@ -103,10 +103,6 @@ public class UserController {
         //this.subscribers.notifysubs();
     }
 
-    public List<Customer> getCustomers() {
-        return this.customers;
-    }
-
     public void setCustomers(List<Customer> customer) {
         this.customers = customer;
         //this.subscribers.notify();
@@ -135,6 +131,27 @@ public class UserController {
     public void setVIPs(List<Integer> vips) {
         this.vips = vips;
         //this.subscribers.notify();
+    }
+
+    public List<Customer> getCustomers() {
+        return this.customers;
+    }
+
+    public void loadData(String s, DataStoreController.TYPE t){
+        this.customerStore.changeTarget(s+"/Customer." + t.name().toLowerCase(), t);
+        try {
+            this.customers = this.customerStore.loadData().getCustomerList();
+            this.subscribers.notifysubs("new-data");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        try {
+            this.members = this.customerStore.loadData().getMemberList();
+            this.subscribers.notifysubs("new-data");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
     }
 
     public void addSubscriber(Subscriber s) {

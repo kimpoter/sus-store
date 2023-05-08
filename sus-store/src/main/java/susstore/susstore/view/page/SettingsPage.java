@@ -88,6 +88,9 @@ public class SettingsPage extends Page {
                 
                 this.filePath.setText("Directory yang dipilih adalah : " + selectedFile.getAbsolutePath());
                 this.barangController.loadData(selectedDirectory.getAbsolutePath(), categoryChoices.getSelectionModel().getSelectedItem());
+                this.userController.loadData(selectedDirectory.getAbsolutePath(), categoryChoices.getSelectionModel().getSelectedItem());
+                this.temporaryBillController.loadData(selectedDirectory.getAbsolutePath(), categoryChoices.getSelectionModel().getSelectedItem());
+                this.fixedBillController.loadData(selectedDirectory.getAbsolutePath(), categoryChoices.getSelectionModel().getSelectedItem());
             }
         );
         settingContainer.add(labelSetting1, 0, 0);

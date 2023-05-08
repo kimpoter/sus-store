@@ -63,7 +63,6 @@ public class BarangController {
 
     public void loadData(String s, TYPE t){
         this.dataStoreController.changeTarget(s+"/Barang." + t.name().toLowerCase(), t);
-        this.dataStoreController.setTargetPath(s+"/Barang"+ t.name().toLowerCase());
         try {
             this.barangs = this.dataStoreController.loadData().getBarangList();
             this.subscribers.notifysubs("new-data");
