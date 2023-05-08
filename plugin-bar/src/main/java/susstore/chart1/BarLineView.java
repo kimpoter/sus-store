@@ -8,6 +8,7 @@ import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import susstore.susstore.controller.BarangController;
 import susstore.susstore.models.Barang;
 import susstore.susstore.view.PageType;
@@ -35,7 +36,9 @@ public class BarLineView extends Page
     private void loadUI() {
 
         // Create a dataset
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        DefaultCategoryDataset barDataset = new DefaultCategoryDataset();
+
+        XYSeriesCollection lineDataset = new XYSeriesCollection();
 
         XYSeries series = new XYSeries("Data");
 
@@ -43,14 +46,19 @@ public class BarLineView extends Page
            while (true)
            {
                try {
+                   int index = 0;
                    for (Barang b : barangController.getBarangs())
                    {
-                       dataset.addValue(b.getStok(), "", b.getNama());
+                       System.out.println(b.getNama() +  b.getStok());
+                       barDataset.addValue(b.getStok(), "", b.getNama());
+                       series.addOrUpdate(index, b.getStok());
+                       index += 10;
                    }
 
                    Thread.sleep(2000);
 
-                    dataset.clear();
+                    barDataset.clear();
+                    series.clear();
                }
                catch (Exception e) {
                    e.printStackTrace();
@@ -59,12 +67,13 @@ public class BarLineView extends Page
         });
         thread.start();
 
+        lineDataset.addSeries(series);
         // Create a bar chart
-        JFreeChart chart = ChartFactory.createBarChart(
+        JFreeChart barChart = ChartFactory.createBarChart(
                 "Product Sales",
                 "Product",
                 "Stok",
-                dataset,
+                barDataset,
                 PlotOrientation.VERTICAL,
                 true,
                 true,
@@ -72,8 +81,18 @@ public class BarLineView extends Page
         );
 
         // Create a chart viewer and set the chart panel as its content
-        ChartViewer barViewer = new ChartViewer(chart);
+        ChartViewer barViewer = new ChartViewer(barChart);
 
-        this.pageRootLayout.getItems().addAll(barViewer);
+        // Create a JFreeChart object
+        JFreeChart lineChart = ChartFactory.createXYLineChart(
+                "Line Chart Example",
+                "X Axis Label",
+                "Y Axis Label",
+                lineDataset
+        );
+
+        ChartViewer lineViewer = new ChartViewer(lineChart);
+
+        this.pageRootLayout.getItems().addAll(barViewer, lineViewer);
     }
 }
