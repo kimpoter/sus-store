@@ -7,6 +7,7 @@ import susstore.susstore.models.FixedBill;
 import susstore.susstore.models.wrappers.FixedBillWrapper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,13 @@ public class FixedBillController {
             try {
                 this.fixedBills = this.dataStoreController.loadData().getFixedBillList();
             } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+        else{
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
                 // TODO: handle exception
             }
         }

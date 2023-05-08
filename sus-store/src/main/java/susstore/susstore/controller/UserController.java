@@ -12,6 +12,7 @@ import susstore.susstore.models.wrappers.CustomerWrapper;
 
 import java.io.Console;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +42,13 @@ public class UserController {
                 this.customers = temp.getCustomerList();
                 this.members = temp.getMemberList();
             } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+        else{
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
                 // TODO: handle exception
             }
         }

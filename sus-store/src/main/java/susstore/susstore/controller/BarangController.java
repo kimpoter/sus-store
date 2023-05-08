@@ -9,6 +9,7 @@ import susstore.susstore.models.api.Kategori;
 import susstore.susstore.models.wrappers.BarangWrapper;
 import susstore.susstore.Subscriber;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +36,14 @@ public class BarangController {
                 // TODO: handle exception
             }
             
-} 
+        }
+        else{
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                // TODO: handle exception
+            }
+        }
     }
 
     public BarangController(List<Barang> barang){

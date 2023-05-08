@@ -7,6 +7,7 @@ import susstore.susstore.datastore.DataStoreController;
 import susstore.susstore.models.wrappers.TemporaryBillWrapper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,13 @@ public class TemporaryBillController {
             try {
                 this.temporaryBills = this.dataStoreController.loadData().getTemporaryBillList();
             } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+        else{
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
                 // TODO: handle exception
             }
         }
