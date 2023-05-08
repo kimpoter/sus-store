@@ -10,16 +10,10 @@ public class Chart extends BasePlugin implements Plugin
     {
         try {
             BasePlugin.CreateNewTab(
-                    new BarView(
-                            BasePlugin.getListOfBarang(),
-                            BasePlugin.getListOfCustomer()
+                    new BarLineView(
+                            BasePlugin.getBarangController()
                     ),
-                    "Bar Chart"
-            );
-
-            BasePlugin.CreateNewTab(
-                    new LineView(),
-                    "Line Chart"
+                    "Bar and Line Chart"
             );
         }
         catch (Exception e) {

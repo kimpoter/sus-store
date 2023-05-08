@@ -1,5 +1,7 @@
 package susstore.susstore.plugin;
 
+import susstore.susstore.controller.BarangController;
+import susstore.susstore.controller.UserController;
 import susstore.susstore.models.*;
 import susstore.susstore.view.MainWindow;
 import susstore.susstore.view.page.Page;
@@ -20,13 +22,8 @@ public class BasePlugin {
         window.getNavbar().addNewMenu(title);
     }
 
-    public static List<Barang> getListOfBarang()
+    public static BarangController getBarangController()
     {
-        return window.getPageManager().getBarangController().getBarangs();
-    }
-
-    public static List<Customer> getListOfCustomer()
-    {
-        return window.getPageManager().getUserController().getCustomers();
+        return window.getPageManager().getBarangController();
     }
 }
