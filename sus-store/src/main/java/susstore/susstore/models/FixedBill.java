@@ -3,11 +3,12 @@ package susstore.susstore.models;
 import susstore.susstore.models.api.Currency;
 import susstore.susstore.models.api.Product;
 import susstore.susstore.models.api.UseCurrency;
+import susstore.susstore.report.Printable;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class FixedBill extends Bill implements UseCurrency {
+public class FixedBill extends Bill implements UseCurrency, Printable {
     private static Currency currency = CurrencyIDR.getInstance();
     private ArrayList<BarangSnapshot> daftarBarang;
     private double totalHarga;
@@ -53,5 +54,23 @@ public class FixedBill extends Bill implements UseCurrency {
     @Override
     public void setCurrency(Currency c) {
         currency = c;
+    }
+
+    @Override
+    public String toText() {
+        StringBuilder txt = new StringBuilder();
+        txt.append("Bill-ID: ").append(this.billID).append('\n');
+        txt.append("Customer-ID: ").append(this.userID).append('\n');
+        txt.append("Qty.").append("\tItem").append("\tPrice").append("\tTotal\n");
+        for (BarangSnapshot entry: this.daftarBarang
+             ) {
+            txt.append(entry.getJumlahBarang()).append('\t');
+            txt.append(" x ").append(entry.getNamaBarang()).append('\t');
+            txt.append(entry.getHargaBarang()).append('\t');
+            txt.append(entry.getHargaBarang() * entry.getJumlahBarang()).append('\n');
+        }
+        txt.append("\t\t\tTotal: ").append(this.totalHarga).append('\n');
+
+        return txt.toString();
     }
 }
