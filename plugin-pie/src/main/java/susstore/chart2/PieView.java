@@ -6,13 +6,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.data.general.DefaultPieDataset;
 import susstore.susstore.controller.BarangController;
-import susstore.susstore.controller.UserController;
 import susstore.susstore.models.Barang;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.page.Page;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PieView extends Page
 {
@@ -36,21 +36,38 @@ public class PieView extends Page
         DefaultPieDataset dataset = new DefaultPieDataset();
 
         Map<String, Integer> data = new HashMap<>();
-        int totalStok = 0;
+        AtomicReference<Integer> totalStok = new AtomicReference<>(0);
 
-        for (Barang b : barangController.getBarangs())
-        {
-            if (data.containsKey(b.getKategori()))
-                data.put(b.getKategori(), data.get(b.getKategori()) + b.getStok());
-            else
-                data.put(b.getKategori(), b.getStok());
-            totalStok += b.getStok();
-        }
+        Thread thread = new Thread(() -> {
+           while (true)
+           {
+               try {
+                   for (Barang b : barangController.getBarangs())
+                   {
+                       if (data.containsKey(b.getKategori()))
+                           data.put(b.getKategori(), data.get(b.getKategori()) + b.getStok());
+                       else
+                           data.put(b.getKategori(), b.getStok());
+                       totalStok.updateAndGet(v -> v + b.getStok());
+                   }
 
-        for (HashMap.Entry<String, Integer> entry : data.entrySet())
-        {
-            dataset.setValue(entry.getKey(), (int)(entry.getValue() / totalStok));
-        }
+                   for (HashMap.Entry<String, Integer> entry : data.entrySet())
+                   {
+                       dataset.setValue(entry.getKey(), (int)(entry.getValue() / totalStok.get()));
+                   }
+
+                   Thread.sleep(2000);
+
+                   dataset.clear();
+
+                   totalStok.set(0);
+               }
+               catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }
+        });
+        thread.start();
 
         // Create a JFreeChart pie chart from the dataset
         JFreeChart chart = ChartFactory.createPieChart(

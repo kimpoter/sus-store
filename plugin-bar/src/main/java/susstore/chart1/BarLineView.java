@@ -15,7 +15,7 @@ import susstore.susstore.view.page.Page;
 
 public class BarLineView extends Page
 {
-    private final SplitPane pageRootLayout;
+    private SplitPane pageRootLayout;
 
     private BarangController barangController;
 
@@ -33,13 +33,31 @@ public class BarLineView extends Page
     }
 
     private void loadUI() {
+
         // Create a dataset
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (Barang b : barangController.getBarangs())
-        {
-            dataset.addValue(b.getStok(), "", b.getNama());
-        }
+        XYSeries series = new XYSeries("Data");
+
+        Thread thread = new Thread(() -> {
+           while (true)
+           {
+               try {
+                   for (Barang b : barangController.getBarangs())
+                   {
+                       dataset.addValue(b.getStok(), "", b.getNama());
+                   }
+
+                   Thread.sleep(2000);
+
+                    dataset.clear();
+               }
+               catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }
+        });
+        thread.start();
 
         // Create a bar chart
         JFreeChart chart = ChartFactory.createBarChart(
@@ -55,10 +73,6 @@ public class BarLineView extends Page
 
         // Create a chart viewer and set the chart panel as its content
         ChartViewer barViewer = new ChartViewer(chart);
-
-        XYSeries series = new XYSeries("Data");
-
-
 
         this.pageRootLayout.getItems().addAll(barViewer);
     }
