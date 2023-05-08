@@ -11,7 +11,8 @@ public enum PageType {
     TransactionHistory("Transaction History"),
     AllBarang("All Barang"),
     NewBarang("New Barang"),
-    Kasir("Kasir");
+    Kasir("Kasir"),
+    Riwayat("Riwayat");
 
     private final String name;
 
