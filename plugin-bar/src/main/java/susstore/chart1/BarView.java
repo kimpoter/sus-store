@@ -6,18 +6,33 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import susstore.susstore.models.Barang;
+import susstore.susstore.models.Customer;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.page.Page;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BarView extends Page
 {
     private final BorderPane pageRootLayout;
 
-    public BarView() {
+    private List<Barang> listOfBarang;
+
+    private List<Customer> listOfCustomer;
+
+    public BarView(
+            List<Barang>   listOfBarang,
+            List<Customer> listOfCustomer
+    ) {
         super(PageType.EditCustomerPage);
         this.pageRootLayout = new BorderPane();
         loadUI();
         this.tab.setContent(this.pageRootLayout);
+
+        this.listOfBarang   = listOfBarang;
+        this.listOfCustomer = listOfCustomer;
     }
 
     private void loadUI() {
