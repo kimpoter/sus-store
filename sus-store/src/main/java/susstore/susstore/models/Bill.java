@@ -7,13 +7,13 @@ import java.util.UUID;
 
 public abstract class Bill implements Transaction, Storable
 {
-    protected UUID biilID;
+    protected UUID billID;
 
     protected UUID userID;
 
     public Bill(UUID userID)
     {
-        this.biilID = UUID.randomUUID();
+        this.billID = UUID.randomUUID();
         this.userID = userID;
     }
 
@@ -22,7 +22,7 @@ public abstract class Bill implements Transaction, Storable
     @Override
     public UUID getID()
     {
-        return this.biilID;
+        return this.billID;
     }
 
     public UUID getUserID()
