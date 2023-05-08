@@ -35,9 +35,13 @@ public class Customer implements User, Storable
         return this.jumlahTransaksi;
     }
 
+    public double getFinalPrice(double nominal) {
+        return currency.getValue(nominal);
+    }
+
     @Override
     public double bayar(double nominal) {
         this.jumlahTransaksi++;
-        return currency.getValue(nominal);
+        return getFinalPrice(nominal);
     }
 }

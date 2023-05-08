@@ -88,6 +88,29 @@ public class Member extends Customer implements UseCurrency, UsePoin
     }
 
     @Override
+    public double getFinalPrice(double nominal) {
+        return super.getFinalPrice(nominal);
+    }
+
+    public double getFinalPrice(double harga, int poinBayar)
+    {
+        double poinToCurrency = poin.convertCurrency(poinBayar);
+
+        double convertedHarga = currency.getValue(harga);
+
+        if (poinToCurrency > convertedHarga)
+        {
+            // do not modify object data
+            convertedHarga = 0;
+        }
+        else
+        {
+            convertedHarga -= poinToCurrency;
+        }
+        return getFinalPrice(convertedHarga);
+    }
+
+    @Override
     public double bayar(double harga)
     {
         double hargaTotal = super.bayar(harga);
