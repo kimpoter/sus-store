@@ -42,7 +42,7 @@ public class Navbar {
         this.menuItems.get(MenuType.Customer.name()).add(PageType.RegisterNewMember.getName());
         this.menuItems.get(MenuType.Customer.name()).add(PageType.EditCustomerPage.getName());
         this.menuItems.get(MenuType.Customer.name()).add(PageType.AllMemberPage.getName());
-        this.menuItems.get(MenuType.Customer.name()).add(PageType.TransactionHistory.getName());
+        this.menuItems.get(MenuType.Customer.name()).add(PageType.Riwayat.getName());
 
         // barang menu items
         this.menuItems.get(MenuType.Barang.name()).add(PageType.AllBarang.getName());

@@ -48,13 +48,16 @@ public class UserController {
             this.customerStore.storeData(new CustomerWrapper(customers, members));
         } catch (Exception e) {
         }
+        this.subscribers.notifysubs("add-customer");
         return this.customers.get(this.customers.size() - 1).getUserID().toString();
-        //this.subscribers.notifysubs();
+        
     }
-
+    public void addMemberFromC(Customer C,String a, String b){
+        this.members.add(new Member(new Customer(),a,b));
+        this.subscribers.notifysubs("add-member");
+    }
     public void addMember(Member c) {
         this.members.add(c);
-        this.addCustomer(c);
         this.subscribers.notifysubs("add-member");
         try {
             this.customerStore.storeData(new CustomerWrapper(customers, members));
@@ -84,10 +87,20 @@ public class UserController {
 
     public void addToVIP(Member m, Integer id) {
         this.members.set(id, new MemberVIP(m));
+        this.subscribers.notifysubs("add-customer");
+        try {
+            this.customerStore.storeData(new CustomerWrapper(customers, members));
+        } catch (Exception e) {
+        }
     }
 
     public void deleteFromVIP(Member m, Integer id) {
         this.members.set(id, new Member(m));
+        this.subscribers.notifysubs("add-customer");
+        try {
+            this.customerStore.storeData(new CustomerWrapper(customers, members));
+        } catch (Exception e) {
+        }
     }
 
     public Integer getMemberIdxByID(UUID id) {

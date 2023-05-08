@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import susstore.susstore.models.Customer;
 import susstore.susstore.models.Member;
+import susstore.susstore.controller.UpdateCustomerController;
+
 
 public class CustomerCardComponent {
     private final BorderPane componentRootLayout;
@@ -16,13 +18,15 @@ public class CustomerCardComponent {
     private final VBox nameAndPhoneContainer;
     private Customer containedCustomer;
     private Member memberInfo;
+    private UpdateCustomerController updateCustomerController;
 
-    public CustomerCardComponent(Customer c) {
+    public CustomerCardComponent(Customer c,UpdateCustomerController updateCustomerController) {
         this.componentRootLayout = new BorderPane();
         this.idAndMembershipContainer = new VBox();
         this.statusAndActionsContainer = new HBox();
         this.nameAndPhoneContainer = new VBox();
         this.containedCustomer = c;
+        this.updateCustomerController = updateCustomerController;
         loadUI();
     }
 
@@ -32,18 +36,11 @@ public class CustomerCardComponent {
         // memberInfo.getMembership());
         // membershipLabel.getStyleClass().add("membership-label");
 
-        Label idLabel = new Label(containedCustomer.getUserID() + "");
-        idLabel.getStyleClass().add("id-label");
-
-        this.idAndMembershipContainer.getChildren().addAll(idLabel);
-
         // center
-        Label nameLabel = new Label("Kurokawa Akane");
-        Label phonNumberLabel = new Label("09098309");
+        Label nameLabel = new Label(containedCustomer.getUserID() + "");
         nameLabel.getStyleClass().add("name-label");
-        phonNumberLabel.getStyleClass().add("phone-number-label");
 
-        this.nameAndPhoneContainer.getChildren().addAll(nameLabel, phonNumberLabel);
+        this.nameAndPhoneContainer.getChildren().addAll(nameLabel);
 
         // right
         Button deleteButton = new Button("\uf2ed;");
@@ -51,19 +48,20 @@ public class CustomerCardComponent {
         deleteButton.getStyleClass().add("delete-action-button");
         editButton.getStyleClass().add("edit-action-button");
 
+        editButton.setOnAction(
+            e->{
+                updateCustomerController.setChoosenCustomer(containedCustomer);
+            }
+
+        );
         Label statusLabel = new Label("ACTIVE");
         Label transactionLabel = new Label(containedCustomer.getJumlahTransaksi() + " transactions");
         statusLabel.getStyleClass().addAll("status-label", "status-label-active");
         transactionLabel.getStyleClass().add("transaction-label");
 
-        VBox statusAndTransactionContainer = new VBox();
-        statusAndTransactionContainer.getChildren().addAll(statusLabel, transactionLabel);
-        statusAndTransactionContainer.getStyleClass().add("status-transaction-container");
-
-        this.statusAndActionsContainer.getChildren().addAll(statusAndTransactionContainer, editButton, deleteButton);
+        this.statusAndActionsContainer.getChildren().addAll(editButton, deleteButton);
 
         // root layout
-        this.componentRootLayout.setLeft(this.idAndMembershipContainer);
         this.componentRootLayout.setRight(this.statusAndActionsContainer);
         this.componentRootLayout.setCenter(this.nameAndPhoneContainer);
 

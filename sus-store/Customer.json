@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"customerList":[{"nama":"test","noTelp":"08124","membership":"MEMBER","status":true,"userPoin":0,"userID":"44795337-8d65-43bb-bf0e-89fa3df7b3a2","jumlahTransaksi":0}],"memberList":[{"nama":"test","noTelp":"08124","membership":"MEMBER","status":true,"userPoin":0,"userID":"44795337-8d65-43bb-bf0e-89fa3df7b3a2","jumlahTransaksi":0}]}
+=======
+{"customerList":[{"userID":"7b0fbe83-ad7d-4a5b-83cf-0214f63c2068","jumlahTransaksi":0}],"memberList":[{"nama":"1233","noTelp":"1233","membership":"MEMBER","status":true,"userPoin":0,"userID":"50f9cfd5-4e78-480e-9cc7-4b24f1599710","jumlahTransaksi":0},{"nama":"test","noTelp":"08124","membership":"MEMBER","status":true,"userPoin":0,"userID":"f2060b0c-b54c-473c-96e6-b2c554c30b8e","jumlahTransaksi":0}]}
+>>>>>>> af7cb1980a67ea67dd03e1eb6aa04bc7f4980537
