@@ -12,7 +12,7 @@ public enum PageType {
     AllBarang("All Barang"),
     NewBarang("New Barang"),
     Kasir("Kasir"),
-    Riwayat("Riwayat");
+    Riwayat("Riwayat"),
 
     PluginPage("Plugin");
 

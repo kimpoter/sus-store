@@ -105,7 +105,7 @@ public class SettingsPage extends Page {
         categoryChoices.getItems().add(TYPE.XML);
         categoryChoices.getItems().add(TYPE.OBJ);
 
-        Button addPlugin = new Button();
+        Button addPlugin = new Button("Add Plugin");
         addPlugin.setOnAction(
             e -> {
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JAR files(.jar)", "*.jar");
