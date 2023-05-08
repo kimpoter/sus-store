@@ -14,6 +14,8 @@ public enum PageType {
     Kasir("Kasir"),
     Riwayat("Riwayat");
 
+    PluginPage("Plugin");
+
     private final String name;
 
     private PageType(String name) {

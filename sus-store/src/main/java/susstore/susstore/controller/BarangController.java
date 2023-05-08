@@ -5,6 +5,7 @@ import susstore.susstore.datastore.DataStoreController;
 import susstore.susstore.datastore.Storable;
 import susstore.susstore.datastore.DataStoreController.TYPE;
 import susstore.susstore.models.Barang;
+import susstore.susstore.models.api.Kategori;
 import susstore.susstore.models.wrappers.BarangWrapper;
 import susstore.susstore.Subscriber;
 
@@ -24,9 +25,9 @@ public class BarangController {
         this.subscribers = new SubscriberManager();
         this.dataStoreController =
                 new DataStoreController<>(BarangWrapper.class,
-                        "Barang.json",
+                        "sus-store/Barang.json",
                         DataStoreController.TYPE.JSON);
-        File f = new File("Barang.json");
+        File f = new File("sus-store/Barang.json");
         if(f.exists() && !f.isDirectory()) { 
             try {
                 this.barangs = this.dataStoreController.loadData().getBarangList();
@@ -105,5 +106,16 @@ public class BarangController {
             if(b.getID()==idbarang)return b;
         }
         return null;
+    }
+
+    public List<Barang> filterBarang(String nama, String kategori, int hargaUpper) {
+        ArrayList<Barang> filtered = new ArrayList<>(this.barangs);
+        if(hargaUpper > 0)
+            filtered.removeIf(e -> (e.getHargaJual() > hargaUpper));
+        if(!nama.isBlank())
+            filtered.removeIf(e -> !(e.getNama().equals(nama)));
+        if(!kategori.isBlank())
+            filtered.removeIf(e -> !(e.getKategori().equals(kategori)));
+        return filtered;
     }
 }

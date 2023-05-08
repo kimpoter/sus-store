@@ -61,15 +61,15 @@ public class FixedBill extends Bill implements UseCurrency, Printable {
         StringBuilder txt = new StringBuilder();
         txt.append("Bill-ID: ").append(this.billID).append('\n');
         txt.append("Customer-ID: ").append(this.userID).append('\n');
-        txt.append("Qty.").append("\tItem").append("\tPrice").append("\tTotal\n");
+        txt.append("Qty. and ").append(" Item price: \n");
         for (BarangSnapshot entry: this.daftarBarang
              ) {
-            txt.append(entry.getJumlahBarang()).append('\t');
-            txt.append(" x ").append(entry.getNamaBarang()).append('\t');
-            txt.append(entry.getHargaBarang()).append('\t');
-            txt.append(entry.getHargaBarang() * entry.getJumlahBarang()).append('\n');
+            txt.append("     ").append(entry.getJumlahBarang())
+            .append(" x ").append(entry.getNamaBarang()).append(" (")
+            .append(entry.getHargaBarang()).append(") = ")
+            .append(entry.getHargaBarang() * entry.getJumlahBarang()).append("\n");
         }
-        txt.append("\t\t\tTotal: ").append(this.totalHarga).append('\n');
+        txt.append("Total: ").append(this.totalHarga).append("\n");
 
         return txt.toString();
     }

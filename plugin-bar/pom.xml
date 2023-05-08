@@ -29,6 +29,12 @@
             <artifactId>sus-store</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>20-ea+4</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
