@@ -1,5 +1,7 @@
 package susstore.susstore.view.page;
 
+import javax.print.DocFlavor.STRING;
+
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -12,6 +14,7 @@ import susstore.susstore.controller.UserController;
 import susstore.susstore.controller.UpdateMemberController;
 import susstore.susstore.models.Customer;
 import susstore.susstore.models.Member;
+import susstore.susstore.models.Member.MEMBERSHIP;
 import susstore.susstore.Subscriber;
 
 public class AllMemberPage extends Page implements Subscriber {
@@ -20,8 +23,8 @@ public class AllMemberPage extends Page implements Subscriber {
     private UpdateMemberController updateMemberController;
     private TextField nameInput;
     private TextField phoneNumberInput;
-    private ChoiceBox membershipChoices;
-    private ChoiceBox statusChoices;
+    private ChoiceBox<MEMBERSHIP> membershipChoices;
+    private ChoiceBox<String> statusChoices;
     private ScrollPane customersContainerScroll;
 
     public AllMemberPage(UserController customerController) {
@@ -48,7 +51,7 @@ public class AllMemberPage extends Page implements Subscriber {
             } else {
                 this.nameInput.setText(updateMemberController.getChoosenMember().getNama());
                 this.phoneNumberInput.setText(updateMemberController.getChoosenMember().getNoTelp());
-                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getNama());
+                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getMembership());
                 this.statusChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getStatus() ? 0 : 1);
             }
         } else {
@@ -91,15 +94,15 @@ public class AllMemberPage extends Page implements Subscriber {
 
         Label membershipLabel = new Label("Membership:");
         membershipChoices = new ChoiceBox();
-        membershipChoices.getItems().add("VIP");
-        membershipChoices.getItems().add("MEMBER");
+        membershipChoices.getItems().add(MEMBERSHIP.MEMBER);
+        membershipChoices.getItems().add(MEMBERSHIP.VIP);
         VBox membershipInputContainer = new VBox();
         membershipLabel.getStyleClass().add("input-label-all-customer");
         membershipChoices.getSelectionModel().selectFirst();
         membershipInputContainer.getChildren().addAll(membershipLabel, membershipChoices);
 
         Label statusLabel = new Label("Status:");
-        statusChoices = new ChoiceBox();
+        statusChoices = new ChoiceBox<String>();
         statusChoices.getItems().add("ACTIVE");
         statusChoices.getItems().add("DISABLED");
         VBox statusInputContainer = new VBox();
@@ -135,11 +138,10 @@ public class AllMemberPage extends Page implements Subscriber {
                             updateMemberController.getChoosenMember().getUserID(),
                             this.nameInput.getText(),
                             this.phoneNumberInput.getText(),
-                            this.membershipChoices.getSelectionModel().getSelectedItem().toString(),
+                            this.membershipChoices.getSelectionModel().getSelectedItem(),
                             this.statusChoices.getSelectionModel().isSelected(0) ? true : false
                     );
                 }
-                this.membershipChoices.getSelectionModel().select(updateMemberController.getChoosenMember().getNama());
                 updateMemberController.setChoosenMember(null);
             }
         });

@@ -11,7 +11,9 @@ public enum PageType {
     TransactionHistory("Transaction History"),
     AllBarang("All Barang"),
     NewBarang("New Barang"),
-    Kasir("Kasir");
+    Kasir("Kasir"),
+
+    PluginPage("Plugin");
 
     private final String name;
 

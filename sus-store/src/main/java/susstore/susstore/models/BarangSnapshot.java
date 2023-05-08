@@ -14,8 +14,8 @@ class BarangSnapshot implements Storable {
 
     public BarangSnapshot(
             String namaBarang,
-            Double hargaBarang,
-            Integer jumlahBarang
+            double hargaBarang,
+            int jumlahBarang
     ) {
         this.namaBarang = namaBarang;
         this.hargaBarang = hargaBarang;

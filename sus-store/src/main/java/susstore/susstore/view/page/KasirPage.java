@@ -170,6 +170,11 @@ public class KasirPage extends Page implements Subscriber {
                     customerInput.getItems().add("Member<>" + temporaryBill1.getUserID().toString());
                 }
             }
+
+        }
+        for (Member member : userController.getMembers()) {
+            System.out.println("TEST");
+            customerInput.getItems().add("Member<>" + member.getUserID().toString());
         }
 
         Button okButton = new Button("OK");
@@ -217,8 +222,11 @@ public class KasirPage extends Page implements Subscriber {
                     }
                     loadTemporaryBill();
                     if (this.temporaryBill != null) {
+                        System.out.println("CURENT_TRANSACTION_MEMBERSHIP" + this.currentTransactionMembership);
                         if (this.currentTransactionMembership.equals("Member")) {
-                            this.totalPriceLabel.setText("Member<>" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).bayar(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                            System.out.println("USERINDEX:::" + userController.getMemberIdxByID(this.userId));
+                            System.out.println(userController.getMembers().get(userController.getMemberIdxByID(this.userId)).getFinalPrice(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                            this.totalPriceLabel.setText("" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).getFinalPrice(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
                         } else {
                             this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
                         }
@@ -232,8 +240,10 @@ public class KasirPage extends Page implements Subscriber {
                     }
                     loadTemporaryBill();
                     if (this.temporaryBill != null) {
+                        System.out.println("CURENT_TRANSACTION_MEMBERSHIP" + this.currentTransactionMembership);
                         if (this.currentTransactionMembership.equals("Member")) {
-                            this.totalPriceLabel.setText("Member<>" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).bayar(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                            System.out.println(userController.getMembers().get(userController.getMemberIdxByID(this.userId)).getFinalPrice(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                            this.totalPriceLabel.setText("" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).getFinalPrice(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
                         } else {
                             this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
                         }
@@ -248,8 +258,10 @@ public class KasirPage extends Page implements Subscriber {
         this.booleanProperty.addListener(((observable, oldValue, newValue) -> {
             loadTemporaryBill();
             if (this.temporaryBill != null) {
+                System.out.println("CURENT_TRANSACTION_MEMBERSHIP" + this.currentTransactionMembership);
                 if (this.currentTransactionMembership.equals("Member")) {
-                    this.totalPriceLabel.setText("Member<>" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).bayar(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                    System.out.println(userController.getMembers().get(userController.getMemberIdxByID(this.userId)).getFinalPrice(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
+                    this.totalPriceLabel.setText("" + userController.getMembers().get(userController.getMemberIdxByID(this.userId)).getFinalPrice(this.temporaryBill.getBillTotal(), Integer.parseInt(pointInput.getText())));
                 } else {
                     this.totalPriceLabel.setText("" + this.temporaryBill.getBillTotal());
                 }

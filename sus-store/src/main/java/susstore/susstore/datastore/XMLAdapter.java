@@ -2,13 +2,8 @@ package susstore.susstore.datastore;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
-import susstore.susstore.models.Customer;
-import susstore.susstore.models.Member;
-import susstore.susstore.models.wrappers.MemberWrapper;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 // Added dependency: (taruh di pom.xml)
 //<dependency>
@@ -25,7 +20,7 @@ public class XMLAdapter<T extends Storable> extends FileAdapter<T>{
 
     @Override
     public void storeObject(T obj) throws Exception  {
-        File outputFile = new File(this.targetFile);
+        File outputFile = new File(this.targetPath);
 
         Serializer serializer = new Persister();
 
@@ -34,7 +29,7 @@ public class XMLAdapter<T extends Storable> extends FileAdapter<T>{
 
     @Override
     public T loadObject() throws Exception {
-        File inputFile = new File(this.targetFile);
+        File inputFile = new File(this.targetPath);
 
         Serializer serializer = new Persister();
 

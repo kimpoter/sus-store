@@ -93,7 +93,7 @@ public class AllBarangPage extends Page implements Subscriber {
 
         // edit barang
         imageContainer = new Rectangle(0, 0, 180, 180);
-        Image image = new Image("images/barang.jpg", false);
+        Image image = new Image("images/default.jpg", false);
         imageContainer.setFill(new ImagePattern(image));
         Button chooseImageButton = new Button("Choose Image");
         chooseImageButton.setOnAction(
@@ -165,7 +165,14 @@ public class AllBarangPage extends Page implements Subscriber {
         imageAndInputContainer.getStyleClass().add("image-input-container-all-barang");
         imageAndInputContainer.getChildren().addAll(imageAndChooseButtonContainer, inputContainer);
 
-        Button cancelButton = new Button("Cancel");
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(
+                e -> {
+                    if(editBarangController.getBarang()!=null)
+                    this.barangController.deleteBarang(editBarangController.getBarang().getID());
+                    this.editBarangController.setBarang(null);
+                }
+        );
         Button saveButton = new Button("Save");
         saveButton.setOnAction(
                 e -> {
@@ -178,14 +185,13 @@ public class AllBarangPage extends Page implements Subscriber {
                         Double.parseDouble(hargaBarangInput.getText()),
                         Double.parseDouble(hargaBeliBarangInput.getText())
                 );
-
                 }
         );
         HBox actionButtonsContainer = new HBox();
-        cancelButton.getStyleClass().addAll("action-button-all-barang", "cancel-button-all-barang");
+        deleteButton.getStyleClass().addAll("action-button-all-barang", "cancel-button-all-barang");
         saveButton.getStyleClass().addAll("action-button-all-barang", "save-button-all-barang");
         actionButtonsContainer.getStyleClass().add("action-buttons-container-all-barang");
-        actionButtonsContainer.getChildren().addAll(cancelButton, saveButton);
+        actionButtonsContainer.getChildren().addAll(deleteButton, saveButton);
 
         formAndActionsContainer = new BorderPane();
         formAndActionsContainer.getStyleClass().add("form-actions-container");

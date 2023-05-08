@@ -16,6 +16,18 @@ public class MemberVIP extends Member {
     }
 
     @Override
+    public double getFinalPrice(double nominal) {
+        double newValue = currency.getValue(nominal) * (1 - VIP_DISCOUNT);
+        return super.getFinalPrice(newValue);
+    }
+
+    @Override
+    public double getFinalPrice(double harga, int poinBayar) {
+        double newValue = currency.getValue(harga) * (1 - VIP_DISCOUNT);
+        return super.getFinalPrice(newValue, poinBayar);
+    }
+
+    @Override
     public double bayar(double harga) {
         double newValue = currency.getValue(harga) * (1 - VIP_DISCOUNT);
         return super.bayar(newValue);

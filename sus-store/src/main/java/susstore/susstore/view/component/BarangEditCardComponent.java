@@ -60,9 +60,7 @@ public class BarangEditCardComponent {
         imageAndNameContainer.getStyleClass().add("image-name-container");
         imageAndNameContainer.getChildren().addAll(imageContainer, nameLabel);
 
-        Button deleteButton = new Button("\uf2ed;");
         Button editButton = new Button("\ue4c7;");
-        deleteButton.getStyleClass().add("delete-action-button");
         editButton.getStyleClass().add("edit-action-button");
 
         editButton.setOnAction(
@@ -73,7 +71,6 @@ public class BarangEditCardComponent {
 
         BorderPane actionsContainer = new BorderPane();
         actionsContainer.setLeft(editButton);
-        actionsContainer.setRight(deleteButton);
         actionsContainer.getStyleClass().add("actions-container");
 
 

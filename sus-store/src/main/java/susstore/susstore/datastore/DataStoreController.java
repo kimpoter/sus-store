@@ -1,5 +1,8 @@
 package susstore.susstore.datastore;
 
+import susstore.susstore.SubscriberManager;
+import susstore.susstore.Subscriber;
+
 public class DataStoreController<T extends Storable> {
     public enum TYPE {
         JSON,
@@ -7,47 +10,36 @@ public class DataStoreController<T extends Storable> {
         XML
     }
 
-    private String targetFile;
-    private TYPE type;
-    private Class<T> objClass;
+    private final Class<T> objClass;
     private DataStore<T> dataStore;
-    private T data;
+    private SubscriberManager subscriberManager;
 
-    public DataStoreController(Class<T> objClass, String targetFile, TYPE type) {
-        this.targetFile = targetFile;
+    public DataStoreController(Class<T> objClass, String targetPath, TYPE type) {
         this.objClass = objClass;
-        this.targetFile = targetFile;
-        changeTarget(targetFile, type);
-        this.data = null;
+        changeTarget(targetPath, type);
+    }
+
+    public void subscribe(Subscriber s){
+        this.subscriberManager.subscribe(s);
     }
 
     public void changeTarget(String targetFile, TYPE type) {
         switch (type) {
-            case JSON:
-                this.dataStore = new JSONAdapter<>(targetFile, this.objClass);
-                break;
-            case XML:
-                this.dataStore = new XMLAdapter<>(targetFile, this.objClass);
-                break;
-            case OBJ:
-                this.dataStore = new OBJAdapter<>(targetFile, this.objClass);
-                break;
+            case JSON -> this.dataStore = new JSONAdapter<>(targetFile, this.objClass);
+            case XML -> this.dataStore = new XMLAdapter<>(targetFile, this.objClass);
+            case OBJ -> this.dataStore = new OBJAdapter<>(targetFile, this.objClass);
         }
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setTargetPath(String targetPath) {
+        this.dataStore.setTargetPath(targetPath);
     }
 
-    public T getData() {
-        return data;
+    public void storeData(T data) throws Exception {
+        this.dataStore.storeObject(data);
     }
 
-    public void storeData() throws Exception {
-        this.dataStore.storeObject(this.data);
-    }
-
-    public void loadData() throws Exception {
-        this.data = this.dataStore.loadObject();
+    public T loadData() throws Exception {
+        return this.dataStore.loadObject();
     }
 }

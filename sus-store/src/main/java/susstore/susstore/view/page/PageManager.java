@@ -5,6 +5,10 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import susstore.susstore.controller.FixedBillController;
 import susstore.susstore.controller.TemporaryBillController;
+import susstore.susstore.datastore.DataStoreController;
+import susstore.susstore.models.wrappers.BarangWrapper;
+import susstore.susstore.models.wrappers.CustomerWrapper;
+import susstore.susstore.models.wrappers.TemporaryBillWrapper;
 import susstore.susstore.plugin.PluginManager;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.JoinDataTest;
@@ -20,12 +24,12 @@ import susstore.susstore.controller.UserController;
 
 
 public class PageManager {
-    private static Setting setting = Setting.getInstance();
     protected final JoinDataTest joinDataTest;
     private final HashMap<String, Function<String, Page>> pages;
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
+    private static Setting setting = Setting.getInstance();
     private final TemporaryBillController temporaryBillController;
     private UserController customerController;
     private BarangController barangController;
@@ -39,8 +43,11 @@ public class PageManager {
         this.tabPane = new TabPane();
         this.joinDataTest = new JoinDataTest();
         this.primaryStage = primaryStage;
+
         this.barangController = new BarangController();
+
         this.customerController = new UserController();
+
         this.temporaryBillController = new TemporaryBillController();
         this.fixedBillController = new FixedBillController();
         this.userId = UUID.randomUUID();
@@ -58,7 +65,7 @@ public class PageManager {
         pages.put(PageType.AllBarang.getName(), (String) -> new AllBarangPage(primaryStage, this.barangController));
         pages.put(PageType.NewBarang.getName(), (String) -> new NewBarangPage(primaryStage, this.barangController));
         pages.put(PageType.Kasir.getName(), (String) -> new KasirPage(this.barangController, this.temporaryBillController, this.customerController, this.fixedBillController, this));
-        pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage));
+        pages.put(PageType.SettingsPage.getName(), (String) -> new SettingsPage(primaryStage,this.barangController,this.customerController,this.fixedBillController,this.temporaryBillController));
         pages.put(PageType.AllMemberPage.getName(), (String) -> new AllMemberPage(this.customerController));
         pages.put(PageType.TransactionHistory.getName(), (String) -> new TransactionHisotryPage(this.fixedBillController, this.customerController));
     }
@@ -93,5 +100,15 @@ public class PageManager {
     public void removeTab(Tab tab, String pageName) {
         tabPane.getTabs().remove(tab);
         this.tabs.remove(pageName);
+    }
+
+    public BarangController getBarangController()
+    {
+        return barangController;
+    }
+
+    public UserController getUserController()
+    {
+        return customerController;
     }
 }

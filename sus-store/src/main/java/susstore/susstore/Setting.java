@@ -13,12 +13,10 @@ public class Setting {
     private static Setting instance;
     private String path;
 
-    private String extension;
-
-    private ArrayList<String> plugins;
+    private final Configuration configuration;
 
     private Setting() {
-        this.plugins = new ArrayList<String>();
+        this.configuration = new Configuration("", new ArrayList<String>());
     }
 
     public static Setting getInstance() {
@@ -38,33 +36,39 @@ public class Setting {
     }
 
     public void setExtension(String extension) {
-        this.extension = extension;
+        this.configuration.extension = extension;
     }
 
     public String getExtension()
     {
-        return this.extension;
+        return this.configuration.extension;
     }
 
     public void addPlugins(String plugin) {
-        this.plugins.add(plugin);
+        if (!this.configuration.plugins.contains(plugin))
+        {
+            this.configuration.plugins.add(plugin);
+        }
     }
 
     public String getPlugin(int index)
     {
-        return this.plugins.get(index);
+        return this.configuration.plugins.get(index);
+    }
+
+    public ArrayList<String> getListOfPlugins()
+    {
+        return this.configuration.plugins;
     }
 
     public void load() {
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-//            Configuration configuration = gson.fromJson(new FileReader(this.path), Configuration.class);
+            Configuration configuration = gson.fromJson(new FileReader(this.path), Configuration.class);
 
-            Setting setting = gson.fromJson(new FileReader(this.path), Setting.class);
-
-            this.extension = setting.extension;
-            this.plugins = setting.plugins;
+            this.configuration.extension = configuration.extension;
+            this.configuration.plugins = configuration.plugins;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,11 +76,16 @@ public class Setting {
 
     public void save() {
         try {
+            Configuration configuration = new Configuration(
+                    this.configuration.extension,
+                    this.configuration.plugins
+            );
+
             Gson gson = new Gson();
 
             Writer writer = Files.newBufferedWriter(Paths.get(this.path));
 
-            gson.toJson(this, writer);
+            gson.toJson(configuration, writer);
 
             writer.flush();
 
@@ -86,24 +95,35 @@ public class Setting {
         }
     }
 
-    public static void main(String[] args)
-    {
-        Setting setting = new Setting();
-        setting.setPath("sus-store/src/main/resources/settings.json");
-        setting.setExtension("json");
-        setting.addPlugins("test.jar");
-        setting.addPlugins("tes2.jar");
+//    public static void main(String[] args)
+//    {
+//        Setting setting = new Setting();
+//        setting.setPath("sus-store/src/main/resources/settings.json");
+//        setting.setExtension("json");
+//        setting.addPlugins("test.jar");
+//        setting.addPlugins("tes2.jar");
+//
+//        setting.save();
+//
+//        Setting haha = new Setting();
+//
+//        haha.setPath("sus-store/src/main/resources/settings.json");
+//        haha.load();
+//
+//        System.out.println(haha.getPath());
+//        System.out.println(haha.getExtension());
+//        System.out.println(haha.getPlugin(0));
+//        System.out.println(haha.getPlugin(1));
+//    }
 
-        setting.save();
+    class Configuration {
+        private String extension;
 
-        Setting haha = new Setting();
+        private ArrayList<String> plugins;
 
-        haha.setPath("sus-store/src/main/resources/settings.json");
-        haha.load();
-
-        System.out.println(haha.getPath());
-        System.out.println(haha.getExtension());
-        System.out.println(haha.getPlugin(0));
-        System.out.println(haha.getPlugin(1));
+        public Configuration(String extension, ArrayList<String> plugins) {
+            this.extension = extension;
+            this.plugins = plugins;
+        }
     }
 }

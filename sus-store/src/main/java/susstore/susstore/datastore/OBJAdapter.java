@@ -12,7 +12,7 @@ public class OBJAdapter<T extends Storable> extends FileAdapter<T> {
 
     @Override
     public void storeObject(T obj) throws Exception {
-        FileOutputStream fileOutputStream = new FileOutputStream(this.targetFile);
+        FileOutputStream fileOutputStream = new FileOutputStream(this.targetPath);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(obj);
         objectOutputStream.flush();
@@ -21,7 +21,7 @@ public class OBJAdapter<T extends Storable> extends FileAdapter<T> {
 
     @Override
     public T loadObject() throws Exception {
-        FileInputStream fileInputStream = new FileInputStream(this.targetFile);
+        FileInputStream fileInputStream = new FileInputStream(this.targetPath);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         @SuppressWarnings("unchecked")
         T data = (T) objectInputStream.readObject();

@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import susstore.susstore.view.PageType;
 import susstore.susstore.view.component.BarangCardComponent;
@@ -30,7 +31,7 @@ public class NewBarangPage extends Page {
     private TextField hargaBarangInput;
     private TextField namaBarangInput;
     private TextField hargaBeliBarangInput;
-    private ChoiceBox categoryChoices;
+    private TextField categoryInput;
     private BarangController barangController;
     private ScrollPane barangContainerScroll;
     private Rectangle imageContainer;
@@ -111,14 +112,13 @@ public class NewBarangPage extends Page {
         stockContainer.getChildren().addAll(stockLabel, stockInput);
 
         Label categoryLabel = new Label("Kategori:");
-        categoryChoices = new ChoiceBox();
-        categoryChoices.getItems().add("Peralatan Rumah");
-        categoryChoices.getItems().add("Alat Tulis");
+
+        categoryInput = new TextField();
         VBox categoryContainer = new VBox();
         categoryLabel.getStyleClass().add("input-label-all-barang");
-        categoryChoices.getStyleClass().add("choices-all-barang");
+        categoryInput.getStyleClass().add("choices-all-barang");
         categoryContainer.getStyleClass().add("category-container-all-barang");
-        categoryContainer.getChildren().addAll(categoryLabel, categoryChoices);
+        categoryContainer.getChildren().addAll(categoryLabel, categoryInput);
 
 
         BorderPane stockCategoryContainer = new BorderPane();
@@ -127,15 +127,7 @@ public class NewBarangPage extends Page {
 
         Label hargaBarangLabel = new Label("Harga Barang:");
         hargaBarangInput = new TextField();
-        hargaBarangInput.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*\\.?\\d+") || !newValue.matches("\\d*\\.?")) {
-                    hargaBarangInput.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
+        
         VBox hargaBarangContainer = new VBox();
         hargaBarangLabel.getStyleClass().add("input-label-all-barang");
         hargaBarangInput.getStyleClass().add("input-all-barang");
@@ -143,15 +135,7 @@ public class NewBarangPage extends Page {
 
         Label hargaBeliBarangLabel = new Label("Harga Beli Barang:");
         hargaBeliBarangInput = new TextField();
-        hargaBeliBarangInput.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*\\.?\\d+") || !newValue.matches("\\d*\\.?")) {
-                    hargaBeliBarangInput.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
+        
         VBox hargaBeliBarangContainer = new VBox();
         hargaBeliBarangLabel.getStyleClass().add("input-label-all-barang");
         hargaBeliBarangInput.getStyleClass().add("input-all-barang");
@@ -173,7 +157,7 @@ public class NewBarangPage extends Page {
         saveButton.setOnAction(
                 e -> this.barangController.addBarang(new Barang(namaBarangInput.getText(),
                         Integer.parseInt(stockInput.getText()),
-                        "makanan",
+                        categoryInput.getText(),
                         imagePath,
                         Double.parseDouble(hargaBarangInput.getText()),
                         Double.parseDouble(hargaBeliBarangInput.getText())

@@ -15,15 +15,17 @@ import susstore.susstore.Subscriber;
 public class AllCustomerPage extends Page implements Subscriber{
     private final SplitPane pageRootLayout;
     private UserController customerController;
+    private ScrollPane customersContainerScroll;
 
     public AllCustomerPage(UserController customerController) {
         super(PageType.AllCustomerPage);
         this.pageRootLayout = new SplitPane();
         this.customerController = customerController;
+        customersContainerScroll = new ScrollPane();
         loadUI();
         setStylesheet();
         this.tab.setContent(this.pageRootLayout);
-        this.customerController.addSubscriber(null);
+        this.customerController.addSubscriber(this);   
     }
 
     public void update(String s){
@@ -32,18 +34,19 @@ public class AllCustomerPage extends Page implements Subscriber{
             CustomerCardComponent card = new CustomerCardComponent(c);
             customersContainer.getChildren().add(card.getComponent());
         }
+        customersContainerScroll.setContent(customersContainer);
+        customersContainer.getStyleClass().add("customers-container-all-customer");
     }
 
     private void loadUI() {
         VBox customersContainer = new VBox();
         for(Customer c : customerController.getCustomers()){
+            if(customerController.getMemberbyUUID(c.getUserID())==null){
             CustomerCardComponent card = new CustomerCardComponent(c);
-            customersContainer.getChildren().add(card.getComponent());
+            customersContainer.getChildren().add(card.getComponent());}
         }
         
         customersContainer.getStyleClass().add("customers-container-all-customer");
-
-        ScrollPane customersContainerScroll = new ScrollPane();
         customersContainerScroll.setContent(customersContainer);
         customersContainerScroll.setFitToWidth(true);
 
