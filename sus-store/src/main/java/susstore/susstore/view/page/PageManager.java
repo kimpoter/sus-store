@@ -29,7 +29,6 @@ public class PageManager {
     private final HashMap<String, Tab> tabs;
     private final TabPane tabPane;
     private final Stage primaryStage;
-    private static Setting setting = Setting.getInstance();
     private final TemporaryBillController temporaryBillController;
     private UserController customerController;
     private BarangController barangController;
@@ -37,7 +36,6 @@ public class PageManager {
     private UUID userId;
 
     public PageManager(Stage primaryStage) {
-        setting.setPath("sus-store/sus-store/src/main/resources/setting.json");
         this.pages = new HashMap<>();
         this.tabs = new HashMap<>();
         this.tabPane = new TabPane();
@@ -94,5 +92,15 @@ public class PageManager {
 
     public Stage getStage() {
         return this.primaryStage;
+    }
+
+    public BarangController getBarangController()
+    {
+        return barangController;
+    }
+
+    public UserController getUserController()
+    {
+        return customerController;
     }
 }
