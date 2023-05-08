@@ -84,10 +84,18 @@ public class UserController {
 
     public void addToVIP(Member m, Integer id) {
         this.members.set(id, new MemberVIP(m));
+        try {
+            this.customerStore.storeData(new CustomerWrapper(customers, members));
+        } catch (Exception e) {
+        }
     }
 
     public void deleteFromVIP(Member m, Integer id) {
         this.members.set(id, new Member(m));
+        try {
+            this.customerStore.storeData(new CustomerWrapper(customers, members));
+        } catch (Exception e) {
+        }
     }
 
     public Integer getMemberIdxByID(UUID id) {
