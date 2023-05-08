@@ -1,7 +1,6 @@
 package susstore.susstore.controller;
 
 import susstore.susstore.SubscriberManager;
-import susstore.susstore.datastore.Storable;
 import susstore.susstore.models.Customer;
 import susstore.susstore.models.Member;
 import susstore.susstore.models.MemberVIP;
@@ -12,14 +11,14 @@ import susstore.susstore.models.wrappers.CustomerWrapper;
 
 
 import java.io.Console;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class UserController {
-    private int dataStore;
     private SubscriberManager subscribers;
-    private DataStoreController<CustomerWrapper> customerStore;
+    private DataStoreController<CustomerWrapper> dataStoreController;
 
     // TEMPORARY LIST TO STORE
     private List<Customer> customers;
@@ -31,10 +30,20 @@ public class UserController {
         this.subscribers = new SubscriberManager();
         this.members = new ArrayList<Member>();
         this.vips = new ArrayList<Integer>();
-        this.customerStore = 
-        new DataStoreController<>(CustomerWrapper.class,
-                "Customer.json",
-                DataStoreController.TYPE.JSON);
+        this.dataStoreController =
+                new DataStoreController<>(CustomerWrapper.class,
+                        "FixedBill.json",
+                        DataStoreController.TYPE.JSON);
+        File f = new File("FixedBill.json");
+        if(f.exists() && !f.isDirectory()) {
+            try {
+                CustomerWrapper temp = this.dataStoreController.loadData();
+                this.customers = temp.getCustomerList();
+                this.members = temp.getMemberList();
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
     }
 
     public UserController(List<Customer> barang) {
@@ -45,7 +54,7 @@ public class UserController {
     public String addCustomer(Customer c) {
         this.customers.add(c);
         try {
-            this.customerStore.storeData(new CustomerWrapper(customers, members));
+            this.dataStoreController.storeData(new CustomerWrapper(customers, members));
         } catch (Exception e) {
         }
         this.subscribers.notifysubs("add-customer");
@@ -60,7 +69,7 @@ public class UserController {
         this.members.add(c);
         this.subscribers.notifysubs("add-member");
         try {
-            this.customerStore.storeData(new CustomerWrapper(customers, members));
+            this.dataStoreController.storeData(new CustomerWrapper(customers, members));
         } catch (Exception e) {
         }
     }
@@ -80,7 +89,7 @@ public class UserController {
         }
         this.subscribers.notifysubs("edit-member");
         try {
-            this.customerStore.storeData(new CustomerWrapper(customers, members));
+            this.dataStoreController.storeData(new CustomerWrapper(customers, members));
         } catch (Exception e) {
         }
     }
@@ -89,7 +98,7 @@ public class UserController {
         this.members.set(id, new MemberVIP(m));
         this.subscribers.notifysubs("add-customer");
         try {
-            this.customerStore.storeData(new CustomerWrapper(customers, members));
+            this.dataStoreController.storeData(new CustomerWrapper(customers, members));
         } catch (Exception e) {
         }
     }
@@ -98,7 +107,7 @@ public class UserController {
         this.members.set(id, new Member(m));
         this.subscribers.notifysubs("add-customer");
         try {
-            this.customerStore.storeData(new CustomerWrapper(customers, members));
+            this.dataStoreController.storeData(new CustomerWrapper(customers, members));
         } catch (Exception e) {
         }
     }
@@ -152,15 +161,15 @@ public class UserController {
     }
 
     public void loadData(String s, DataStoreController.TYPE t){
-        this.customerStore.changeTarget(s+"/Customer." + t.name().toLowerCase(), t);
+        this.dataStoreController.changeTarget(s+"/Customer." + t.name().toLowerCase(), t);
         try {
-            this.customers = this.customerStore.loadData().getCustomerList();
+            this.customers = this.dataStoreController.loadData().getCustomerList();
             this.subscribers.notifysubs("new-data");
         } catch (Exception e) {
             // TODO: handle exception
         }
         try {
-            this.members = this.customerStore.loadData().getMemberList();
+            this.members = this.dataStoreController.loadData().getMemberList();
             this.subscribers.notifysubs("new-data");
         } catch (Exception e) {
             // TODO: handle exception

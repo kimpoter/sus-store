@@ -42,6 +42,9 @@ public class PieView extends Page
            while (true)
            {
                try {
+                   data.clear();
+                   totalStok.set(0);
+
                    for (Barang b : barangController.getBarangs())
                    {
                        if (data.containsKey(b.getKategori()))
@@ -51,16 +54,14 @@ public class PieView extends Page
                        totalStok.updateAndGet(v -> v + b.getStok());
                    }
 
-                   for (HashMap.Entry<String, Integer> entry : data.entrySet())
-                   {
-                       dataset.setValue(entry.getKey(), (int)(entry.getValue() / totalStok.get()));
-                   }
-
-                   Thread.sleep(2000);
-
                    dataset.clear();
 
-                   totalStok.set(0);
+                   for (HashMap.Entry<String, Integer> entry : data.entrySet())
+                   {
+                       dataset.setValue(entry.getKey(), (int)(entry.getValue() * 100 / totalStok.get()));
+                   }
+
+                   Thread.sleep(1000);
                }
                catch (Exception e) {
                    e.printStackTrace();
